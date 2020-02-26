@@ -10,12 +10,7 @@ jobs:
     - run: ./obs_dsc_gen bpp
     - uses: actions/upload-artifact@v1.0.0
       with:
-        name: bpp.dsc
-        path: bpp/bpp.dsc
-    - uses: actions/upload-artifact@v1.0.0
-      with:
-        name: bpp.debian.tar.xz
-        path: bpp/bpp.debian.tar.xz
-    - uses: yakuhzi/action-release@v1.2.0
-      with:
-        file: bpp/bpp.dsc
+        name: bpp
+        path:
+          - bpp/bpp.dsc
+          - bpp/bpp.debian.tar.xz
