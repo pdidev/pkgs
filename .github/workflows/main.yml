@@ -17,12 +17,12 @@ jobs:
         name: bpp.debian.tar.xz
         path: bpp/bpp.debian.tar.xz
     - uses: actions/create-release@v1
+      id: create_release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        RELEASE_NAME: ${{ github.GITHUB_RUN_NUMBER }}
       with:
-        tag_name: v${{ github.GITHUB_RUN_NUMBER }}
-        release_name: Release v$RELEASE_NAME
+        tag_name: v${{ github.run_id }}
+        release_name: Release v${{ github.run_id }}
         body: ""
         draft: false
         prerelease: false
