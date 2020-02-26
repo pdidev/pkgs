@@ -21,8 +21,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         RELEASE_NAME: ${{ github.GITHUB_RUN_NUMBER }}
       with:
-        tag_name: v$GITHUB_RUN_NUMBER
-        release_name: Release v$GITHUB_RUN_NUMBER
+        tag_name: v${{ github.GITHUB_RUN_NUMBER }}
+        release_name: Release v$RELEASE_NAME
         body: ""
         draft: false
         prerelease: false
