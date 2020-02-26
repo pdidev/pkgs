@@ -19,8 +19,16 @@ jobs:
     - uses: actions/create-release@v1
       env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: v${{ GITHUB_RUN_NUMBER }}
+        release_name: Release v${{ GITHUB_RUN_NUMBER }}
         body: ""
         draft: false
         prerelease: false
+    - uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: bpp/bpp.dsc
+        asset_name: bpp.dsc
+        asset_content_type: text/plain
