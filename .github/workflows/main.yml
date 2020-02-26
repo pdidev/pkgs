@@ -10,6 +10,10 @@ jobs:
     - run: ./obs_dsc_gen bpp
       env:
         RELEASE_NAME: v${{ github.run_id }}
+    - uses: actions/upload-artifact@v1.0.0
+      with:
+        name: bpp_package_data
+        path: bpp/
     - uses: actions/create-release@v1
       id: create_release
       env:
