@@ -1,0 +1,14 @@
+name: OBS
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./obs_dsc_gen bpp
+    - uses: actions/upload-artifact@v1.0.0
+      with: 
+        name: bpp.dsc
+        path: bpp/
