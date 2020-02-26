@@ -13,7 +13,7 @@ PKGVERS="$(awk '/urgency\s*=/ { sub("\\(", "", $2); sub("\\)", "", $2); print $2
 SRCVERS="$(echo "${PKGVERS}" | sed 's/-.*//')"
 SRCURL="$(eval echo "$(cat src_url)")"
 
-cat <<EOF > "${PKGNAME}_${PKGVERS}.dsc"
+cat <<EOF > "${PKGNAME}.dsc"
 Format: 3.0 (quilt)
 Source: ${PKGNAME}
 Binary: $(awk '/Package:/ { ORS=","; print $2 }' "debian/control" | sed 's/,$//')
@@ -27,5 +27,5 @@ Files:
  aaa 000 ${SRCURL}
 EOF
 
-rm -f "${PKGNAME}_${PKGVERS}.debian.tar.xz" &> /dev/null
-tar -cJf "${PKGNAME}_${PKGVERS}.debian.tar.xz" debian/
+rm -f "${PKGNAME}.debian.tar.xz" &> /dev/null
+tar -cJf "${PKGNAME}.debian.tar.xz" debian/
