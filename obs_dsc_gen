@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 <directory>" >&2
+    exit 1
+fi
+
+cd "$1"
+
+PKGNAME="$(awk '/Source:/ { print $2 }' "debian/control")"
+PKGVERS="$(awk '/urgency\s*=/ { sub("\\(", "", $2); sub("\\)", "", $2); print $2; exit }' "debian/changelog")"
+SRCVERS="$(echo "${PKGVERS}" | sed 's/-.*//')"
+SRCURL="$(eval echo "$(cat src_url)")"
+
+cat <<EOF > "${PKGNAME}_${PKGVERS}.dsc"
+Format: 3.0 (quilt)
+Source: ${PKGNAME}
+Binary: $(awk '/Package:/ { ORS=","; print $2 }' "debian/control" | sed 's/,$//')
+Architecture: any
+Version: ${PKGVERS}
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Standards-Version: 4.5.0
+$(grep 'Build-Depends:' "debian/control")
+Files: 
+ aaa 000 https://gitlab.maisondelasimulation.fr/jbigot/libparaconf/-/archive/0.4.3/libparaconf-0.4.3.tar.gz
+ aaa 000 ${SRCURL}
+EOF
+
+rm -f "${PKGNAME}_${PKGVERS}.debian.tar.xz" &> /dev/null
+tar -cJf "${PKGNAME}_${PKGVERS}.debian.tar.xz" debian/
