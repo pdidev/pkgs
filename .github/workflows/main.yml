@@ -17,7 +17,9 @@ jobs:
         name: bpp.debian.tar.xz
         path: bpp/bpp.debian.tar.xz
     - uses: actions/create-release@v1
-      env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_NAME: ${{ github.GITHUB_RUN_NUMBER }}
       with:
         tag_name: v$GITHUB_RUN_NUMBER
         release_name: Release v$GITHUB_RUN_NUMBER
