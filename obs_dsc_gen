@@ -23,7 +23,7 @@ Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Standards-Version: 4.5.0
 $(grep 'Build-Depends:' "debian/control")
 Files: 
- aaa 000 https://gitlab.maisondelasimulation.fr/jbigot/libparaconf/-/archive/0.4.3/libparaconf-0.4.3.tar.gz
+ aaa 000 https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_NAME}/${PKGNAME}.debian.tar.xz
  aaa 000 ${SRCURL}
 EOF
 

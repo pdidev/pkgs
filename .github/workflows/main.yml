@@ -8,14 +8,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: ./obs_dsc_gen bpp
-    - uses: actions/upload-artifact@v1.0.0
-      with:
-        name: bpp.dsc
-        path: bpp/bpp.dsc
-    - uses: actions/upload-artifact@v1.0.0
-      with:
-        name: bpp.debian.tar.xz
-        path: bpp/bpp.debian.tar.xz
+      env:
+        RELEASE_NAME: v${{ github.run_id }}
     - uses: actions/create-release@v1
       id: create_release
       env:
@@ -34,3 +28,11 @@ jobs:
         asset_path: bpp/bpp.dsc
         asset_name: bpp.dsc
         asset_content_type: text/plain
+    - uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: bpp/bpp.debian.tar.xz
+        asset_name: bpp.debian.tar.xz
+        asset_content_type: application/x-xz-compressed-tar
