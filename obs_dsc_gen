@@ -22,9 +22,14 @@ Version: ${PKGVERS}
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Standards-Version: 4.5.0
 $(grep 'Build-Depends:' "debian/control")
-Files: 
- aaa 000 https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_NAME}/${PKGNAME}.debian.tar.xz
+Files:
  aaa 000 ${SRCURL}
+ aaa 000 https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_NAME}/${PKGNAME}.debian.tar.xz
+EOF
+
+cat <<EOF > "${PKGNAME}.spec"
+Source0: ${SRCURL}
+Source1: https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_NAME}/${PKGNAME}.debian.tar.xz
 EOF
 
 rm -f "${PKGNAME}.debian.tar.xz" &> /dev/null
