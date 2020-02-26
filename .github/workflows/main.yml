@@ -19,8 +19,8 @@ jobs:
     - uses: actions/create-release@v1
       env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
       with:
-        tag_name: v${{ GITHUB_RUN_NUMBER }}
-        release_name: Release v${{ GITHUB_RUN_NUMBER }}
+        tag_name: v$GITHUB_RUN_NUMBER
+        release_name: Release v$GITHUB_RUN_NUMBER
         body: ""
         draft: false
         prerelease: false
