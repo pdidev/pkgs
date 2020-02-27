@@ -22,14 +22,9 @@ jobs:
     - name: Deploy
       run: |
         set -x
-        pwd
-        ls -la .
-        echo "DONE LS0"
+        pwd; ls -la . *
         cd source
-        ls -la .
-        echo "DONE LS1"
-        ls -la ..
-        echo "DONE LS2"
+        pwd; ls -la . *
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
         rm ../generated/*
         mv *-obs_*data.tar ../generated
