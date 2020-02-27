@@ -68,7 +68,5 @@ popd
 
 %changelog
 
--------------------------------------------------------------------
-Thu Feb  6 11:31:01 UTC 2020 - ksiero@man.poznan.pl
-
-First paraconf package 
+* Thu Feb  6 11:31:01 UTC 2020 - ksiero@man.poznan.pl
+- First paraconf package 

@@ -71,8 +71,5 @@ set -e
 %{_libdir}/lib%{name}.so.%{_sover}*
 
 %changelog
-
--------------------------------------------------------------------
-Tue Feb 18 09:06:40 UTC 2020 - ksiero@man.poznan.pl
-
-First pdi package
+* Tue Feb 18 09:06:40 UTC 2020 - ksiero@man.poznan.pl
+- First pdi package
