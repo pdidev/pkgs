@@ -22,9 +22,9 @@ jobs:
     - run: cd source
     - run: "find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'"
     - run: |
-      rm ../generated/*
-      mv *-obs_*data.tar ../generated
-      cd ../generated
-      git add -A .
-      git commit -a --amend
-      git push -f
+        rm ../generated/*
+        mv *-obs_*data.tar ../generated
+        cd ../generated
+        git add -A .
+        git commit -a --amend
+        git push -f
