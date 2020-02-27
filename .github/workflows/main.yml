@@ -22,13 +22,13 @@ jobs:
     - name: Deploy
       run: |
         set -x
-        pwd; ls -la .
         cd source
-        pwd; ls -la .
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
         rm -rf ../generated/* || true
         mv *-obs_*data.tar ../generated
         cd ../generated
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@noreply.example.com"
         git add -A .
         git commit -a --amend
         git push -f
