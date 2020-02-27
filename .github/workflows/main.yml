@@ -21,9 +21,14 @@ jobs:
         fetch-depth: 0
     - name: Deploy
       run: |
+        set -x
+        ls .
+        echo "DONE LS0"
         cd source
+        ls .
+        echo "DONE LS1"
         ls ..
-        echo "DONE LS"
+        echo "DONE LS2"
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
         rm ../generated/*
         mv *-obs_*data.tar ../generated
