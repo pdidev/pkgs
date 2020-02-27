@@ -19,8 +19,10 @@ jobs:
         ref: generated
         path: generated
         fetch-depth: 0
-    - run: |
+    - name: Deploy
+      run: |
         cd source
+        ls ..
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
         rm ../generated/*
         mv *-obs_*data.tar ../generated
