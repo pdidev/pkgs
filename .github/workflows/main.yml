@@ -21,7 +21,7 @@ jobs:
         fetch-depth: 0
     - run: |
       cd source
-      find . -maxdepth 1 -type d -exec ./obs_data_gen '{}' ';'
+      find . -maxdepth 1 -type d \! -name .\* -exec ./obs_data_gen {} \;
       rm ../generated/*
       mv *-obs_*data.tar ../generated
       cd ../generated
