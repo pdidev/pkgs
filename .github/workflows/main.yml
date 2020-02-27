@@ -35,6 +35,6 @@ jobs:
         git add -A .
         git commit -a -C HEAD --amend
         git push -f
-        curl 'https://api.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_BPP_RUNSERVICE_TOKEN}"
-        curl 'https://api.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
-        curl 'https://api.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_BPP_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
