@@ -7,32 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: ./obs_dsc_gen bpp
-      env:
-        RELEASE_NAME: v${{ github.run_id }}
-    - uses: actions/create-release@v1
-      id: create_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ github.run_id }}
-        release_name: Release v${{ github.run_id }}
-        body: ""
-        draft: false
-        prerelease: false
-    - uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bpp/bpp.dsc
-        asset_name: bpp.dsc
-        asset_content_type: text/plain
-    - uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: bpp/bpp.debian.tar.xz
-        asset_name: bpp.debian.tar.xz
-        asset_content_type: application/x-xz-compressed-tar
+    - run: ./obs_data_gen bpp
