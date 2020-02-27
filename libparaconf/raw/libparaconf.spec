@@ -7,7 +7,9 @@ Group:          Development/Libraries/C and C++
 Summary:        A library that provides a simple query language to access a Yaml tree on top of libyaml
 Url:            https://gitlab.maisondelasimulation.fr/jbigot/libparaconf
 Source0:        https://gitlab.maisondelasimulation.fr/jbigot/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
+
 BuildRequires:  cmake3 >= 3.2
 %else
 BuildRequires:  cmake >= 3.2
@@ -35,9 +37,8 @@ Paraconf is a library that provides a simple query language to
 access a Yaml tree on top of libyaml.
 
 %prep
-%autosetup -p1
+%autosetup
 mkdir -p %{_target_platform}
-find . -name '.gitignore' -exec rm {} \;
 
 %build
 pushd %{_target_platform}
@@ -47,17 +48,22 @@ pushd %{_target_platform}
     ../paraconf
 popd
 %make_build -C %{_target_platform}
- 
+
 %install
+rm -rf $RPM_BUILD_ROOT
 %make_install -C %{_target_platform}
 
-%post -n %{name}%{_sover} -p /sbin/ldconfig
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post   -n %{name}%{_sover} -p /sbin/ldconfig
 
 %postun -n %{name}%{_sover} -p /sbin/ldconfig
 
 %files devel
 %license LICENSE
 %doc README.md
+
 %{_includedir}/
 %{_libdir}/%{name}.so
 %{_datadir}/paraconf/cmake/
@@ -65,8 +71,6 @@ popd
 %files -n %{name}%{_sover}
 %{_libdir}/%{name}.so.%{_sover}*
 
-
 %changelog
-
-* Thu Feb  6 11:31:01 UTC 2020 - ksiero@man.poznan.pl
-- First paraconf package 
+* Tue Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
+- Initial Release

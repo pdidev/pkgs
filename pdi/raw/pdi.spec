@@ -7,14 +7,14 @@ Group:          Development/Libraries/C and C++
 Summary:        the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
 BuildRequires:  devtoolset-6
 BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  libparaconf-devel >= 0.4.0
-BuildRequires:  spdlog-devel >= 1.3.1
+BuildRequires:  libparaconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 
 %description
 PDI is a library that aims to decouple high-performance simulation
@@ -22,7 +22,8 @@ codes from Input/Output concerns.
 
 %package devel
 Summary:        Development files for %{name}
-Requires:       lib%{name}%{_sover} = %{version}, libparaconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
+Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       libparaconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 
 %description devel
 The %{name}-devel package contains C/C++ header files for developing
@@ -36,7 +37,8 @@ PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
 %prep
-%setup -q -n pdi-%{version}
+%autosetup
+mkdir -p %{_target_platform}
 
 %build
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
@@ -44,15 +46,21 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
-%cmake3 \
-  -DBUILD_DOCUMENTATION=OFF \
-  -DBUILD_TESTING=OFF \
-  -DBUILD_FORTRAN=OFF \
-  pdi
-%make_build
+%pushd %{_target_platform}
+    %cmake3 \
+    -DBUILD_DOCUMENTATION=OFF \
+    -DBUILD_TESTING=OFF \
+    -DBUILD_FORTRAN=OFF \
+    pdi
+popd
+%make_build -C %{_target_platform}
 
 %install
-%make_install
+rm -rf $RPM_BUILD_ROOT
+%make_install -C %{_target_platform}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post   -n lib%{name}%{_sover} -p /sbin/ldconfig
 

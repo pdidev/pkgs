@@ -6,6 +6,7 @@ Group:          Development/Libraries/C and C++
 Summary:        Trace plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
 BuildRequires:  devtoolset-6
 BuildRequires:  cmake3 >= 3.5
@@ -24,7 +25,8 @@ Summary:        Trace plugin for the Portable Data Interface library
 The PDI trace plugin generates a trace of what happens in PDI data store.
 
 %prep
-%setup -q -n pdi-%{version}
+%autosetup -n pdi-%{version}
+mkdir -p %{_target_platform}
 
 %build
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
@@ -32,17 +34,22 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
-%cmake3 \
-  plugins/trace
-%make_build
+%pushd %{_target_platform}
+    %cmake3 plugins/trace
+popd
+%make_build -C %{_target_platform}
 
 %install
-%make_install
+rm -rf $RPM_BUILD_ROOT
+%make_install -C %{_target_platform}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post   -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %changelog
-* Thu, 27 Feb 2020 17:15:00 +0100 - Julien Bigot <julien.bigot@cea.fr>
+* Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

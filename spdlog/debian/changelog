@@ -1,0 +1,5 @@
+spdlog (1:1.5.0) unstable; urgency=low
+
+  * Initial release
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 22 Feb 2020 20:00:00 +0100
