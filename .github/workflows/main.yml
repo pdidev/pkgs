@@ -22,11 +22,11 @@ jobs:
     - name: Deploy
       run: |
         set -x
-        pwd; ls -la . *
+        pwd; ls -la .
         cd source
-        pwd; ls -la . *
+        pwd; ls -la .
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
-        rm ../generated/*
+        rm -rf ../generated/* || true
         mv *-obs_*data.tar ../generated
         cd ../generated
         git add -A .
