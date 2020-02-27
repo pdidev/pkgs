@@ -21,7 +21,6 @@ jobs:
         fetch-depth: 0
     - name: Deploy
       run: |
-        set -x
         cd source
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
         rm -rf ../generated/* || true
