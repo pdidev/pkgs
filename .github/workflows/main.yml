@@ -24,7 +24,7 @@ jobs:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
         OBS_LIBPARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsLibparaconfRunserviceToken }}
         OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
-        OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN: ${{ secrets. ObsPdiplugintraceRunserviceToken }}
+        OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugintraceRunserviceToken }}
       run: |
         cd source
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
