@@ -1,0 +1,14 @@
+Source: pdiplugin-trace
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9), cmake (>= 3.5), libpdi-dev (= ${binary:Version})
+Standards-Version: 4.5.0
+Homepage: https://pdi.julien-bigot.fr/
+
+Package: pdiplugin-trace
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Trace plugin for the Portable Data Interface library
+ The PDI trace plugin generates a trace of what happens in PDI data store.

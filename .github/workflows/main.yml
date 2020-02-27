@@ -24,6 +24,7 @@ jobs:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
         OBS_LIBPARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsLibparaconfRunserviceToken }}
         OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
+        OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN: ${{ secrets. ObsPdiplugintraceRunserviceToken }}
       run: |
         cd source
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
@@ -38,3 +39,4 @@ jobs:
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_BPP_RUNSERVICE_TOKEN}"
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN}"
