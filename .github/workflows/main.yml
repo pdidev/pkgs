@@ -19,9 +19,9 @@ jobs:
         ref: generated
         path: generated
         fetch-depth: 0
+    - run: cd source
+    - run: "find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'"
     - run: |
-      cd source
-      find . -maxdepth 1 -type d \! -name .\* -exec ./obs_data_gen {} \;
       rm ../generated/*
       mv *-obs_*data.tar ../generated
       cd ../generated
