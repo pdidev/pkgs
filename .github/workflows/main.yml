@@ -1,10 +1,30 @@
 name: OBS
 
-on: [push]
+on:
+  push:
+    branches:
+    - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: ./obs_data_gen bpp
+    - name: Checkout master
+      uses: actions/checkout@v2
+      with:
+        path: source
+    - name: Checkout generated
+      uses: actions/checkout@v2
+      with:
+        ref: generated
+        path: generated
+        fetch-depth: 0
+    - run: |
+      cd source
+      find . -maxdepth 1 -type d -exec ./obs_data_gen '{}' ';'
+      rm ../generated/*
+      mv *-obs_*data.tar ../generated
+      cd ../generated
+      git add -A .
+      git commit -a --amend
+      git push -f
