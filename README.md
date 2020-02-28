@@ -57,5 +57,5 @@ OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN: ${{ secrets.<YourSecretName> }}
 ```
   - the actual trigger:
 ```
-curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN}"
+curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN}"
 ```
