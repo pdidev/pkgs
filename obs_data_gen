@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 
 if [ $# -lt 1 -o $# -gt 2 ]
 then
