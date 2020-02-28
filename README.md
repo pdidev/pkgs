@@ -5,7 +5,8 @@ packages of PDI and related projects on the Open Build Service
 ## Layout
 
 Each directory maps to an open build service "package".
-Each package contains:
+
+Each directory contains:
 * a `debian` directory whose content will be used as-is to generate the debian
   source packages,
 * a `src_url` file that contains the URL where to fetch the debian orig file.
@@ -51,11 +52,11 @@ curl -X POST --anyauth -u ${username} "https://api.opensuse.org/person/jbigot/to
 * add this token as a "secret" on github
   https://github.com/pdidev/obs-packages/settings/secrets/new
 * add a trigger line to `.github/workflows/main.yml`
-  - an env line:
+  - an line in the `env` section:
 ```
 OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN: ${{ secrets.<YourSecretName> }}
 ```
-  - the actual trigger:
+  - the actual trigger at the end of the `run` section:
 ```
-curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN}"
+../source/obs_trigger "${OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN}"
 ```
