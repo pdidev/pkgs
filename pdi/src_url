@@ -1,1 +1,1 @@
-https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/0.6.1/pdi-0.6.1.tar.gz
+https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${SRCVERS}/pdi-${SRCVERS}.tar.gz
