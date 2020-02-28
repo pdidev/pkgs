@@ -30,7 +30,7 @@ else
     trap "cd '${RUNDIR}'; rm -rf '${DSTDIR}'" EXIT
 fi
 
-curl -s "${SRCURL}" -o "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}"
+curl -L -s "${SRCURL}" -o "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}"
 
 mkdir -p "${PKGNAME}-${PKGVERS}"
 cd "${PKGNAME}-${PKGVERS}"
