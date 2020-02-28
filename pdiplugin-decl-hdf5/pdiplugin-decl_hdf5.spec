@@ -20,14 +20,6 @@ The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
 declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
 a simple declarative interface to access a large subset of it.
 
-%package
-Summary:        Decl'HDF5 plugin for the Portable Data Interface library
-
-%description
-The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
-declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
-a simple declarative interface to access a large subset of it.
-
 %prep
 %autosetup -n pdi-%{version}
 mkdir -p %{_target_platform}

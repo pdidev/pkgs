@@ -18,12 +18,6 @@ BuildRequires:  pdi-devel = %{version}
 %description
 The PDI mpi plugin interfaces PDI with MPI.
 
-%package
-Summary:        MPI plugin for the Portable Data Interface library
-
-%description
-The PDI mpi plugin interfaces PDI with MPI.
-
 %prep
 %autosetup -n pdi-%{version}
 mkdir -p %{_target_platform}

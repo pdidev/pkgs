@@ -18,12 +18,6 @@ BuildRequires:  pdi-devel = %{version}
 %description
 The PDI trace plugin generates a trace of what happens in PDI data store.
 
-%package
-Summary:        Trace plugin for the Portable Data Interface library
-
-%description
-The PDI trace plugin generates a trace of what happens in PDI data store.
-
 %prep
 %autosetup -n pdi-%{version}
 mkdir -p %{_target_platform}

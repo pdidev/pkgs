@@ -19,13 +19,6 @@ BuildRequires:  pdi-devel = %{version}
 The PDI user-code plugin enables one to call a user-defined function when a
 specified event occur or certain data becomes available.
 
-%package
-Summary:        user-code plugin for the Portable Data Interface library
-
-%description
-The PDI user-code plugin enables one to call a user-defined function when a
-specified event occur or certain data becomes available.
-
 %prep
 %autosetup -n pdi-%{version}
 mkdir -p %{_target_platform}
