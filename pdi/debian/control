@@ -14,7 +14,7 @@ Description: the Portable Data Interface library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
-Package: pdi-dev
+Package: libpdi-dev
 Architecture: any
 Section: libs
 Priority: optional

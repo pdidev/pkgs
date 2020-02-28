@@ -2,7 +2,7 @@ Source: pdiplugin-decl-hdf5
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), cmake (>= 3.5), libpdi-dev (= ${binary:Version}), libhdf5-dev
+Build-Depends: debhelper (>= 9), cmake (>= 3.5), libpdi-dev (= ${source:Version}), libhdf5-dev
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

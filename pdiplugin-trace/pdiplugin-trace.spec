@@ -13,7 +13,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  pdi-devel = %(version)
+BuildRequires:  pdi-devel = %{version}
 
 %description
 The PDI trace plugin generates a trace of what happens in PDI data store.

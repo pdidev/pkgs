@@ -13,7 +13,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  pdi-devel = %(version)
+BuildRequires:  pdi-devel = %{version}
 
 %description
 The PDI user-code plugin enables one to call a user-defined function when a
