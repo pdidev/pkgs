@@ -35,7 +35,7 @@ source scl_source enable devtoolset-6
 set -e
 %endif
 pushd %{_target_platform}
-    %cmake3 plugins/trace
+    %cmake3 ../plugins/trace
 popd
 %make_build -C %{_target_platform}
 

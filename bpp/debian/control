@@ -3,7 +3,7 @@ Section: unknown
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 # wget is only required to support our workflow on OBS...
-Build-Depends: debhelper-compat (= 10), cmake (>= 2.8)
+Build-Depends: debhelper (>= 9), cmake (>= 2.8)
 Standards-Version: 4.4.1
 Homepage: https://gitlab.maisondelasimulation.fr/jbigot/bpp/
 

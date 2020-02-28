@@ -2,7 +2,7 @@ Source: pdiplugin-mpi
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper-compat (= 10), cmake (>= 3.5), libpdi-dev (= ${binary:Version}), libmpi-dev
+Build-Depends: debhelper (>= 9), cmake (>= 3.5), libpdi-dev (= ${binary:Version}), libmpi-dev
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
