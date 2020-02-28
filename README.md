@@ -1,3 +1,5 @@
+# obs-package repository
+
 This is the repository that holds the files used to generate `.deb` and `.rpm`
 packages of PDI and related projects on the Open Build Service
 (https://build.opensuse.org/project/show/home:pdi).
