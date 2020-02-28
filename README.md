@@ -46,7 +46,7 @@ osc token --create home:pdi ${pkgname}
 ```
   - or with `curl`:
 ```
-curl -X POST --anyauth -u jbigot 'https://api.opensuse.org/person/jbigot/token?project=home:pdi&package=pdiplugin-trace'
+curl -X POST --anyauth -u ${username} "https://api.opensuse.org/person/jbigot/token?project=home:pdi&package=${pkgname}"
 ```
 * add this token as a "secret" on github
   https://github.com/pdidev/obs-packages/settings/secrets/new

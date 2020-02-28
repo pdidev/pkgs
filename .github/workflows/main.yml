@@ -23,8 +23,12 @@ jobs:
       env:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
         OBS_LIBPARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsLibparaconfRunserviceToken }}
-        OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
+        OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5RunserviceToken }}
+        OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginmpiRunserviceToken }}
         OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugintraceRunserviceToken }}
+        OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginusercodeRunserviceToken }}
+        OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
+        OBS_SPDLOG_RUNSERVICE_TOKEN: ${{ secrets.ObsSpdlogRunserviceToken }}
       run: |
         cd source
         find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
@@ -38,5 +42,9 @@ jobs:
         git push -f
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_BPP_RUNSERVICE_TOKEN}"
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
-        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN}"
         curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
+        curl 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_SPDLOG_RUNSERVICE_TOKEN}"

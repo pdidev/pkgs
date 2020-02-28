@@ -2,7 +2,7 @@ Source: pdi
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libparaconf-dev (>= 0.4.0), libspdlog-dev (>= 1:1.3.1)
+Build-Depends: debhelper-compat (= 10), cmake (>= 3.5), pkg-config, libparaconf-dev (>= 0.4.0), libspdlog-dev (>= 1:1.3.1)
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

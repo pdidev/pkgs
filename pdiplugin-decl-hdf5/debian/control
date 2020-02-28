@@ -1,0 +1,16 @@
+Source: pdiplugin-decl-hdf5
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper-compat (= 10), cmake (>= 3.5), libpdi-dev (= ${binary:Version}), libhdf5-dev
+Standards-Version: 4.5.0
+Homepage: https://pdi.julien-bigot.fr/
+
+Package: pdiplugin-decl-hdf5
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Decl'HDF5 plugin for the Portable Data Interface library
+ The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
+ a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
+ offers a simple declarative interface to access a large subset of it.

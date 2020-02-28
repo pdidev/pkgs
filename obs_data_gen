@@ -28,7 +28,7 @@ else
     trap "cd '${RUNDIR}'; rm -rf '${DSTDIR}'" EXIT
 fi
 
-curl "${SRCURL}" -o "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}"
+curl -s "${SRCURL}" -o "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}"
 
 mkdir -p "${PKGNAME}-${PKGVERS}"
 cd "${PKGNAME}-${PKGVERS}"
@@ -44,9 +44,9 @@ tar -cf "${PKGNAME}-obs_rundata.tar" "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" 
 mv "${PKGNAME}-obs_rundata.tar" "${RUNDIR}/"
 rm "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" "${PKGNAME}_${PKGVERS}.debian.tar.xz"
 
-if [ -d "${SRCDIR}/raw" ]
+if [ -e "${SRCDIR}"/*.spec -o -e "${SRCDIR}"/*.changes ]
 then
-    cp -r "${SRCDIR}/raw"/* .
+    cp "${SRCDIR}"/*.spec "${SRCDIR}"/*.changes .
 fi
 
 tar -cf "${PKGNAME}-obs_repodata.tar" *

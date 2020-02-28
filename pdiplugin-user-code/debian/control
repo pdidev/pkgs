@@ -1,4 +1,4 @@
-Source: pdiplugin-trace
+Source: pdiplugin-user-code
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
@@ -6,9 +6,10 @@ Build-Depends: debhelper-compat (= 10), cmake (>= 3.5), libpdi-dev (= ${binary:V
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
-Package: pdiplugin-trace
+Package: pdiplugin-user-code
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Trace plugin for the Portable Data Interface library
- The PDI trace plugin generates a trace of what happens in PDI data store.
+Description: user-code plugin for the Portable Data Interface library
+ The PDI user-code plugin enables one to call a user-defined function when a
+ specified event occur or certain data becomes available.
