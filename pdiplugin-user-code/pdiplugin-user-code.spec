@@ -5,7 +5,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        user-code plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
 BuildRequires:  devtoolset-6
