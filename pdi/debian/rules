@@ -13,4 +13,5 @@ override_dh_auto_configure:
 	dh_auto_configure -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_FORTRAN=OFF \
+		-DBUILD_TESTING=OFF \
 		-DCMAKE_BUILD_TYPE=Release

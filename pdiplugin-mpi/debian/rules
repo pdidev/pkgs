@@ -10,6 +10,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -D plugins/mpi \
+	dh_auto_configure -D plugins/mpi -- \
 		-DBUILD_FORTRAN=OFF \
+		-DBUILD_TESTING=OFF \
 		-DCMAKE_BUILD_TYPE=Release

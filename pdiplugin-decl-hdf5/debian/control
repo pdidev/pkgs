@@ -2,7 +2,8 @@ Source: pdiplugin-decl-hdf5
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libpdi-dev, libhdf5-dev, libgtest-dev (>= 1.8), libgmock-dev (>= 1.8)
+Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libpdi-dev, libhdf5-dev
+#, libgtest-dev (>= 1.8), libgmock-dev (>= 1.8)
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
