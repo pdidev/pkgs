@@ -37,7 +37,10 @@ source scl_source enable devtoolset-6
 set -e
 %endif
 pushd %{_target_platform}
-    %cmake3 ../plugins/user_code
+    %cmake3 \
+    -DBUILD_TESTING=OFF \
+    -DBUILD_FORTRAN=OFF \
+    ../plugins/user_code
 popd
 %make_build -C %{_target_platform}
 

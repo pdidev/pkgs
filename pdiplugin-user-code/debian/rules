@@ -12,4 +12,5 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -D plugins/user_code
+	dh_auto_configure -D plugins/user_code \
+		-DBUILD_TESTING=OFF

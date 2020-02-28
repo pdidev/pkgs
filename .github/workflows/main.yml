@@ -32,7 +32,7 @@ jobs:
       run: |
         cd source
         find . -maxdepth 1 -type d '!' -name '.*' -exec bash -x ./obs_data_gen '{}' ';'
-        rm -rf ../generated/* || true
+        rm -rf ../generated/*-obs_*data.tar || true
         mv *-obs_*data.tar ../generated
         cd ../generated
         git config user.name "${GITHUB_ACTOR}"
@@ -40,11 +40,10 @@ jobs:
         git add -A .
         git commit -a -C HEAD --amend
         git push -f
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_BPP_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_PDI_RUNSERVICE_TOKEN}"
-        curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token ${OBS_SPDLOG_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_BPP_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_SPDLOG_RUNSERVICE_TOKEN}"
