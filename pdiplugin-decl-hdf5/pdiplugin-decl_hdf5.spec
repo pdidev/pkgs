@@ -39,7 +39,7 @@ source scl_source enable devtoolset-6
 set -e
 %endif
 pushd %{_target_platform}
-    %cmake3 plugins/decl_hdf5
+    %cmake3 ../plugins/decl_hdf5
 popd
 %make_build -C %{_target_platform}
 

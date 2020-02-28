@@ -51,7 +51,7 @@ pushd %{_target_platform}
     -DBUILD_DOCUMENTATION=OFF \
     -DBUILD_TESTING=OFF \
     -DBUILD_FORTRAN=OFF \
-    pdi
+    ../pdi
 popd
 %make_build -C %{_target_platform}
 
