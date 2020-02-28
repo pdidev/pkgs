@@ -7,4 +7,5 @@ then
     exit 1
 fi
 
-curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token $1" 
+curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token $1" \
+    | grep -q -s -e 'status\s*code="ok"'

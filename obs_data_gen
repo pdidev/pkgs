@@ -41,9 +41,9 @@ cd ..
 dpkg-source -b "${PKGNAME}-${PKGVERS}"
 rm -r "${PKGNAME}-${PKGVERS}"
 
-tar -cf "${PKGNAME}-obs_rundata.tar" "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.xz
+tar -cf "${PKGNAME}-obs_rundata.tar" "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.*
 mv "${PKGNAME}-obs_rundata.tar" "${RUNDIR}/"
-rm "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.xz
+rm "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.*
 
 if [ -e "${SRCDIR}"/*.spec ]
 then
