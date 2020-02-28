@@ -1,6 +1,6 @@
 #!/bin/bash
-set -x
 set -e
+set -x
 
 if [ $# -lt 1 -o $# -gt 2 ]
 then
@@ -42,9 +42,9 @@ cd ..
 dpkg-source -b "${PKGNAME}-${PKGVERS}"
 rm -r "${PKGNAME}-${PKGVERS}"
 
-tar -cf "${PKGNAME}-obs_rundata.tar" "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" "${PKGNAME}_${PKGVERS}.debian.tar.xz"
+tar -cf "${PKGNAME}-obs_rundata.tar" "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.xz
 mv "${PKGNAME}-obs_rundata.tar" "${RUNDIR}/"
-rm "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" "${PKGNAME}_${PKGVERS}.debian.tar.xz"
+rm "${PKGNAME}_${SRCVERS}.orig.tar.${SRCEXT}" ${PKGNAME}_*.debian.tar.xz
 
 if [ -e "${SRCDIR}"/*.spec ]
 then

@@ -9,8 +9,8 @@ Each package contains:
 * a `debian` directory whose content will be used as-is to generate the debian
   source packages,
 * a `src_url` file that contains the URL where to fetch the debian orig file.
-* a `raw` directory that contains files that will be transfered as-is on the
-  open build service instance.
+* `.spec` and `.changes` files that will be transfered as-is on the open build
+  service instance.
 
 The `src_url` file might reference three variables:
 * `${PKGNAME}` will be replaced by the name of the source package as defined in
