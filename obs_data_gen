@@ -12,7 +12,7 @@ RUNDIR="${PWD}"
 cd "$1"
 SRCDIR="${PWD}"
 
-PKGNAME="$(awk '/Source:/ { print $2 }' "debian/control")"
+PKGNAME="$(dpkg-parsechangelog -n 1 -S Source)"
 PKGVERS="$(dpkg-parsechangelog -n 1 -S Version)"
 SRCVERS="$(echo "${PKGVERS}" | sed -e 's/.*://' -e 's/-.*//' )"
 SRCURL="$(eval echo "$(cat src_url)")"
