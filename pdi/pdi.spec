@@ -46,7 +46,7 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
-%pushd %{_target_platform}
+pushd %{_target_platform}
     %cmake3 \
     -DBUILD_DOCUMENTATION=OFF \
     -DBUILD_TESTING=OFF \
