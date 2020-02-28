@@ -31,7 +31,7 @@ jobs:
         OBS_SPDLOG_RUNSERVICE_TOKEN: ${{ secrets.ObsSpdlogRunserviceToken }}
       run: |
         cd source
-        find . -maxdepth 1 -type d '!' -name '.*' -exec ./obs_data_gen '{}' ';'
+        find . -maxdepth 1 -type d '!' -name '.*' -exec bash -x ./obs_data_gen '{}' ';'
         rm -rf ../generated/* || true
         mv *-obs_*data.tar ../generated
         cd ../generated

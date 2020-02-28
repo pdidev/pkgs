@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-set -x
 
 if [ $# -lt 1 -o $# -gt 2 ]
 then
@@ -14,7 +13,7 @@ cd "$1"
 SRCDIR="${PWD}"
 
 PKGNAME="$(awk '/Source:/ { print $2 }' "debian/control")"
-PKGVERS="$(awk '/urgency\s*=/ { sub("\\(", "", $2); sub("\\)", "", $2); print $2; exit }' "debian/changelog")"
+PKGVERS="$(dpkg-parsechangelog -n 1 -S Version)"
 SRCVERS="$(echo "${PKGVERS}" | sed -e 's/.*://' -e 's/-.*//' )"
 SRCURL="$(eval echo "$(cat src_url)")"
 SRCEXT="$(basename "${SRCURL}"| sed 's/.*\.//')"
