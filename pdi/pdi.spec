@@ -69,7 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %license LICENSE
 %doc README.md
-%{_bindir}/
+%{_bindir}/*
 %{_includedir}/
 %{_libdir}/lib%{name}.so
 %{_datadir}/%{name}/cmake
