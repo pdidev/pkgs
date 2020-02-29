@@ -44,6 +44,7 @@ jobs:
         ../source/obs_trigger "${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDI_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_SPDLOG_RUNSERVICE_TOKEN}"

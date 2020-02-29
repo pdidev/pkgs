@@ -28,6 +28,7 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
+module load mpi/openmpi-%{_arch}
 pushd %{_target_platform}
     %cmake3 \
     -DBUILD_TESTING=OFF \
@@ -35,10 +36,13 @@ pushd %{_target_platform}
     ../plugins/mpi
 popd
 %make_build -C %{_target_platform}
+module purge
 
 %install
 rm -rf $RPM_BUILD_ROOT
+module load mpi/openmpi-%{_arch}
 %make_install -C %{_target_platform}
+module purge
 
 %clean
 rm -rf $RPM_BUILD_ROOT
