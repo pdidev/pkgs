@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libpdi-dev, mpi-default-dev
-#, libgtest-dev (>= 1.8), libgmock-dev (>= 1.8)
+#Build-Depends: libgtest-dev (>= 1.8), libgmock-dev (>= 1.8) # TODO: Enable, currently disabled to support older distribs without these
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
@@ -11,5 +11,6 @@ Package: pdiplugin-mpi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi0
 Description: MPI plugin for the Portable Data Interface library
  The PDI mpi plugin interfaces PDI with MPI.

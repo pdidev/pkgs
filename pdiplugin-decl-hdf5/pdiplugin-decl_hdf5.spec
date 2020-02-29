@@ -13,7 +13,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  pdi-devel = %{version}
+BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.8
 
 %description
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -49,6 +49,11 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
+
+%files
+%license LICENSE
+%doc README.md
+%{_libdir}/lib%{name}.so
 
 %changelog
 * Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>

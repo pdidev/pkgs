@@ -44,6 +44,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun -p /sbin/ldconfig
 
+%files
+%license LICENSE
+%doc README.md
+%{_libdir}/lib%{name}.so
+
 %changelog
 * Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

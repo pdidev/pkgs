@@ -13,7 +13,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  pdi-devel = %{version}
+BuildRequires:  pdi-devel = %{version}, mpi-devel
 
 %description
 The PDI mpi plugin interfaces PDI with MPI.
@@ -46,6 +46,10 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
+
+%files
+%license LICENSE
+%{_libdir}/lib%{name}.so
 
 %changelog
 * Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>
