@@ -13,5 +13,6 @@ override_dh_auto_configure:
 	dh_auto_configure -D plugins/decl_hdf5 -- \
 		-DBUILD_FORTRAN=OFF \
 		-DBUILD_HDF5_PARALLEL=OFF \
-		-DBUILD_TESTING=OFF \ # TODO: Enable, currently disabled to support older distribs without gtest/gmock
+		-DBUILD_TESTING=OFF \
 		-DCMAKE_BUILD_TYPE=Release
+	# TODO: Enable DBUILD_TESTING, currently disabled to support older distribs without gtest/gmock
