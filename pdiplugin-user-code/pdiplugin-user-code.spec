@@ -51,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/lib%{name}.so
+%{_libdir}/lib*.so
 
 %changelog
 * Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>
