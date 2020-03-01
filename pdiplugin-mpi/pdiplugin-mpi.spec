@@ -13,7 +13,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  pdi-devel = %{version}, mpi-devel
+BuildRequires:  pdi-devel = %{version}, openmpi-devel
 
 %description
 The PDI mpi plugin interfaces PDI with MPI.
