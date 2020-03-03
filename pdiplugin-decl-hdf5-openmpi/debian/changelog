@@ -1,0 +1,5 @@
+pdiplugin-decl-hdf5-openmpi (0.6.1-1) unstable; urgency=low
+
+  * Initial Release
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Thu, 27 Feb 2020 17:15:00 +0100

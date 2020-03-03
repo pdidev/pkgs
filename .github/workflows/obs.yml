@@ -1,10 +1,8 @@
 name: OBS
-
 on:
   push:
     branches:
     - master
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,11 +21,12 @@ jobs:
       env:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
         OBS_LIBPARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsLibparaconfRunserviceToken }}
-        OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5RunserviceToken }}
-        OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginmpiRunserviceToken }}
-        OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugintraceRunserviceToken }}
-        OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginusercodeRunserviceToken }}
         OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
+        OBS_PDIPLUGIN_DECL_HDF5_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5RunserviceToken }}
+        OBS_PDIPLUGIN_DECL_HDF5_OPENMPI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5openmpiRunserviceToken }}
+        OBS_PDIPLUGIN_MPI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginmpiRunserviceToken }}
+        OBS_PDIPLUGIN_TRACE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugintraceRunserviceToken }}
+        OBS_PDIPLUGIN_USER_CODE_RUNSERVICE_TOKEN: ${{ secrets.ObsPdipluginusercodeRunserviceToken }}
         OBS_SPDLOG_RUNSERVICE_TOKEN: ${{ secrets.ObsSpdlogRunserviceToken }}
       run: |
         cd source
@@ -42,9 +41,10 @@ jobs:
         git push -f
         ../source/obs_trigger "${OBS_BPP_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
-        ../source/obs_trigger "${OBS_PDIPLUGINDECLHDF5_RUNSERVICE_TOKEN}"
-        ../source/obs_trigger "${OBS_PDIPLUGINMPI_RUNSERVICE_TOKEN}"
-        ../source/obs_trigger "${OBS_PDIPLUGINTRACE_RUNSERVICE_TOKEN}"
-        ../source/obs_trigger "${OBS_PDIPLUGINUSERCODE_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGIN_DECL_HDF5_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGIN_DECL_HDF5_OPENMPI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGIN_MPI_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGIN_TRACE_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PDIPLUGIN_USER_CODE_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_SPDLOG_RUNSERVICE_TOKEN}"
