@@ -1,0 +1,132 @@
+#!/bin/bash
+
+GH_USER="julien.bigot@cea.fr"
+GH_PROJECT="pdidev/obs-packages"
+OBS_USER="jbigot"
+OBS_PROJECT="home:pdi"
+
+if [ $# -eq 0 ]
+then
+    echo "Usage: $0 <dirnames...>" >&2
+    exit 1
+fi
+NEW_PKGS=$@
+
+cd "$(dirname "$0")"
+
+GH_API_ENDPOINT="https://api.github.com"
+GH_API_ACCEPT='Accept: application/vnd.github.v3+json'
+OBS_API_ENDPOINT="https://api.opensuse.org"
+
+echo -n "Please enter the github passwd for ${GH_USER}: "
+read -rs GH_PASSWD
+echo
+echo "fetching secrets from github..."
+GH_SECRETS="$(curl -s -u "${GH_USER}:${GH_PASSWD}" -H "${GH_API_ACCEPT}" -X GET "${GH_API_ENDPOINT}/repos/${GH_PROJECT}/actions/secrets" || exit 2)"
+if ! echo "${GH_SECRETS}" | grep -qs 'total_count'
+then
+    echo "Error: unable to fetch secrets from Github: ${GH_SECRETS}"
+    exit 1
+fi
+echo "fetching public key from github..."
+RES="$(curl -s -u "${GH_USER}:${GH_PASSWD}" -H "${GH_API_ACCEPT}" -X GET "${GH_API_ENDPOINT}/repos/${GH_PROJECT}/actions/secrets/public-key" || exit 2)"
+if ! echo "${RES}" | grep -qs 'key_id'
+then
+    echo "Error: unable to fetch public key from Github: ${RES}"
+    exit 1
+fi
+GH_PUBKEY="$(echo "${RES}" | grep '"key"' | sed 's/.*"key"\s*:\s*"\([^"]*\)".*/\1/')"
+GH_PUBKEYID="$(echo "${RES}" | grep '"key_id"' | sed 's/.*"key_id"\s*:\s*"\([^"]*\)".*/\1/')"
+
+
+echo -n "Please enter OBS passwd for ${OBS_USER}: "
+read -rs OBS_PASSWD
+echo
+echo "fetching packages from OBS..."
+OBS_PKGS="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X GET "${OBS_API_ENDPOINT}/source/${OBS_PROJECT}/" || exit 3)"
+if ! echo "${OBS_PKGS}" | grep -qs 'directory\s*count'
+then
+    echo "Error: unable to fetch packages from OBS: ${OBS_PKGS}"
+    exit 1
+fi
+echo "fetching tokens from OBS..."
+OBS_TOKENS="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X GET "${OBS_API_ENDPOINT}/person/${OBS_USER}/token" || exit 3)"
+if ! echo "${OBS_TOKENS}" | grep -qs 'directory\s*count'
+then
+    echo "Error: unable to fetch tokens from OBS: ${OBS_TOKENS}"
+    exit 1
+fi
+
+EXISTING_PKGS=$(echo "${OBS_TOKENS}" | grep 'package=' | sed -e 's/.*package="//' -e 's/".*//')
+ALL_PKGS=$(for P in ${EXISTING_PKGS} ${NEW_PKGS} ; do basename "$P" ; done | sort -u)
+
+ENV_LINES=""
+TRIGGER_LINES=""
+
+for PKG in ${ALL_PKGS}
+do
+    echo "Package: ${PKG}..."
+    PKG_SEC="$(echo "$PKG" | sed -e 's/-//g')"
+    PKG_SEC="Obs$(echo "${PKG_SEC}" | sed 's/^\(.\).*/\1/' | tr 'a-z' 'A-Z')$(echo "${PKG_SEC}" | sed 's/^.//')RunserviceToken"
+    PKG_VAR="OBS_$(echo "$PKG" | sed -e 's/-/_/g' | tr 'a-z' 'A-Z')_RUNSERVICE_TOKEN"
+    
+    ENV_LINES="${ENV_LINES}        ${PKG_VAR}: \${{ secrets.${PKG_SEC} }}\n"
+    TRIGGER_LINES="${TRIGGER_LINES}        ../source/obs_trigger \"\${${PKG_VAR}}\"\n"
+    
+    if ! echo "${OBS_PKGS}" | grep -sq "name=\"${PKG}\""
+    then
+        echo "Adding package on OBS: ${PKG}"
+        RES="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X PUT "${OBS_API_ENDPOINT}/source/${OBS_PROJECT}/${PKG}/_meta" -d "<package name=\"${PKG}\" project=\"${OBS_PROJECT}\"><title/><description/></package>")"
+        if ! echo "${RES}" | grep -qs '<summary>Ok</summary>'
+        then
+            echo "Error: unable to add package on OBS: ${RES}"
+            exit 1
+        fi
+        echo "Adding _service on OBS for package: ${PKG}"
+        RES="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X PUT "${OBS_API_ENDPOINT}/source/${OBS_PROJECT}/${PKG}/_service" -d "$(cat _service | sed "s/%(package)/${PKG}/g")")"
+        if ! echo "${RES}" | grep -qs 'revision'
+        then
+            echo "Error: unable to set _service on OBS: ${RES}"
+            exit 1
+        fi
+    fi
+    
+    if ! echo "${OBS_TOKENS}" | grep -sq "package=\"${PKG}\""
+    then
+        echo "Adding token on OBS for package: ${PKG}"
+        RES="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X POST "${OBS_API_ENDPOINT}/person/${OBS_USER}/token?cmd=create&project=${OBS_PROJECT}&package=${PKG}")"
+        if ! echo "${RES}" | grep -qs '<summary>Ok</summary>'
+        then
+            echo "Error: unable to set token on OBS: ${RES}"
+            exit 1
+        fi
+        echo "fetching updated tokens from OBS..."
+        OBS_TOKENS="$(curl -s -u "${OBS_USER}:${OBS_PASSWD}" -X GET "${OBS_API_ENDPOINT}/person/${OBS_USER}/token" || exit 3)"
+        if ! echo "${OBS_TOKENS}" | grep -qs 'directory\s*count'
+        then
+            echo "Error: unable to fetch tokens from OBS: ${OBS_TOKENS}"
+            exit 1
+        fi
+    fi
+    
+    if ! echo "${GH_SECRETS}" | grep -sq "\"name\"\s*:\s*\"${PKG_SEC}\""
+    then
+        echo "Adding secret on Github for package: ${PKG}"
+        PKG_TOKEN="$(echo "${OBS_TOKENS}" | grep -e "kind=\"runservice\".*package=\"${PKG}\"" | sed -e "s/.*string=\"\([^\"]*\)\"[^>]*package=\"${PKG}\".*/\1/")"
+        ENC_TOKEN="$(python -c '
+from base64 import b64encode
+from nacl import encoding, public
+from sys import argv
+
+public_key = argv[1]
+secret_value = argv[2]
+public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
+sealed_box = public.SealedBox(public_key)
+encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
+print(b64encode(encrypted).decode("utf-8"))
+' "${GH_PUBKEY}" "${PKG_TOKEN}" || exit 1)"
+        curl -s -u "${GH_USER}:${GH_PASSWD}" -H "${GH_API_ACCEPT}" -d "{\"encrypted_value\": \"${ENC_TOKEN}\", \"key_id\": \"${GH_PUBKEYID}\"}" -X PUT "${GH_API_ENDPOINT}/repos/${GH_PROJECT}/actions/secrets/${PKG_SEC}" || exit 1
+    fi
+done
+
+sed -e "s#\s*@ENV_LINES@\s*#${ENV_LINES}#" -e "s#@TRIGGER_LINES@#${TRIGGER_LINES}#" .github/workflows/obs.yml.in | grep -v '^\s*$' > .github/workflows/obs.yml
