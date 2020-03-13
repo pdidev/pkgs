@@ -1,3 +1,9 @@
+libparaconf (0.4.6-1) unstable; urgency=low
+
+  * Bump version
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Fri, 13 Mar 2020 13:59:32 +0100
+
 libparaconf (0.4.5-1) unstable; urgency=low
 
   * Bump version
