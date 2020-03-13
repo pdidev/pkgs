@@ -1,6 +1,6 @@
 %define _sover  0
 Name:           libparaconf
-Version:        0.4.3
+Version:        0.4.5
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -72,5 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}.so.%{_sover}*
 
 %changelog
+* Fri Mar 13 2020 - Julien Bigot julien.bigot@cea.fr
+- Version bump
 * Tue Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
 - Initial Release
