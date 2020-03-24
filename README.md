@@ -37,28 +37,10 @@ updated files.
 
 ## Adding a new package
 
-To add a new package, one must:
-* add a package manually on the open build service side,
-* add a `_service` file in this package whose content match that of the one
-  provided at the root of the repository, but where `%(package)` is replaced by
-  the package name,
-* generate a token for the repository
-  - either with the `osc` command line tool:
+To add a new package, edit the `add_package` script to set your username.
+Then, simply execute:
 ```
-osc token --create home:pdi ${pkgname}
+./add_package <dirnames...>
 ```
-  - or with `curl`:
-```
-curl -X POST --anyauth -u ${username} "https://api.opensuse.org/person/jbigot/token?project=home:pdi&package=${pkgname}"
-```
-* add this token as a "secret" on github
-  https://github.com/pdidev/obs-packages/settings/secrets/new
-* add a trigger line to `.github/workflows/main.yml`
-  - an line in the `env` section:
-```
-OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN: ${{ secrets.<YourSecretName> }}
-```
-  - the actual trigger at the end of the `run` section:
-```
-../source/obs_trigger "${OBS_<ALLCAPSPACKAGENAME>_RUNSERVICE_TOKEN}"
-```
+
+Where `<dirnames...>` is the list of package directories to add.

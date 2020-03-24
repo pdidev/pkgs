@@ -1,9 +1,20 @@
 #!/bin/bash
 
+######################################################################
+# Some configuration first
+
+# The github user
 GH_USER="julien.bigot@cea.fr"
-GH_PROJECT="pdidev/obs-packages"
+# The open build service user
 OBS_USER="jbigot"
+
+# The project on github
+GH_PROJECT="pdidev/obs-packages"
+# The project on the open build service
 OBS_PROJECT="home:pdi"
+
+######################################################################
+# And now the main script
 
 if [ $# -eq 0 ]
 then
