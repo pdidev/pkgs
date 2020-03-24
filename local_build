@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+
+if [ $# -lt 1 -o $# -gt 1 ]
+then
+    echo "Usage: $0 <directory>" >&2
+    exit 1
+fi
+PKGNAME="$(basename "$1")"
+SRCDIR="$PWD"
+
+ROOTDIR="$(dirname "$0")"
+cd "${ROOTDIR}"
+ROOTDIR="$PWD"
+
+
+cd "$(mktemp -d --tmpdir LOCAL.XXXXXXXXXXXX.tmdir || exit 1)"
+WKDIR="${PWD}"
+#trap "cd '${RUNDIR}'; rm -rf '${WKDIR}'" EXIT
+
+
+"${ROOTDIR}/obs_data_gen" "${SRCDIR}/${PKGNAME}"
+
+
+tar -xf "${PKGNAME}-obs_repodata.tar"
+tar -xf "${PKGNAME}-obs_rundata.tar"
+rm *.tar
+
+dpkg-source -x "${PKGNAME}_"*".dsc"
+cd "$(find . -type d -name "${PKGNAME}-*")"
+debuild-pbuilder --no-sign
+cd "${WKDIR}"
+rm "$(find . -type d -name "${PKGNAME}-*")"
+mv *.deb *.dsc "${PKGNAME}_"*".debian.tar."* "${PKGNAME}_"*".orig.tar."*
+
+#rpmbuild -ba --clean --build-in-place "${PKGNAME}"*".spec"
+
+echo "$PWD"
+
