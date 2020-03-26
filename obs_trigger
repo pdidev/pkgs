@@ -11,5 +11,5 @@ OUTPUT="$(curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Au
 if ! echo "${OUTPUT}" | grep -q -s -e 'status\s*code="ok"'
 then
 	echo "${OUTPUT}"
-	exit 2s
+	exit 2
 fi
