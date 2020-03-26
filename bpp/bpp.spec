@@ -1,5 +1,5 @@
 Name:           bpp
-Version:        0.4.0
+Version:        0.4.2
 Release:        0
 Summary:        A Bash pre-processor originally intended for Fortran
 License:        MIT
@@ -31,7 +31,8 @@ and array ranks supported by the compiler.
 %{python3_sitelib}/%{name}-*.egg-info/
 %{python3_sitelib}/%{name}/
 %{_bindir}/%{name}
+%{_datadir}/%{name}
 
 %changelog
-* Wed Mar 25 2020 - Julien Bigot julien.bigot@cea.fr
+* Thu Mar 26 2020 - Julien Bigot julien.bigot@cea.fr
 - Initial Release
