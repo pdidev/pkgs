@@ -1,10 +1,15 @@
-Source: libparaconf
+Source: paraconf
 Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libyaml-dev
+Build-Depends: debhelper (>= 9),
+  dh-fortran-mod,
+  cmake (>= 3.5),
+  gfortran | fortran-compiler,
+  pkg-config,
+  libyaml-dev
 Standards-Version: 4.5.0
-Homepage: https://gitlab.maisondelasimulation.fr/jbigot/libparaconf
+Homepage: https://github.com/pdidev/paraconf
 
 Package: libparaconf0
 Architecture: any
@@ -14,10 +19,18 @@ Description: provide a simple query language to access a Yaml tree on top of lib
  Paraconf is a library that provides a simple query language to
  access a Yaml tree on top of libyaml.
 
+Package: libparaconf-f90.0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf0 (= ${binary:Version})
+Description: provide a simple query language to access a Yaml tree on top of libyaml
+ Paraconf is a library that provides a simple query language to
+ access a Yaml tree on top of libyaml.
+
 Package: libparaconf-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf0 (= ${binary:Version}), libyaml-dev
 Recommends: cmake (>= 3.5), pkg-config
 Description: Development files for libparaconf
- The libparaconf-dev package contains C/C++ header files for developing
+ The libparaconf-dev package contains C/C++/F90 header files for developing
  applications that use libparaconf.

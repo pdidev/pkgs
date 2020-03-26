@@ -14,7 +14,7 @@ BuildRequires:  cmake3 >= 3.5
 %else
 BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  libparaconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
+BuildRequires:  paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 
 %description
 PDI is a library that aims to decouple high-performance simulation
@@ -23,7 +23,7 @@ codes from Input/Output concerns.
 %package devel
 Summary:        Development files for %{name}
 Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       libparaconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
+Requires:       paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 
 %description devel
 The %{name}-devel package contains C/C++ header files for developing

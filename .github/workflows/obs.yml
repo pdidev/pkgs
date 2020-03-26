@@ -21,6 +21,7 @@ jobs:
       env:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
         OBS_LIBPARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsLibparaconfRunserviceToken }}
+        OBS_PARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsParaconfRunserviceToken }}
         OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
         OBS_PDIPLUGIN_DECL_HDF5_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5RunserviceToken }}
         OBS_PDIPLUGIN_DECL_HDF5_OPENMPI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5openmpiRunserviceToken }}
@@ -41,6 +42,7 @@ jobs:
         git push -f
         ../source/obs_trigger "${OBS_BPP_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_LIBPARACONF_RUNSERVICE_TOKEN}"
+        ../source/obs_trigger "${OBS_PARACONF_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDI_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDIPLUGIN_DECL_HDF5_RUNSERVICE_TOKEN}"
         ../source/obs_trigger "${OBS_PDIPLUGIN_DECL_HDF5_OPENMPI_RUNSERVICE_TOKEN}"

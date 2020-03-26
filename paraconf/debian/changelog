@@ -1,0 +1,24 @@
+paraconf (0.4.8-1) unstable; urgency=low
+
+  * Version bump
+  * Added Fortran support
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Thu, 26 Mar 2020 23:19:04 +0100
+
+paraconf (0.4.6-1) unstable; urgency=low
+
+  * Bump version
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Fri, 13 Mar 2020 13:59:32 +0100
+
+paraconf (0.4.5-1) unstable; urgency=low
+
+  * Bump version
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Fri, 13 Mar 2020 13:08:43 +0100
+
+paraconf (0.4.3-1) unstable; urgency=low
+
+  * Initial Release
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Fri, 21 Feb 2020 08:00:00 +0100
