@@ -44,5 +44,6 @@ then
 fi
 
 tar -cf "${PKGNAME}-obs_repodata.tar" *
-tar -cf "${PKGNAME}-obs_rundata.tar" -T /dev/null # kept for compatibility
+touch empty
+tar -cf "${PKGNAME}-obs_rundata.tar" empty # kept for compatibility
 mv "${PKGNAME}-obs_"*"data.tar" "${RUNDIR}/"
