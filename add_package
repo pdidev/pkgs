@@ -82,7 +82,7 @@ do
     PKG_VAR="OBS_$(echo "$PKG" | sed -e 's/-/_/g' | tr 'a-z' 'A-Z')_RUNSERVICE_TOKEN"
     
     ENV_LINES="${ENV_LINES}        ${PKG_VAR}: \${{ secrets.${PKG_SEC} }}\n"
-    TRIGGER_LINES="${TRIGGER_LINES}        ../source/obs_trigger \"\${${PKG_VAR}}\"\n"
+    TRIGGER_LINES="${TRIGGER_LINES}        echo \"Triggering OBS for ${PKG}...\"\n        ../source/obs_trigger \"\${${PKG_VAR}}\"\n"
     
     if ! echo "${OBS_PKGS}" | grep -sq "name=\"${PKG}\""
     then
