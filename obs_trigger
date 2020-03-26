@@ -8,7 +8,8 @@ then
 fi
 
 OUTPUT="$(curl -s 'https://build.opensuse.org/trigger/runservice' -X POST -H "Authorization: Token $1" )"
-if echo "${OUTPUT}" | grep -q -s -e 'status\s*code="ok"'
+if ! echo "${OUTPUT}" | grep -q -s -e 'status\s*code="ok"'
 then
 	echo "${OUTPUT}"
+	exit 2s
 fi
