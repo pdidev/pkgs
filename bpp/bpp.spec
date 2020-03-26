@@ -16,16 +16,6 @@ BPP is useful in order to build clean Fortran90 interfaces.
 It allows to generate Fortran code for all types, kinds,
 and array ranks supported by the compiler.
 
-%package
-Summary:        %{summary}
-
-%description 
-BPP, the Bash Pre-Processor.
-
-BPP is useful in order to build clean Fortran90 interfaces.
-It allows to generate Fortran code for all types, kinds,
-and array ranks supported by the compiler.
-
 %prep
 %autosetup
 
