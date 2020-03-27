@@ -29,7 +29,7 @@ Description: provide a simple query language to access a Yaml tree on top of lib
 
 Package: libparaconf-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf0 (= ${binary:Version}), libyaml-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf-f90.0 (= ${binary:Version}), libyaml-dev
 Recommends: cmake (>= 3.5), pkg-config
 Description: Development files for libparaconf
  The libparaconf-dev package contains C/C++/F90 header files for developing

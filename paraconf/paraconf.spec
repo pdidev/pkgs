@@ -22,16 +22,6 @@ BuildRequires:  pkgconfig(yaml-0.1)
 Paraconf is a library that provides a simple query language to
 access a Yaml tree on top of libyaml.
 
-%package devel
-Summary:        Development files for %{name}
-Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       libyaml-devel
-Requires:       gcc-gfortran%{_isa}
-
-%description devel
-The %{name}-devel package contains C/C++/F90 header files for developing
-applications that use %{name}.
-
 %package     -n lib%{name}%{_sover}
 Summary:        C++ logging library
 
@@ -42,10 +32,21 @@ applications that use %{name}.
 
 %package     -n lib%{name}-f90.%{_sover}
 Summary:        C++ logging library
+Requires:       lib%{name}%{_sover} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n lib%{name}-f90.%{_sover}
 Paraconf is a library that provides a simple query language to
 access a Yaml tree on top of libyaml.
+
+%package devel
+Summary:        Development files for %{name}
+Requires:       lib%{name}-f90.%{_sover} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       libyaml-devel
+Requires:       gcc-gfortran%{_isa}
+
+%description devel
+The %{name}-devel package contains C/C++/F90 header files for developing
+applications that use %{name}.
 
 %prep
 %autosetup
