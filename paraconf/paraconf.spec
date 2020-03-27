@@ -24,7 +24,7 @@ access a Yaml tree on top of libyaml.
 
 %package devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       libyaml-devel
 Requires:       gcc-gfortran%{_isa}
 
