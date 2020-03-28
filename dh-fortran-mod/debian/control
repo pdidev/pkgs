@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Science Team <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Sébastien Villemot <sebastien@debian.org>,
  Alastair McKinstry <mckinstry@debian.org>
-Build-Depends: debhelper (>= 9)
+Build-Depends: debhelper (>= 10)
 Standards-Version: 4.5.0
 Vcs-Browser: https://salsa.debian.org/science-team/dh-fortran-mod
 Vcs-Git: https://salsa.debian.org/science-team/dh-fortran-mod.git
@@ -14,7 +14,7 @@ Architecture: all
 Multi-Arch: foreign
 Depends: ${perl:Depends},
    ${misc:Depends},
-   debhelper (>= 9),
+   debhelper (>= 10),
    libio-compress-perl,
    libfile-libmagic-perl
 Enhances: debhelper
