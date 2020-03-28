@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+
+%:
+	dh $@
+
+dh_fortran_mod: dh_fortran_mod.in
+	sed 's/@VERSION@/$(DEB_VERSION)/' $< > $@
+	chmod 0755 $@
+
+dh_fortran_mod.1: dh_fortran_mod
+	pod2man -r "$(DEB_SOURCE) v$(DEB_VERSION)" -c "dh-fortran-mod" --section=1 $< $@
+
+override_dh_auto_build: dh_fortran_mod
+override_dh_auto_build: dh_fortran_mod.1
+override_dh_auto_build: ;
+
+override_dh_auto_clean:
+	$(RM) dh_fortran_mod
+	$(RM) dh_fortran_mod.1

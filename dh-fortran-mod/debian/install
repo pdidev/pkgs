@@ -1,0 +1,4 @@
+dh_fortran_mod  /usr/bin/
+fortran_mod.pm  /usr/share/perl5/Debian/Debhelper/Sequence/
+preinst-fortran-mod	/usr/share/debhelper/autoscripts/
+postrm-fortran-mod	/usr/share/debhelper/autoscripts/

@@ -1,0 +1,126 @@
+dh-fortran-mod (0.15-1) unstable; urgency=medium
+
+  * Support building for older distributions
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 28 Mar 2020 12:43:51 +0100
+
+dh-fortran-mod (0.15) unstable; urgency=medium
+
+  * Standards-Version now 4.5.0
+  * Provide: dh-sequence-fortran_mod. 
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Sun, 23 Feb 2020 11:56:01 +0000
+
+dh-fortran-mod (0.14) unstable; urgency=medium
+
+  * Now Use gfortran-9.
+  * Drop use fof ${Fortran-Mod} and Fortran-Mod: stanza. Simply use
+    ${misc:Depends}. Closes: #941476
+  * Standards-Version now 4.4.1.0
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Fri, 18 Oct 2019 05:47:52 +0100
+
+dh-fortran-mod (0.13) unstable; urgency=medium
+
+  * Bugfix: when installing on cmdline, don't install into non-specified
+    packages
+  * Now at Standards-Version: 4.4.0
+  * flang-7 20190329+ use modversion 34.  Move from 33 to 34
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Thu, 18 Jul 2019 11:50:17 +0100
+
+dh-fortran-mod (0.12) unstable; urgency=medium
+
+  [ Andreas Beckmann ]
+  * Use dpkg makefile snippet instead of manual changelog parsing.
+  * Switch to debhelper-compat (= 12).
+  * Introduce a $VERSION variable in dh_fortran_mod s.t. the generated code
+    inserted into maintainer scripts is properly annotated with the
+    dh-fortran-mod version that created it.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Tue, 29 Jan 2019 08:58:31 +0000
+
+dh-fortran-mod (0.11) unstable; urgency=medium
+
+  * Calculate canonical compiler at build-time, as the compiler may not
+    be installed at install-time, and readlink will fail.
+  * Re-order deletes in postrm script to ensure all deletes are done.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Mon, 07 Jan 2019 12:19:46 +0000
+
+dh-fortran-mod (0.10) unstable; urgency=medium
+
+  * Ensure mod files are installed chmod 644
+  * Add link for canonical compiler name
+  * Standards-Version: 4.3.0
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Thu, 03 Jan 2019 16:05:19 +0000
+
+dh-fortran-mod (0.9) unstable; urgency=medium
+
+  * Make creating cmplr link conditional.
+  * handle target directories that may be subdirectory of $fmoddir
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Mon, 31 Dec 2018 13:23:51 +0000
+
+dh-fortran-mod (0.8) unstable; urgency=medium
+
+  [ Jelmer Vernooĳ ]
+  * Use secure copyright file specification URI.
+
+  [ Alastair McKinstry ]
+  * Only add postrm/preinst scripts for packages with mod files.
+    Closes: #917205
+  * Don't fail on postrm if directory already removed
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Wed, 26 Dec 2018 12:59:35 +0000
+
+dh-fortran-mod (0.7) unstable; urgency=medium
+
+  * Ensure test in postrm script does not return 1 and fail -e.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Thu, 20 Dec 2018 14:10:43 +0000
+
+dh-fortran-mod (0.6) unstable; urgency=medium
+
+  * Add spaces into preinst / postrm fragments. Closes: #916565
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Wed, 19 Dec 2018 15:40:05 +0000
+
+dh-fortran-mod (0.5) unstable; urgency=medium
+
+  * Set ${Fortran-Mod} variable instead of ${misc:Built-Using} as
+    Built-Using has strict semantics; don't use it
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Thu, 13 Dec 2018 07:45:06 +0000
+
+dh-fortran-mod (0.4) unstable; urgency=medium
+
+  * Standards-Version: 4.2.1; no changes required
+  * Put files in fmoddir, /usr/lib/$multiarch/fortran/$compiler directory
+    by default.
+  * Set misc:Built-Using: variable with the compiler version rather
+    than misc:Depends.
+  * Add support for flang compiler.
+  * Add preinst / postrm script fragments for creating / deleting
+    /usr/lib/$multiarch/fortran/$compiler/ directories for mod files
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Mon, 10 Dec 2018 16:29:21 +0000
+
+dh-fortran-mod (0.3) unstable; urgency=medium
+
+  * Change subst-vars to include real compiler pkg to work build buildds.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Sun, 06 May 2018 07:39:28 +0100
+
+dh-fortran-mod (0.2) unstable; urgency=medium
+
+  * Copy code from dh_install to enable globbing of paths.
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Fri, 04 May 2018 15:30:50 +0100
+
+dh-fortran-mod (0.1) unstable; urgency=low
+
+  * Initial release. (Closes: #868013).
+
+ -- Alastair McKinstry <mckinstry@debian.org>  Tue, 01 May 2018 17:36:13 +0100
