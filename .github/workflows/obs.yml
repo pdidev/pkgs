@@ -20,7 +20,6 @@ jobs:
     - name: Deploy
       env:
         OBS_BPP_RUNSERVICE_TOKEN: ${{ secrets.ObsBppRunserviceToken }}
-        OBS_DH_FORTRAN_MOD_RUNSERVICE_TOKEN: ${{ secrets.ObsDhfortranmodRunserviceToken }}
         OBS_PARACONF_RUNSERVICE_TOKEN: ${{ secrets.ObsParaconfRunserviceToken }}
         OBS_PDI_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiRunserviceToken }}
         OBS_PDIPLUGIN_DECL_HDF5_RUNSERVICE_TOKEN: ${{ secrets.ObsPdiplugindeclhdf5RunserviceToken }}
@@ -42,8 +41,6 @@ jobs:
         git push -f
         echo "Triggering OBS for bpp..."
         ../source/obs_trigger "${OBS_BPP_RUNSERVICE_TOKEN}"
-        echo "Triggering OBS for dh-fortran-mod..."
-        ../source/obs_trigger "${OBS_DH_FORTRAN_MOD_RUNSERVICE_TOKEN}"
         echo "Triggering OBS for paraconf..."
         ../source/obs_trigger "${OBS_PARACONF_RUNSERVICE_TOKEN}"
         echo "Triggering OBS for pdi..."
