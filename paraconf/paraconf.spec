@@ -1,6 +1,6 @@
 %define _sover  0
 Name:           paraconf
-Version:        0.4.8
+Version:        0.4.9
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -93,6 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Mar 28 2020 - Julien Bigot julien.bigot@cea.fr
+- Version bump to 0.4.9
 * Thu Mar 26 2020 - Julien Bigot julien.bigot@cea.fr
 - Version bump
 - Added Fortran support

@@ -1,3 +1,9 @@
+paraconf (0.4.9-1) unstable; urgency=low
+
+  * Version bump
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 28 Mar 2020 13:30:55 +0100
+
 paraconf (0.4.8-1) unstable; urgency=low
 
   * Version bump
