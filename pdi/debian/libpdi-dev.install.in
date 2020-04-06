@@ -1,0 +1,5 @@
+usr/bin/*
+usr/include/*
+usr/lib/*/libpdi.so
+usr/share/*
+ifdef(`WITH_FORTRAN_MOD', `', `usr/lib/*/fortran/*/*.mod')

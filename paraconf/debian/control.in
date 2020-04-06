@@ -2,8 +2,8 @@ Source: paraconf
 Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9),
-  dh-fortran-mod,
+Build-Depends: debhelper (>= 9), ifdef(`WITH_FORTRAN_MOD', `
+  dh-fortran-mod,')
   cmake (>= 3.5),
   gfortran | fortran-compiler,
   pkg-config,

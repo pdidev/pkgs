@@ -2,8 +2,10 @@ Source: pdiplugin-user-code
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libpdi-dev
-#Build-Depends: libgtest-dev (>= 1.8), libgmock-dev (>= 1.8) # TODO: Enable, currently disabled to support older distribs without these
+Build-Depends: debhelper (>= 9),
+  cmake (>= ifdef(`WITH_TESTING',`3.10',`3.5') ),
+  pkg-config,
+  libpdi-dev
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

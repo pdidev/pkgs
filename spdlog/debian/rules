@@ -1,19 +1,32 @@
 #!/usr/bin/make -f
 
-export DH_VERBOSE=1
+# export DH_VERBOSE = 1
 
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 export DEB_LDFLAGS_MAINT_APPEND=-latomic
 
+PKG = $(shell dpkg-parsechangelog -S Source)
+VERSION = $(shell dpkg-parsechangelog -S Version)
+SRCVERSION = $(shell echo $(VERSION) | sed -e 's/^[0-9]*://' -e 's/-[^-]*$$//')
+
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH) \
-		-DCMAKE_BUILD_TYPE=Release \
 		-DSPDLOG_BUILD_SHARED=ON \
 		-DSPDLOG_BUILD_EXAMPLE=ON \
 		-DSPDLOG_BUILD_EXAMPLE_HO=OFF \
 		-DSPDLOG_BUILD_TESTS=ON \
-		-DSPDLOG_BUILD_TESTS_HO=OFF
+		-DSPDLOG_BUILD_TESTS_HO=OFF \
+		-DCMAKE_BUILD_TYPE=Release
+
+debian/control: ../$(PKG)-$(SRCVERSION)
+	
+
+../$(PKG)-$(SRCVERSION): ../$(PKG)_$(SRCVERSION).orig.tar.gz
+	tar -k --strip-components=1 -xf $<
+
+../$(PKG)_$(SRCVERSION).orig.tar.gz:
+	curl -L https://github.com/gabime/$(PKG)/archive/v$(SRCVERSION).tar.gz -o $@

@@ -1,0 +1,5 @@
+debian:buster
+debian:bullseye
+debian:sid
+ubuntu:disco
+ubuntu:eoan

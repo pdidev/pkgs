@@ -1,17 +1,5 @@
-bpp (0.4.3-1) unstable; urgency=low
-
-  * Version bump
-
- -- Julien Bigot <julien.bigot@cea.fr>  Thu, 26 Mar 2020 14:58:24 +0100
-
-bpp (0.4.0-1) unstable; urgency=low
-
-  * Version bump
-
- -- Julien Bigot <julien.bigot@cea.fr>  Tue, 24 Mar 2020 16:43:15 +0100
-
-bpp (0.3.0-1) unstable; urgency=low
+bpp (0.4.5-1) unstable; urgency=medium
 
   * Initial release
 
- -- Julien Bigot <julien.bigot@cea.fr>  Tue, 25 Feb 2020 16:57:50 +0100
+ -- Julien Bigot <julien.bigot@cea.fr>  Mon, 06 Apr 2020 18:01:26 +0200

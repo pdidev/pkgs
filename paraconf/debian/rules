@@ -1,15 +1,38 @@
 #!/usr/bin/make -f
 
-export DH_VERBOSE = 1
+# export DH_VERBOSE ?= 1
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+PKG = $(shell dpkg-parsechangelog -S Source)
+VERSION = $(shell dpkg-parsechangelog -S Version)
+SRCVERSION = $(shell echo $(VERSION) | sed -e 's/^[0-9]*://' -e 's/-[^-]*$$//')
+
+VERSION_CODENAME ?= $(shell . /etc/os-release; echo "$${VERSION_CODENAME}")
+ifeq (,$(filter stretch xenial bionic, $(VERSION_CODENAME)))
+	DHFLAGS += --with fortran_mod
+	M4FLAGS += -DWITH_FORTRAN_MOD
+endif
+
+FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
+FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+
 %:
-	dh $@ --with fortran_mod
+	dh $@ --parallel $(DHFLAGS)
 
 override_dh_auto_configure:
 	dh_auto_configure -D paraconf -- \
-		-DBUILD_FORTRAN=ON \
+		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		-DCMAKE_BUILD_TYPE=Release
+
+debian/%: debian/%.in
+	m4 $(M4FLAGS) $< > $@
+
+debian/control: ../$(PKG)-$(SRCVERSION) debian/libparaconf-dev.install
+../$(PKG)-$(SRCVERSION): ../$(PKG)_$(SRCVERSION).orig.tar.gz
+	tar -k --strip-components=1 -xf $<
+
+../$(PKG)_$(SRCVERSION).orig.tar.gz:
+	curl -L https://github.com/pdidev/$(PKG)/archive/$(SRCVERSION).tar.gz -o $@

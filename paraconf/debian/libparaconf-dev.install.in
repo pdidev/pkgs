@@ -1,0 +1,4 @@
+usr/lib/*/*.so
+usr/include/*
+usr/share/paraconf/cmake/*
+ifdef(`WITH_FORTRAN_MOD', `', `usr/lib/*/fortran/*/*.mod')
