@@ -1,4 +1,4 @@
-spdlog (1:1.5.0-1) unstable; urgency=low
+spdlog (1:1.5.0-1) stretch; urgency=low
 
   * Initial release
 

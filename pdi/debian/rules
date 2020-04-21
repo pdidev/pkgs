@@ -6,19 +6,11 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-PKG = $(shell dpkg-parsechangelog -S Source)
-VERSION = $(shell dpkg-parsechangelog -S Version)
-SRCVERSION = $(shell echo $(VERSION) | sed -e 's/^[0-9]*://' -e 's/-[^-]*$$//')
-
-VERSION_CODENAME ?= $(shell . /etc/os-release; echo "$${VERSION_CODENAME}")
-ifeq (,$(filter xenial bionic disco, $(VERSION_CODENAME)))
-	M4FLAGS += -DWITH_TESTING
-else
+ifneq (,$(filter xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
-ifeq (,$(filter stretch xenial bionic, $(VERSION_CODENAME)))
+ifeq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
 	DHFLAGS += --with fortran_mod
-	M4FLAGS += -DWITH_FORTRAN_MOD
 endif
 
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
@@ -27,22 +19,17 @@ FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC
 %:
 	dh $@ --parallel $(DHFLAGS)
 
-override_dh_auto_configure:
-	dh_auto_configure -D pdi -- \
+override_dh_auto_configure: debian/libpdi-dev.install
+	dh_auto_configure --parallel -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
 
-debian/%: debian/%.in
-	m4 $(M4FLAGS) $< > $@
-
-debian/control: debian/libpdi-dev.install
-debian/control: ../$(PKG)-$(SRCVERSION)
-
-../$(PKG)-$(SRCVERSION): ../$(PKG)_$(SRCVERSION).orig.tar.bz2
-	tar -k --strip-components=1 -xf $<
-
-../$(PKG)_$(SRCVERSION).orig.tar.bz2:
-	curl -L https://gitlab.maisondelasimulation.fr/pdidev/$(PKG)/-/archive/$(SRCVERSION)/$(PKG)-$(SRCVERSION).tar.bz2 -o $@
+debian/libpdi-dev.install: debian/libpdi-dev.install.in debian/libpdi-dev.install.fortran-mod
+ifneq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
+	cat $^ > $@
+else
+	cat $< > $@
+endif

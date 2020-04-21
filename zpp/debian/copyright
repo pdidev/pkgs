@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: bpp
+Upstream-Name: zpp
 Upstream-Contact: Julien Bigot <julien.bigot@cea.fr>
-Source: https://gitlab.maisondelasimulation.fr/jbigot/bpp/
+Source: https://gitlab.maisondelasimulation.fr/jbigot/zpp/
 
 Files: *
 Copyright: 2013-2020 Julien Bigot <julien.bigot@cea.fr>

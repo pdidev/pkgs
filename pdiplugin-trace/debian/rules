@@ -6,22 +6,9 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-PKG = $(shell dpkg-parsechangelog -S Source)
-VERSION = $(shell dpkg-parsechangelog -S Version)
-SRCVERSION = $(shell echo $(VERSION) | sed -e 's/^[0-9]*://' -e 's/-[^-]*$$//')
-
 %:
 	dh $@ --parallel $(DHFLAGS)
 
 override_dh_auto_configure:
-	dh_auto_configure -D plugins/trace -- \
+	dh_auto_configure --parallel -D plugins/trace -- \
 		-DCMAKE_BUILD_TYPE=Release
-
-debian/control: ../$(PKG)-$(SRCVERSION)
-	
-
-../$(PKG)-$(SRCVERSION): ../$(PKG)_$(SRCVERSION).orig.tar.bz2
-	tar -k --strip-components=1 -xf $<
-
-../$(PKG)_$(SRCVERSION).orig.tar.bz2:
-	curl -L https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/$(SRCVERSION)/pdi-$(SRCVERSION).tar.bz2 -o $@

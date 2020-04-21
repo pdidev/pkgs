@@ -3,7 +3,8 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  cmake (>= ifdef(`WITH_TESTING',`3.10',`3.5') ),
+  cmake (>= 3.10) <!xenial !bionic !disco>,
+  cmake (>= 3.5) <xenial> <bionic> <disco>,
   pkg-config,
   libpdi-dev,
   libhdf5-openmpi-dev (>= 1.8)
