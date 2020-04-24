@@ -8,13 +8,12 @@ Url:            https://github.com/gabime/%{name}
 Source0:        %{url}/archive/v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
-
 BuildRequires:  cmake3 >= 3.2
 %else
 BuildRequires:  cmake >= 3.2
 %endif
 #BuildRequires:  fmt-devel >= 6.1.2
-BuildRequires:  gcc, gcc-c++
+BuildRequires:  make, gcc, gcc-c++
 
 %description
 This is a packaged version of the gabime/spdlog C++ logging

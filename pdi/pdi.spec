@@ -7,14 +7,14 @@ Group:          Development/Libraries/C and C++
 Summary:        the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
-BuildRequires:  devtoolset-6
-BuildRequires:  cmake3 >= 3.5
+BuildRequires:  devtoolset-6, cmake3 >= 3.5
 %else
-BuildRequires:  cmake >= 3.5
+BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
+BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
 %endif
-BuildRequires:  paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
+BuildRequires:  make
+BuildRequires:  zpp, paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 
 %description
 PDI is a library that aims to decouple high-performance simulation
@@ -36,9 +36,15 @@ Summary:        the Portable Data Interface library
 PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
+%package     -n lib%{name}-f90.%{_sover}
+Summary:        the Portable Data Interface library
+
+%description -n lib%{name}-f90.%{_sover}
+PDI is a library that aims to decouple high-performance simulation
+codes from Input/Output concerns.
+
 %prep
 %autosetup
-mkdir -p %{_target_platform}
 
 %build
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
@@ -46,18 +52,17 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
-pushd %{_target_platform}
-    %cmake3 \
-    -DBUILD_DOCUMENTATION=OFF \
-    -DBUILD_TESTING=OFF \
-    -DBUILD_FORTRAN=OFF \
-    ../pdi
-popd
-%make_build -C %{_target_platform}
+%cmake3 \
+	-DBUILD_DOCUMENTATION=OFF \
+	-DINSTALL_FMODDIR=%{_fmoddir} \
+	-DINSTALL_FINCLUDEDIR=%{_fmoddir} \
+	-DCMAKE_BUILD_TYPE=Release \
+	pdi
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install -C %{_target_platform}
+%make_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,17 +71,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun -n lib%{name}%{_sover} -p /sbin/ldconfig
 
+%postun -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
+
 %files devel
 %license LICENSE
 %doc README.md
 %{_bindir}/*
 %{_includedir}/
-%{_libdir}/lib%{name}.so
-%{_datadir}/%{name}/cmake
-%{_datadir}/%{name}/env.bash
+%{_fmoddir}/*
+%{_libdir}/lib*.so
+%{_datadir}/%{name}
 
 %files -n lib%{name}%{_sover}
 %{_libdir}/lib%{name}.so.%{_sover}*
+
+%files -n lib%{name}-f90.%{_sover}
+%{_libdir}/lib%{name}_f90.so.%{_sover}*
 
 %changelog
 * Tue Feb 18 2020 - Karol Sierociński ksiero@man.poznan.pl

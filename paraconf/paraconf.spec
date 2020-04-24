@@ -8,14 +8,12 @@ Summary:        A library that provides a simple query language to access a Yaml
 Url:            https://github.com/pdidev/%{name}
 Source0:        https://github.com/pdidev/%{name}/archive/%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%name-root
-BuildRequires:  make
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
-BuildRequires:  cmake3 >= 3.2
+BuildRequires:  cmake3 >= 3.5
 %else
-BuildRequires:  cmake >= 3.2
+BuildRequires:  cmake >= 3.5
 %endif
-BuildRequires:  gcc
-BuildRequires:  gcc-gfortran
+BuildRequires:  make, gcc, gcc-gfortran
 BuildRequires:  pkgconfig(yaml-0.1)
 
 %description
@@ -53,9 +51,10 @@ applications that use %{name}.
 
 %build
 %cmake3 \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DINSTALL_FMODDIR=%{_fmoddir} \
-    paraconf
+	-DCMAKE_BUILD_TYPE=Release \
+	-DINSTALL_FMODDIR=%{_fmoddir} \
+	-DINSTALL_FINCLUDEDIR=%{_fmoddir} \
+	paraconf
 %make_build
 
 %install
@@ -95,10 +94,5 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Mar 28 2020 - Julien Bigot julien.bigot@cea.fr
 - Version bump to 0.4.9
-* Thu Mar 26 2020 - Julien Bigot julien.bigot@cea.fr
-- Version bump
-- Added Fortran support
-* Fri Mar 13 2020 - Julien Bigot julien.bigot@cea.fr
-- Version bump
-* Tue Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
+* Thu Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
 - Initial Release

@@ -6,13 +6,12 @@ Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%name-root
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
-BuildRequires:  devtoolset-6
-BuildRequires:  cmake3 >= 3.5
+BuildRequires:  devtoolset-6, cmake3 >= 3.5
 %else
-BuildRequires:  cmake >= 3.5
+BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 %endif
+BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.8
 
 %description
@@ -22,7 +21,6 @@ a simple declarative interface to access a large subset of it.
 
 %prep
 %autosetup -n pdi-%{version}
-mkdir -p %{_target_platform}
 
 %build
 %if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
@@ -30,18 +28,16 @@ set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
-pushd %{_target_platform}
-    %cmake3 \
-		-DBUILD_FORTRAN=OFF \
-		-DBUILD_HDF5_PARALLEL=OFF \
-		-DBUILD_TESTING=OFF \
-		../plugins/decl_hdf5
-popd
-%make_build -C %{_target_platform}
+%cmake3 \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DBUILD_TESTING=OFF \
+	-DBUILD_HDF5_PARALLEL=OFF \
+	plugins/decl_hdf5
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install -C %{_target_platform}
+%make_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT

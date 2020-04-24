@@ -1,6 +1,6 @@
 Name:           zpp
 Version:        1.0.2
-Release:        0
+Release:        1
 Summary:        The Z Pre-Processor
 License:        MIT
 URL:            https://github.com/jbigot/zpp
