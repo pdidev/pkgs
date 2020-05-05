@@ -1,0 +1,5 @@
+Bug-Database: https://github.com/pybind/pybind11/issues
+Bug-Submit: https://github.com/pybind/pybind11/issues/new
+Name: pybind11
+Repository: git@github.com:pybind/pybind11.git
+Repository-Browse: https://github.com/pybind/pybind11

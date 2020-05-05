@@ -1,0 +1,9 @@
+Document: pybind11-doc
+Title: pybind11 Documentation
+Author: Wenzel Jakob
+Abstract: This is the reference documentation for pybind11.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/pybind11-doc/html/index.html
+Files: /usr/share/doc/pybind11-doc/html/*.html

@@ -6,54 +6,91 @@ Group:          Development/Libraries/C and C++
 Summary:        MPI plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%name-root
-%if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
-BuildRequires:  devtoolset-6
-BuildRequires:  cmake3 >= 3.5
+%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
+BuildRequires:  devtoolset-6, cmake3 >= 3.5
 %else
-BuildRequires:  cmake >= 3.5
+BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 %endif
+BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}, openmpi-devel
 
 %description
 The PDI mpi plugin interfaces PDI with MPI.
 
+%package openmpi
+Summary: MPI plugin for the Portable Data Interface library, OpenMPI version
+BuildRequires:  hdf5-openmpi-devel >= 1.8
+
+%description openmpi
+The PDI mpi plugin interfaces PDI with MPI.
+
+%package mpich
+Summary: MPI plugin for the Portable Data Interface library. MPich version
+BuildRequires:  hdf5-mpich-devel >= 1.8
+
+%description mpich
+The PDI mpi plugin interfaces PDI with MPI.
+
 %prep
 %autosetup -n pdi-%{version}
-mkdir -p %{_target_platform}
 
 %build
-%if 0%{?centos_version} > 0 && 0%{?centos_version} < 800
+module load mpi/openmpi-%{_arch}
+%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
 set +e
 source scl_source enable devtoolset-6
 set -e
 %endif
+mkdir build-openmpi
+pushd build-openmpi
 module load mpi/openmpi-%{_arch}
-pushd %{_target_platform}
-    %cmake3 \
-    -DBUILD_TESTING=OFF \
-    -DBUILD_FORTRAN=OFF \
-    ../plugins/mpi
-popd
-%make_build -C %{_target_platform}
+%cmake3 \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_LIBDIR=%{_libdir}/openmpi/lib \
+	../plugins/mpi
+%make_build
 module purge
+popd
+mkdir build-mpich
+pushd build-mpich
+module load mpi/mpich-%{_arch}
+%cmake3 \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_LIBDIR=%{_libdir}/mpich/lib \
+	../plugins/mpi
+%make_build
+module purge
+popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
 module load mpi/openmpi-%{_arch}
-%make_install -C %{_target_platform}
+%make_install -C build-openmpi
+module purge
+module load mpi/mpich-%{_arch}
+%make_install -C build-mpich
 module purge
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
+%post   openmpi -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun openmpi -p /sbin/ldconfig
 
-%files
+%post   mpich -p /sbin/ldconfig
+
+%postun mpich -p /sbin/ldconfig
+
+%files openmpi
 %license LICENSE
-%{_libdir}/lib*.so
+%doc README.md
+%{_libdir}/openmpi/lib/lib*.so
+
+%files mpich
+%license LICENSE
+%doc README.md
+%{_libdir}/mpich/lib/lib*.so
 
 %changelog
 * Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>

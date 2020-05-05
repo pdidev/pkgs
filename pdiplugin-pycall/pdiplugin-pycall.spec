@@ -1,21 +1,21 @@
-Name:           pdiplugin-user-code
+Name:           pdiplugin-pycall
 Version:        0.6.1
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        user-code plugin for the Portable Data Interface library
+Summary:        Trace plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
 %if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
 BuildRequires:  devtoolset-6, cmake3 >= 3.5
 %else
-BuildRequires:  cmake >= 3.10, gcc, gcc-c++
+BuildRequires:  cmake >= 3.5, gcc, gcc-c++
 %endif
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}
 
 %description
-The PDI user-code plugin enables one to call a user-defined function when a
+The PDI pycall plugin enables one to call a user-defined python function when a
 specified event occur or certain data becomes available.
 
 %prep
@@ -30,7 +30,8 @@ set -e
 %cmake3 \
 	-DBUILD_TESTING=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
-	plugins/user_code
+	plugins/pycall
+%make_build
 
 %install
 rm -rf $RPM_BUILD_ROOT

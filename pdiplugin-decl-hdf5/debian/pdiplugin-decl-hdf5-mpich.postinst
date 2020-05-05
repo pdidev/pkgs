@@ -1,0 +1,13 @@
+. /usr/share/mpi-default-dev/debian_defaults
+if [ mpich = "${ARCH_DEFAULT_MPI_IMPL}" ]
+then
+	PRIORITY=30
+else
+	PRIORITY=10
+fi
+update-alternatives \
+	--install \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/libpdi_decl_hdf5_plugin.so \
+	libpdi_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich/libpdi_decl_hdf5_plugin.so \
+	"${PRIORITY}"

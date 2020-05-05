@@ -1,23 +1,50 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE = 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifneq (,$(filter xenial bionic disco, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 else
 	CMAKEFLAGS += -DBUILD_TESTING=OFF # tests currently fails because of incorrectly set ENV
 endif
 
-%:
-	dh $@ --parallel $(DHFLAGS)
+FLAVORS = serial openmpi mpich
 
-override_dh_auto_configure:
-	dh_auto_configure --parallel -D plugins/decl_hdf5 -- \
-		-DHDF5_C_COMPILER_WRAPPER=/usr/bin/h5cc \
+%:
+	dh $@ --parallel -Dplugins/decl_hdf5
+
+override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
+
+configure_serial:
+	dh_auto_configure -Bbuild-serial -- \
 		-DBUILD_HDF5_PARALLEL=OFF \
+		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5cc \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5 \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
+
+configure_openmpi:
+	dh_auto_configure -Bbuild-openmpi -- \
+		-DBUILD_HDF5_PARALLEL=ON \
+		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5pcc.openmpi \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-openmpi \
+		$(CMAKEFLAGS) \
+		-DCMAKE_BUILD_TYPE=Release
+
+configure_mpich:
+	dh_auto_configure -Bbuild-mpich -- \
+		-DBUILD_HDF5_PARALLEL=ON \
+		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5pcc.mpich \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich \
+		$(CMAKEFLAGS) \
+		-DCMAKE_BUILD_TYPE=Release
+
+override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
+build_%: build-%
+	dh_auto_build -B$<
+
+override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
+install_%: build-%
+	dh_auto_install -B$<

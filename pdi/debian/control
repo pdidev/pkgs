@@ -4,16 +4,20 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   dh-fortran-mod <!stretch !xenial !bionic>,
-  cmake (>= 3.10) <!xenial !bionic !disco>,
-  libgtest-dev (>= 1.8.0) <!xenial !bionic !disco>,
-  libgmock-dev (>= 1.8.0) <!xenial !bionic !disco>,
-  cmake (>= 3.5) <xenial> <bionic> <disco>,
+  dh-python,
+  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
+  libgtest-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,
+  libgmock-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,
+  cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
   m4,
   gfortran | fortran-compiler,
   zpp,
   pkg-config,
   libparaconf-dev (>= 0.4.0),
-  libspdlog-dev (>= 1:1.3.1)
+  libspdlog-dev (>= 1:1.3.1),
+  pybind11-dev (>= 2.3.0),
+  python3-dev,
+  python3-numpy
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
@@ -35,14 +39,34 @@ Description: the Portable Data Interface library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
+Package: libpdi-python.0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi0 (= ${binary:Version})
+Description: the Portable Data Interface library
+ PDI is a library that aims to decouple high-performance simulation
+ codes from Input/Output concerns.
+
+Package: python3-pdi
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi-python.0 (= ${binary:Version})
+Description: the Portable Data Interface library
+ PDI is a library that aims to decouple high-performance simulation
+ codes from Input/Output concerns.
+
 Package: libpdi-dev
 Architecture: any
 Section: libs
 Priority: optional
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
   libpdi-f90.0 (= ${binary:Version}),
+  python3-pdi (= ${binary:Version}),
   libparaconf-dev (>= 0.4.0),
-  libspdlog-dev (>= 1.3.1)
+  libspdlog-dev (>= 1.3.1),
+  pybind11-dev (>= 2.3.0),
+  python3-dev,
+  python3-numpy
 Recommends: cmake (>= 3.5), pkg-config
 Description: Development files for pdi
  The pdi-dev package contains C/C++/Fortran header files for developing

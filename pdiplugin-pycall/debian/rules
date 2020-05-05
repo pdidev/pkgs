@@ -6,18 +6,16 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifneq (,$(filter xenial bionic disco, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter nocheck stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 else
 	CMAKEFLAGS += -DBUILD_TESTING=OFF # tests currently fails because of incorrectly set ENV
 endif
 
 %:
-	dh $@ --parallel $(DHFLAGS)
+	dh $@ --parallel
 
 override_dh_auto_configure:
-	dh_auto_configure --parallel -D plugins/decl_hdf5 -- \
-		-DHDF5_C_COMPILER_WRAPPER=/usr/bin/h5pcc.openmpi \
-		-DBUILD_HDF5_PARALLEL=ON \
+	dh_auto_configure --parallel -D plugins/pycall -- \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release

@@ -1,16 +1,18 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE = 1
-
+ifeq (,$(filter xenial, $(DEB_BUILD_PROFILES)))
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+endif
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifneq (,$(filter xenial bionic disco, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
 ifeq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
-	DHFLAGS += --with fortran_mod
+	DHFLAGS += --with python3,fortran_mod
+else
+	DHFLAGS += --with python3
 endif
 
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
@@ -22,6 +24,7 @@ FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC
 override_dh_auto_configure: debian/libpdi-dev.install
 	dh_auto_configure --parallel -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
+		-DBUILD_PYTHON=ON \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
 		$(CMAKEFLAGS) \

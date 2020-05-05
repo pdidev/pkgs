@@ -3,11 +3,14 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  cmake (>= 3.10) <!xenial !bionic !disco>,
-  cmake (>= 3.5) <xenial> <bionic> <disco>,
+  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
+  cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
   pkg-config,
   libpdi-dev,
-  libhdf5-dev (>= 1.8)
+  libhdf5-dev (>= 1.8),
+  mpi-default-dev,
+  libhdf5-openmpi-dev (>= 1.8),
+  libhdf5-mpich-dev (>= 1.8)
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
@@ -15,6 +18,28 @@ Package: pdiplugin-decl-hdf5
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi0
+Description: Decl'HDF5 plugin for the Portable Data Interface library
+ The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
+ a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
+ offers a simple declarative interface to access a large subset of it.
+
+Package: pdiplugin-decl-hdf5-openmpi
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-hdf5
+Enhances: libpdi0
+Description: Decl'HDF5 plugin for the Portable Data Interface library
+ The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
+ a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
+ offers a simple declarative interface to access a large subset of it.
+
+Package: pdiplugin-decl-hdf5-mpich
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-hdf5
 Enhances: libpdi0
 Description: Decl'HDF5 plugin for the Portable Data Interface library
  The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in

@@ -1,4 +1,4 @@
-pdiplugin-decl-hdf5-openmpi (0.6.1-1) unstable; urgency=low
+pdiplugin-pycall (0.6.1-1) unstable devel; urgency=low
 
   * Initial Release
 

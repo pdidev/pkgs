@@ -1,4 +1,4 @@
-Source: pdiplugin-user-code
+Source: pdiplugin-pycall
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
@@ -10,11 +10,11 @@ Build-Depends: debhelper (>= 9),
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
-Package: pdiplugin-user-code
+Package: pdiplugin-pycall
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi0
-Description: user-code plugin for the Portable Data Interface library
- The PDI user-code plugin enables one to call a user-defined function when a
- specified event occur or certain data becomes available.
+Description: Pycall plugin for the Portable Data Interface library
+  The PDI pycall plugin enables one to call a user-defined python function when
+  a specified event occur or certain data becomes available.

@@ -1,21 +1,42 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE = 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifneq (,$(filter xenial bionic disco, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 else
 	CMAKEFLAGS += -DBUILD_TESTING=OFF # tests currently fails because of incorrectly set ENV
 endif
 
-%:
-	dh $@ --parallel $(DHFLAGS)
+FLAVORS = openmpi mpich
 
-override_dh_auto_configure:
-	dh_auto_configure --parallel -D plugins/mpi -- \
+%:
+	dh $@ --parallel -D plugins/mpi
+
+override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
+
+configure_openmpi:
+	dh_auto_configure -Bbuild-openmpi -- \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-mpi-openmpi \
+		-DMPI_C_COMPILER=mpicc.openmpi \
+		-DMPI_CXX_COMPILER=mpicxx.openmpi \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
+
+configure_mpich:
+	dh_auto_configure -Bbuild-mpich -- \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-mpi-mpich \
+		-DMPI_C_COMPILER=mpicc.mpich \
+		-DMPI_CXX_COMPILER=mpicxx.mpich \
+		$(CMAKEFLAGS) \
+		-DCMAKE_BUILD_TYPE=Release
+
+override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
+build_%: build-%
+	dh_auto_build -B$<
+
+override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
+install_%: build-%
+	dh_auto_install -B$<
