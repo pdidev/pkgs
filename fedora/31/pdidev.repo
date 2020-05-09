@@ -1,0 +1,9 @@
+[pdidev]
+name=PDI dev packages (Fedora 31)
+type=rpm-md
+baseurl=https://raw.githubusercontent.com/pdidev/repo/fedora/31
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://raw.githubusercontent.com/pdidev/repo/fedora/pdidev.key
+enabled=1
+

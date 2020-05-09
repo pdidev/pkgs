@@ -1,0 +1,5 @@
+Origin: pdidev
+Label: PDI dev packages
+Archive: stable
+Architecture: source
+Component: main

@@ -1,0 +1,5 @@
+Origin: pdidev
+Label: PDI dev packages
+Archive: bionic
+Architecture: amd64
+Component: main
