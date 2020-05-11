@@ -1,46 +1,109 @@
-# obs-package repository
+# deb and RPM packages for PDI and related software 
 
 This is the repository that holds the files used to generate `.deb` and `.rpm`
-packages of PDI and related projects on the Open Build Service
-(https://build.opensuse.org/project/show/home:pdi).
+packages of PDI and related projects.
 
-## Layout
+The packages themselves are served on the [repo](../../tree/repo) branch.
 
-Each directory maps to an open build service "package".
+The packages are built using the `pkgbuild` script
+https://github.com/jbigot/pkg_builder configured by the [build.conf](build.conf)
+file.
 
-Each directory contains:
-* a `debian` directory whose content will be used as-is to generate the debian
-  source packages,
-* a `src_url` file that contains the URL where to fetch the debian orig file.
-* `.spec` and `.changes` files that will be transfered as-is on the open build
-  service instance.
+# Install the packages
 
-The `src_url` file might reference three variables:
-* `${PKGNAME}` will be replaced by the name of the source package as defined in
-  `debian/control`
-* `${PKGVERS}` contains the version of the latest (topmost) package in
-  `debian/changelog`
-* `${SRCVERS}` contains the source part of this version (i.e. everything before
-  a dash)
+## Ubuntu
 
-## Behaviour
+### On Ubuntu 20.04 LTS (Focal Fossa)
 
-The repository contains two important branches:
-* `master`: the branch that holds the files used to generate the packages
-* `generated`: a single commit branch continuously modified to store the
-  generated tar from master HEAD.
-
-The content of `generated` is automatically updated on each commit by the github
-Action "OBS".
-In addition the action triggers a rebuild on open build service to use the
-updated files.
-
-## Adding a new package
-
-To add a new package, edit the `add_package` script to set your username.
-Then, simply execute:
 ```
-./add_package <dirnames...>
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/ubuntu/ focal main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
 ```
 
-Where `<dirnames...>` is the list of package directories to add.
+### On Ubuntu 19.10 (Eoan Ermine)
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/ubuntu/ eoan main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+### On Ubuntu 16.04 LTS (Xenial Xerus)
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/ubuntu/ xenial main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+## Debian GNU/Linux
+
+### On Debian GNU/Linux 10 (Buster) aka. stable
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/debian/ buster main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+### On Debian GNU/Linux Sid aka. unstable
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/debian/ unstable main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+### On Debian GNU/Linux 11 (Bullseye) aka. testing
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/debian/ testing main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+### On Debian GNU/Linux 9 (Stretch) aka. oldstable
+
+```
+echo "deb [ arch=amd64 ] https://raw.githubusercontent.com/pdidev/pkgs/repo/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/pdi.list
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg https://raw.githubusercontent.com/pdidev/pkgs/repo/pdidev-archive-keyring.gpg
+sudo apt update
+sudo apt install pdidev-archive-keyring libpdi-dev
+```
+
+## Fedora
+
+### On Fedora 31
+
+```
+sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/31/pdidev.repo
+dnf install libpdi-dev
+```
+
+### On Fedora 33 aka. Rawhide
+
+```
+sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/33/pdidev.repo
+dnf install libpdi-dev
+```
+
+### On Fedora 32 aka. branched
+
+```
+sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/32/pdidev.repo
+dnf install libpdi-dev
+```
+
+### On Fedora 30
+
+```
+sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/30/pdidev.repo
+dnf install libpdi-dev
+```
