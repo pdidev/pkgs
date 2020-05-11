@@ -49,5 +49,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.so
 
 %changelog
-* Thu Feb 27 2020 - Julien Bigot <julien.bigot@cea.fr>
+* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

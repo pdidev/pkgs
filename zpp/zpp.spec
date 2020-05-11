@@ -34,5 +34,5 @@ compiler.
 %{_datadir}/bpp
 
 %changelog
-* Thu Mar 26 2020 - Julien Bigot julien.bigot@cea.fr
+* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

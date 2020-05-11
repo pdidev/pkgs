@@ -123,5 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.6.1
+- Added support for Fortran & Python
 * Tue Feb 18 2020 - Karol Sierociński ksiero@man.poznan.pl
 - Initial Release

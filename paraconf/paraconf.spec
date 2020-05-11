@@ -92,7 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Sat Mar 28 2020 - Julien Bigot julien.bigot@cea.fr
+* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.4.9
 * Thu Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
 - Initial Release
