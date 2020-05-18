@@ -84,26 +84,26 @@ sudo apt install pdidev-archive-keyring libpdi-dev
 
 ```
 sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/31/pdidev.repo
-dnf install libpdi-dev
+sudo dnf install pdi-devel
 ```
 
 ### On Fedora 33 aka. Rawhide
 
 ```
 sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/33/pdidev.repo
-dnf install libpdi-dev
+sudo dnf install pdi-devel
 ```
 
 ### On Fedora 32 aka. branched
 
 ```
 sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/32/pdidev.repo
-dnf install libpdi-dev
+sudo dnf install pdi-devel
 ```
 
 ### On Fedora 30
 
 ```
 sudo wget -O /etc/yum.repos.d/pdidev.repo https://raw.githubusercontent.com/pdidev/pkgs/repo/fedora/30/pdidev.repo
-dnf install libpdi-dev
+sudo dnf install pdi-devel
 ```
