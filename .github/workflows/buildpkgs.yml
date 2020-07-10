@@ -1,0 +1,35 @@
+name: buildpkgs
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  buildpkgs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout packages
+      uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        ref: repo
+        path: repo
+    - name: Checkout builder script
+      uses: actions/checkout@v2
+      with:
+        repository: jbigot/pkg_builder
+        path: pkg_builder
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+       python-version: '3.8'
+    - name: Build packages
+      env:
+        KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+      run: |
+        find repo/ -type d -prune -execdir rm -rf '{}' '+'
+        pip3.8 install -r pkg_builder/requirements.txt
+        python3.8 pkg_builder/pkgbuild -p $KEY_PASSPHRASE
+        git -C repo add -A .
+        git -C repo commit -aC HEAD --ammend
+        #git -C repo push -f
