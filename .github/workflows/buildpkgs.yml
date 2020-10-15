@@ -29,7 +29,7 @@ jobs:
         echo "deb http://repo.aptly.info/ squeeze main" | sudo tee /etc/apt/source.list.d/aptly.list
         sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys ED75B5A4483DA07C
         sudo apt-get update
-        sudo apt-get install devscripts equivs aptly gpgv1
+        sudo apt-get install devscripts equivs aptly gpgv1 expect
         pip3.8 install -r pkg_builder/requirements.txt
     - name: Build packages
       env:
@@ -37,10 +37,10 @@ jobs:
       run: |
         rm -rf repo/*
         cp -a repo.template/* repo/
-        python3.8 pkg_builder/pkgbuild -p "${KEY_PASSPHRASE}"
+        unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
         git -C repo add -A .
         git -C repo commit -aC HEAD --ammend
     - name: Publish packages
       if: ${{ github.event_name == 'push' }}
       run: |
-        #git -C repo push -f
+        git -C repo push -f
