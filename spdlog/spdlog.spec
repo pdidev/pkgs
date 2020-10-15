@@ -1,3 +1,4 @@
+%global _vpath_builddir .
 Name:           spdlog
 Version:        1.5.0
 Release:        0

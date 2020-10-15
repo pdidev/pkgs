@@ -1,3 +1,4 @@
+%global _vpath_builddir .
 %define _sover  0
 Name:           pdi
 Version:        0.6.1

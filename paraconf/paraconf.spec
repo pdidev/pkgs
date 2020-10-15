@@ -1,3 +1,4 @@
+%global _vpath_builddir .
 %define _sover  0
 Name:           paraconf
 Version:        0.4.9

@@ -1,3 +1,4 @@
+%global _vpath_builddir .
 Name:           pdiplugin-trace
 Version:        0.6.1
 Release:        0
