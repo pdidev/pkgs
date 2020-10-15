@@ -3,6 +3,8 @@ on:
   push:
     branches: [ master ]
   pull_request:
+  schedule:
+    - cron:  '0 2 * * *' # nightly build at 2AM
 jobs:
   buildpkgs:
     runs-on: ubuntu-20.04
@@ -38,9 +40,11 @@ jobs:
         rm -rf repo/*
         cp -a repo.template/* repo/
         unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
+        git -C repo config user.email "github.action@example.com"
+        git -C repo config user.name  "Github Action"
         git -C repo add -A .
-        git -C repo commit -aC HEAD --ammend
+        git -C repo commit --amend -aC HEAD
     - name: Publish packages
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
       run: |
         git -C repo push -f

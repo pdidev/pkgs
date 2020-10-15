@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-decl-hdf5
-Version:        0.6.1
+Version:        0.6.2
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -123,5 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/lib*.so
 
 %changelog
+* Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

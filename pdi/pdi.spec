@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  0
 Name:           pdi
-Version:        0.6.1
+Version:        0.6.2
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -124,6 +124,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.1
 - Added support for Fortran & Python
