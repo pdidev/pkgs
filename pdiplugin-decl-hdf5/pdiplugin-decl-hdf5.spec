@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-decl-hdf5
-Version:        0.6.2
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -101,19 +101,21 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/lib*.so
+%{_libdir}/pdi/plugins/*/lib*.so
 
 %files openmpi
 %license LICENSE
 %doc README.md
-%{_libdir}/openmpi/lib/lib*.so
+%{_libdir}/openmpi/lib/pdi/plugins/*/lib*.so
 
 %files mpich
 %license LICENSE
 %doc README.md
-%{_libdir}/mpich/lib/lib*.so
+%{_libdir}/mpich/lib/pdi/plugins/*/lib*.so
 
 %changelog
+* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+- Pending release on master
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>

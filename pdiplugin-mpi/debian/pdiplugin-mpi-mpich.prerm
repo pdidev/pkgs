@@ -1,4 +1,4 @@
 update-alternatives \
 	--remove \
 	libpdi_mpi_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-mpi-mpich/libpdi_mpi_plugin.so
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-mpi-mpich/pdi/plugins/*/libpdi_mpi_plugin.so

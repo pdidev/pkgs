@@ -15,7 +15,7 @@ Build-Depends: debhelper (>= 9),
   libparaconf-dev (>= 0.4.0),
   libspdlog-dev (>= 1:1.3.1),
   pybind11-dev (>= 2.3.0),
-  python3-dev,
+  python3-dev (>= 3.5),
   python3-numpy
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
@@ -38,7 +38,7 @@ Description: the Portable Data Interface library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
-Package: libpdi-python.0
+Package: libpdi-pysupport.0
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi0 (= ${binary:Version})
@@ -49,7 +49,7 @@ Description: the Portable Data Interface library
 Package: python3-pdi
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi-python.0 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi-pysupport.0 (= ${binary:Version})
 Description: the Portable Data Interface library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
@@ -64,7 +64,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
   libparaconf-dev (>= 0.4.0),
   libspdlog-dev (>= 1.3.1),
   pybind11-dev (>= 2.3.0),
-  python3-dev,
+  python3-dev (>= 3.5),
   python3-numpy
 Recommends: cmake (>= 3.5), pkg-config
 Description: Development files for pdi

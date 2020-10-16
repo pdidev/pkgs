@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-trace
-Version:        0.6.2
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -37,9 +37,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/lib*.so
+%{_libdir}/pdi/plugins/*/lib*.so
 
 %changelog
+* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+- Pending release on master
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>

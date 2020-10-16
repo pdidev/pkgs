@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  0
 Name:           pdi
-Version:        0.6.2
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -12,7 +12,7 @@ BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
 BuildRequires:  make
 BuildRequires:  zpp, paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
-BuildRequires:  pybind11-devel >= 2.3.0, python3-devel, python3-numpy
+BuildRequires:  pybind11-devel >= 2.3.0, python3-devel >= 3.5, python3-numpy
 
 %description
 PDI is a library that aims to decouple high-performance simulation
@@ -25,7 +25,7 @@ Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{releas
 Requires:       paraconf-devel >= 0.4.0
 Requires:       spdlog-devel >= 1.3.1
 Requires:       pybind11-devel >= 2.3.0
-Requires:       python3-devel, python3-numpy
+Requires:       python3-devel >= 3.5, python3-numpy
 
 %description devel
 The %{name}-devel package contains C/C++ header files for developing
@@ -46,16 +46,16 @@ Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{re
 PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
-%package     -n lib%{name}-python.%{_sover}
+%package     -n lib%{name}-pysupport.%{_sover}
 Summary:        the Portable Data Interface library
 
-%description -n lib%{name}-python.%{_sover}
+%description -n lib%{name}-pysupport.%{_sover}
 PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
 %package     -n python3-%{name}
 Summary:        the Portable Data Interface library
-Requires:       lib%{name}-python.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       lib%{name}-pysupport.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n python3-%{name}
 PDI is a library that aims to decouple high-performance simulation
@@ -89,9 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
 
-%post   -n lib%{name}-python.%{_sover} -p /sbin/ldconfig
+%post   -n lib%{name}-pysupport.%{_sover} -p /sbin/ldconfig
 
-%postun -n lib%{name}-python.%{_sover} -p /sbin/ldconfig
+%postun -n lib%{name}-pysupport.%{_sover} -p /sbin/ldconfig
 
 %files devel
 %license LICENSE
@@ -108,13 +108,15 @@ rm -rf $RPM_BUILD_ROOT
 %files -n lib%{name}-f90.%{_sover}
 %{_libdir}/lib%{name}_f90.so.%{_sover}*
 
-%files -n lib%{name}-python.%{_sover}
-%{_libdir}/lib%{name}_python.so.%{_sover}*
+%files -n lib%{name}-pysupport.%{_sover}
+%{_libdir}/lib%{name}_pysupport.so.%{_sover}*
 
 %files -n python3-%{name}
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+- Pending release on master
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
