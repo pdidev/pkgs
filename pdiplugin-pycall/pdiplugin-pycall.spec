@@ -1,12 +1,12 @@
 %global _vpath_builddir .
 Name:           pdiplugin-pycall
-Version:        0.6.3
+Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Trace plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.5, gcc, gcc-c++
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}
@@ -39,11 +39,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/lib*.so
+%{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Tue Oct 20 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.3
+* Fri Oct 16 2020 - Pending release on prerelease <julien.bigot@cea.fr>
+- Pending release on prerelease
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>

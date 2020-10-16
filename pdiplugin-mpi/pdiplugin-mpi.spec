@@ -1,12 +1,12 @@
 %global _vpath_builddir .
 Name:           pdiplugin-mpi
-Version:        0.6.3
+Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        MPI plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}, openmpi-devel
@@ -37,7 +37,7 @@ pushd build-openmpi
 module load mpi/openmpi-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_INSTALL_LIBDIR=%{_libdir}/openmpi/lib \
+	-DINSTALL_PDIPLUGINDIR=%{_libdir}/openmpi/lib/pdi/plugins_%{version}/ \
 	../plugins/mpi
 %make_build
 module purge
@@ -47,7 +47,7 @@ pushd build-mpich
 module load mpi/mpich-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_INSTALL_LIBDIR=%{_libdir}/mpich/lib \
+	-DINSTALL_PDIPLUGINDIR=%{_libdir}/mpich/lib/pdi/plugins_%{version}/ \
 	../plugins/mpi
 %make_build
 module purge
@@ -76,16 +76,16 @@ rm -rf $RPM_BUILD_ROOT
 %files openmpi
 %license LICENSE
 %doc README.md
-%{_libdir}/openmpi/lib/lib*.so
+%{_libdir}/openmpi/lib/pdi/*/lib*.so
 
 %files mpich
 %license LICENSE
 %doc README.md
-%{_libdir}/mpich/lib/lib*.so
+%{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Tue Oct 20 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.3
+* Fri Oct 16 2020 - Pending release on prerelease <julien.bigot@cea.fr>
+- Pending release on prerelease
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
