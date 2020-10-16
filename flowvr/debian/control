@@ -1,0 +1,33 @@
+Source: flowvr
+Section: libdevel
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9),
+  c++-compiler,
+  cmake (>= 3.0),
+  doxygen,
+  freeglut3-dev,
+  graphviz,
+  libglew-dev,
+  libgraphviz-dev,
+  libhwloc-dev,
+  libopenmpi-dev,
+  libxi-dev,
+  libxml2-dev,
+  libxmu-dev,
+  libxslt1-dev,
+  mesa-common-dev,
+  python3-dev,
+  swig
+Standards-Version: 4.5.0
+Homepage: http://flowvr.sourceforge.net/
+
+Package: flowvr
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: the FlowVR in situ and in transit processing middleware
+ FlowVR is an open source middleware to augment parallel simulations running on
+ thousands of cores with in situ processing capabilities and live steering.
+ FlowVR offers a very flexible environment while enabling high performance
+ asynchronous in situ and in transit processing.
