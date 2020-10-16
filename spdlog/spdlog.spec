@@ -8,11 +8,7 @@ Summary:        Super fast C++ logging library
 Url:            https://github.com/gabime/%{name}
 Source0:        %{url}/archive/v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%name-root
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-BuildRequires:  cmake3 >= 3.2
-%else
 BuildRequires:  cmake >= 3.2
-%endif
 BuildRequires:  make, gcc, gcc-c++
 
 %description

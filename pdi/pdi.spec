@@ -8,12 +8,8 @@ Group:          Development/Libraries/C and C++
 Summary:        the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-BuildRequires:  devtoolset-6, cmake3 >= 3.5
-%else
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
-%endif
 BuildRequires:  make
 BuildRequires:  zpp, paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 BuildRequires:  pybind11-devel >= 2.3.0, python3-devel, python3-numpy
@@ -69,11 +65,6 @@ codes from Input/Output concerns.
 %autosetup
 
 %build
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-set +e
-source scl_source enable devtoolset-6
-set -e
-%endif
 %cmake3 \
 	-DBUILD_DOCUMENTATION=OFF \
 	-DBUILD_PYTHON=ON \

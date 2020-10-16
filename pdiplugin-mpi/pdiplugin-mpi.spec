@@ -7,11 +7,7 @@ Group:          Development/Libraries/C and C++
 Summary:        MPI plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-BuildRequires:  devtoolset-6, cmake3 >= 3.5
-%else
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
-%endif
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}, openmpi-devel
 
@@ -36,12 +32,6 @@ The PDI mpi plugin interfaces PDI with MPI.
 %autosetup -n pdi-%{version}
 
 %build
-module load mpi/openmpi-%{_arch}
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-set +e
-source scl_source enable devtoolset-6
-set -e
-%endif
 mkdir build-openmpi
 pushd build-openmpi
 module load mpi/openmpi-%{_arch}

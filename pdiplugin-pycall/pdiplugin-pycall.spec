@@ -7,11 +7,7 @@ Group:          Development/Libraries/C and C++
 Summary:        Trace plugin for the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-BuildRequires:  devtoolset-6, cmake3 >= 3.5
-%else
 BuildRequires:  cmake >= 3.5, gcc, gcc-c++
-%endif
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}
 
@@ -23,11 +19,6 @@ specified event occur or certain data becomes available.
 %autosetup -n pdi-%{version}
 
 %build
-%if 0%{?centos_ver} > 0 && 0%{?centos_ver} < 800
-set +e
-source scl_source enable devtoolset-6
-set -e
-%endif
 %cmake3 \
 	-DBUILD_TESTING=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
