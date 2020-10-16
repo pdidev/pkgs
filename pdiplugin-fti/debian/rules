@@ -1,0 +1,76 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+include /usr/share/dpkg/architecture.mk
+include /usr/share/mpi-default-dev/debian_defaults
+PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
+FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-fti-' | sed 's/^pdiplugin-fti-//')
+#TODO: re-enable mpich tests after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/299
+ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
+	# openmpi < 4.0.2 does not support running as root
+	DISABLED_TESTS_FLAVOR = openmpi mpich
+else
+	DISABLED_TESTS_FLAVOR = mpich
+endif
+
+
+%:
+	dh $@ --parallel -D plugins/fti
+
+override_dh_auto_clean:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_clean -Bbuild-$${FLAVOR} -ppdiplugin-fti-$${FLAVOR} ;\
+	done
+
+override_dh_auto_configure:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-fti-$${FLAVOR} -- \
+			-DBUILD_TESTING=ON \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DCMAKE_PREFIX_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
+			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
+			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
+			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
+			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
+			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} ;\
+	done
+
+override_dh_auto_build:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-fti-$${FLAVOR} ;\
+	done
+
+override_dh_auto_test:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
+		echo "$(DISABLED_TESTS_FLAVOR)" | grep -q "\b$${FLAVOR}\b" || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-fti-$${FLAVOR} ;\
+	done
+
+override_dh_auto_install:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-fti-$${FLAVOR} ;\
+	done
+
+override_dh_installdeb:
+	# execute_before_dh_installdeb is not available with debhelper 9
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		for SUFFIX in prerm postinst ;\
+		do sed \
+			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+			-e "s/#FLAVOR#/$${FLAVOR}/g" \
+			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+			debian/pdiplugin-fti-FLAVOR.$${SUFFIX} > debian/pdiplugin-fti-$${FLAVOR}.$${SUFFIX} ;\
+		done ;\
+		dh_installdeb -ppdiplugin-fti-$${FLAVOR} ;\
+	done

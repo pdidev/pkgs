@@ -3,23 +3,27 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
-  cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
-  pkg-config,
-  libpdi-dev,
+  cmake (>= 3.5),
   libhdf5-dev (>= 1.8),
-  mpi-default-dev,
+  libhdf5-mpich-dev (>= 1.8),
   libhdf5-openmpi-dev (>= 1.8),
-  libhdf5-mpich-dev (>= 1.8)
+  libpdi-dev,
+  mpi-default-dev,
+  mpich <!nocheck>,
+  openmpi-bin <!nocheck>,
+  pdiplugin-mpi-mpich <!nocheck>,
+  pdiplugin-mpi-openmpi <!nocheck>,
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
-Package: pdiplugin-decl-hdf5
+Package: pdiplugin-decl-hdf5-serial
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
-Description: Decl'HDF5 plugin for the Portable Data Interface library
+Provides: pdiplugin-decl-hdf5
+Enhances: libpdi1
+Description: Decl'HDF5 plugin for the PDI Data Interface
  The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
  a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
  offers a simple declarative interface to access a large subset of it.
@@ -29,8 +33,8 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-hdf5
-Enhances: libpdi0
-Description: Decl'HDF5 plugin for the Portable Data Interface library
+Enhances: libpdi1
+Description: Decl'HDF5 plugin for the PDI Data Interface
  The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
  a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
  offers a simple declarative interface to access a large subset of it.
@@ -40,8 +44,8 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-hdf5
-Enhances: libpdi0
-Description: Decl'HDF5 plugin for the Portable Data Interface library
+Enhances: libpdi1
+Description: Decl'HDF5 plugin for the PDI Data Interface
  The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in
  a declarative way. Decl'HDF5 does not support the full HDF5 feature set but
  offers a simple declarative interface to access a large subset of it.

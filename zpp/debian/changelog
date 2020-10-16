@@ -1,3 +1,9 @@
+zpp (1.0.9-1) unstable devel; urgency=medium
+
+  * Upstream update to 1.0.9
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Sun, 17 Jan 2021 12:15:48 +0100
+
 zpp (1.0.6-1) unstable devel; urgency=medium
 
   * Upstream update to 1.0.6

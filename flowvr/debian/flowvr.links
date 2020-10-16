@@ -1,0 +1,59 @@
+#! /usr/bin/dh-exec
+
+/opt/flowvr/bin/flowvr                    /usr/bin/flowvr
+/opt/flowvr/bin/flowvr-config.sh          /usr/bin/flowvr-config.sh
+/opt/flowvr/bin/flowvr-demo-fluid.sh      /usr/bin/flowvr-demo-fluid.sh
+/opt/flowvr/bin/flowvr-demo-primes.sh     /usr/bin/flowvr-demo-primes.sh
+/opt/flowvr/bin/flowvr-demo-tictac.sh     /usr/bin/flowvr-demo-tictac.sh
+/opt/flowvr/bin/flowvr-fdump              /usr/bin/flowvr-fdump
+/opt/flowvr/bin/flowvr-gltrace            /usr/bin/flowvr-gltrace
+/opt/flowvr/bin/flowvr-kill               /usr/bin/flowvr-kill
+/opt/flowvr/bin/flowvr-relocate.sh        /usr/bin/flowvr-relocate.sh
+/opt/flowvr/bin/flowvr-run-env            /usr/bin/flowvr-run-env
+/opt/flowvr/bin/flowvr-run-ssh            /usr/bin/flowvr-run-ssh
+/opt/flowvr/bin/flowvr-setup-shmem        /usr/bin/flowvr-setup-shmem
+/opt/flowvr/bin/flowvr-shmdump            /usr/bin/flowvr-shmdump
+/opt/flowvr/bin/flowvr-stats              /usr/bin/flowvr-stats
+/opt/flowvr/bin/flowvr-suite-config.sh    /usr/bin/flowvr-suite-config.sh
+/opt/flowvr/bin/flowvr-term               /usr/bin/flowvr-term
+/opt/flowvr/bin/flowvrd                   /usr/bin/flowvrd
+
+/opt/flowvr/lib/flowvr/python/cflowvr.py       ${PYTHON_LIBS_INSTALL_DIR}/cflowvr.py
+/opt/flowvr/lib/flowvr/python/_cflowvr.so      ${PYTHON_LIBS_INSTALL_DIR}/_cflowvr.so
+/opt/flowvr/lib/flowvr/python/filters.py       ${PYTHON_LIBS_INSTALL_DIR}/filters.py
+/opt/flowvr/lib/flowvr/python/flowvrapp_pdi.py ${PYTHON_LIBS_INSTALL_DIR}/flowvrapp_pdi.py
+/opt/flowvr/lib/flowvr/python/flowvrapp.py     ${PYTHON_LIBS_INSTALL_DIR}/flowvrapp.py
+/opt/flowvr/lib/flowvr/python/flowvr.py        ${PYTHON_LIBS_INSTALL_DIR}/flowvr.py
+/opt/flowvr/lib/flowvr/python/spy_module.py    ${PYTHON_LIBS_INSTALL_DIR}/spy_module.py
+/opt/flowvr/lib/flowvr/python/traces.py        ${PYTHON_LIBS_INSTALL_DIR}/traces.py
+
+/opt/flowvr/lib/flowvr/plugins /usr/lib/${DEB_HOST_MULTIARCH}/flowvr/plugins
+
+/opt/flowvr/lib/libflowvr-utils.so.2.3.2    /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-utils.so.2.3.2
+/opt/flowvr/lib/libflowvr-utils.so.2        /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-utils.so.2
+/opt/flowvr/lib/libflowvr-utils.so          /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-utils.so
+/opt/flowvr/lib/libflowvr-base.so.2.3.2     /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-base.so.2.3.2
+/opt/flowvr/lib/libflowvr-base.so.2         /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-base.so.2
+/opt/flowvr/lib/libflowvr-base.so           /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-base.so
+/opt/flowvr/lib/libflowvr-mod.so.2.3.2      /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-mod.so.2.3.2
+/opt/flowvr/lib/libflowvr-mod.so.2          /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-mod.so.2
+/opt/flowvr/lib/libflowvr-mod.so            /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-mod.so
+/opt/flowvr/lib/libflowvr-plugd.so.2.3.2    /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-plugd.so.2.3.2
+/opt/flowvr/lib/libflowvr-plugd.so.2        /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-plugd.so.2
+/opt/flowvr/lib/libflowvr-plugd.so          /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-plugd.so
+/opt/flowvr/lib/libflowvr-commands.so.2.3.2 /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-commands.so.2.3.2
+/opt/flowvr/lib/libflowvr-commands.so.2     /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-commands.so.2
+/opt/flowvr/lib/libflowvr-commands.so       /usr/lib/${DEB_HOST_MULTIARCH}/libflowvr-commands.so
+
+/opt/flowvr/lib/libftlm.so.2.3.2 /usr/lib/${DEB_HOST_MULTIARCH}/libftlm.so.2.3.2
+/opt/flowvr/lib/libftlm.so.2     /usr/lib/${DEB_HOST_MULTIARCH}/libftlm.so.2
+/opt/flowvr/lib/libftlm.so       /usr/lib/${DEB_HOST_MULTIARCH}/libftlm.so
+
+/opt/flowvr/lib/libfca.so /usr/lib/${DEB_HOST_MULTIARCH}/libfca.so
+
+/opt/flowvr/share/flowvr/doc/FlowVR/flowvr-base.tag /usr/share/doc/flowvr/flowvr-base.tag
+/opt/flowvr/share/flowvr/doc/FlowVR/html/           /usr/share/doc/flowvr/html
+
+/opt/flowvr/include/flowvr /usr/include/flowvr
+/opt/flowvr/include/ftl    /usr/include/ftl
+/opt/flowvr/include/fca    /usr/include/fca

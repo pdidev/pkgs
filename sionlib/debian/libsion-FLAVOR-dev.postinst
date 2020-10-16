@@ -1,0 +1,27 @@
+#!
+set -e
+
+case #FLAVOR# in
+#ARCH_DEFAULT_MPI_IMPL#)
+	PRIORITY=30
+	;;
+*)
+	PRIORITY=10
+	;;
+esac
+
+case "$1" in
+configure)
+	update-alternatives \
+		--install \
+		/usr/bin/sionconfig \
+		sionconfig \
+		/usr/bin/sionconfig.#FLAVOR# \
+		${PRIORITY}
+;;
+*)
+	# nothing to do
+;;
+esac
+
+#DEBHELPER#

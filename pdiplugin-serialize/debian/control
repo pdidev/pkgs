@@ -1,0 +1,19 @@
+Source: pdiplugin-serialize
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9),
+  cmake (>= 3.5),
+  libpdi-dev,
+  pkg-config
+Standards-Version: 4.5.0
+Homepage: https://pdi.julien-bigot.fr/
+
+Package: pdiplugin-serialize
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi1
+Description: Serialize plugin for the PDI Data Interface
+ The PDI serialize plugin supports serialization of complex types into a
+ representation all I/O libraries should support.

@@ -1,5 +1,5 @@
 Name:           zpp
-Version:        1.0.6
+Version:        1.0.9
 Release:        1
 Summary:        The Z Pre-Processor
 License:        MIT
@@ -34,6 +34,8 @@ compiler.
 %{_datadir}/bpp
 
 %changelog
+* Sun Jan 17 2021 - Julien Bigot <julien.bigot@cea.fr>
+- Upstream update to 1.0.9
 * Wed Oct 14 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream update to 1.0.6
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>

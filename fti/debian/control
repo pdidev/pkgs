@@ -1,0 +1,63 @@
+Source: fti
+Section: libdevel
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9),
+  cmake (>= 3.4),
+  libmpich-dev,
+  libopenmpi-dev,
+  libssl-dev,
+  mpi-default-dev,
+  mpich,
+  openmpi-bin
+Standards-Version: 4.5.0
+Homepage: https://github.com/leobago/fti
+
+
+Package: libfti-openmpi-1
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: libfti1
+Description: a library for fast and efficient multilevel checkpointing
+ FTI stands for Fault Tolerance Interface and is a library that aims to give
+ computational scientists the means to perform fast and efficient multilevel
+ checkpointing in large scale supercomputers
+
+ 
+Package: libfti-mpich-1
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: libfti1
+Description: a library for fast and efficient multilevel checkpointing
+ FTI stands for Fault Tolerance Interface and is a library that aims to give
+ computational scientists the means to perform fast and efficient multilevel
+ checkpointing in large scale supercomputers
+
+
+Package: libfti-openmpi-dev
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends},
+  libfti-openmpi-1 (= ${binary:Version}),
+  libssl-dev,
+  openmpi-bin, libopenmpi-dev
+Provides: libfti-dev
+Description: a library for fast and efficient multilevel checkpointing
+ FTI stands for Fault Tolerance Interface and is a library that aims to give
+ computational scientists the means to perform fast and efficient multilevel
+ checkpointing in large scale supercomputers
+
+
+Package: libfti-mpich-dev
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends},
+  libfti-mpich-1 (= ${binary:Version}),
+  libssl-dev,
+  mpich, libmpich-dev
+Description: a library for fast and efficient multilevel checkpointing
+ FTI stands for Fault Tolerance Interface and is a library that aims to give
+ computational scientists the means to perform fast and efficient multilevel
+ checkpointing in large scale supercomputers

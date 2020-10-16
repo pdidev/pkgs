@@ -1,22 +1,13 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE = 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
-
-ifneq (,$(filter nocheck stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
-	CMAKEFLAGS += -DBUILD_TESTING=OFF
-else
-	CMAKEFLAGS += -DBUILD_TESTING=OFF # tests currently fails because of incorrectly set ENV
-endif
 
 %:
 	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure --parallel -D plugins/pycall -- \
-		$(CMAKEFLAGS) \
 		-DPython3_EXECUTABLE=/usr/bin/python3 \
 		-DCMAKE_BUILD_TYPE=Release
