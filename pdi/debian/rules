@@ -6,6 +6,8 @@ endif
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+include /usr/share/dpkg/architecture.mk
+
 ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
@@ -16,7 +18,9 @@ else
 endif
 
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
-FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+FMODDIR := /usr/lib/$(DEB_HOST_MULTIARCH)/fortran/$(FC)
+
+PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
 %:
 	dh $@ --parallel $(DHFLAGS)
@@ -26,7 +30,7 @@ override_dh_auto_configure: debian/libpdi-dev.install
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_PYTHON=ON \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
-		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/ \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
 

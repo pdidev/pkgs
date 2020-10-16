@@ -9,7 +9,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 ifneq (,$(filter nocheck stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 else
-	CMAKEFLAGS += -DBUILD_TESTING=OFF # tests currently fails because of incorrectly set ENV
+	CMAKEFLAGS += -DBUILD_TESTING=ON
 endif
 
 %:
