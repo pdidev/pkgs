@@ -1,1 +1,1 @@
-usr/lib/*/pdiplugin-mpi-openmpi/lib*.so
+usr/lib/*/pdi/*/openmpi/*

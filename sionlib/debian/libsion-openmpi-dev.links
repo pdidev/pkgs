@@ -1,0 +1,6 @@
+#! /usr/bin/dh-exec
+
+/usr/bin/sionlib/openmpi/sionconfig            /usr/bin/sionconfig.openmpi
+/usr/bin/sionlib/openmpi                       /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/openmpi/bin
+/usr/include                                   /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/openmpi/include
+/usr/lib/${DEB_HOST_MULTIARCH}/sionlib/openmpi /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/openmpi/lib

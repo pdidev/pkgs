@@ -1,0 +1,20 @@
+Source: pdiplugin-flowvr
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9),
+  cmake (>= 3.5),
+  flowvr,
+  libpdi-dev,
+  pkg-config,
+  python3-yaml
+Standards-Version: 4.5.0
+Homepage: https://pdi.julien-bigot.fr/
+
+Package: pdiplugin-flowvr
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi1
+Description: FlowVR plugin for the PDI Data Interface
+  The PDI FlowVR plugin supports application coupling through the FlowVR software.

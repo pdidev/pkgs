@@ -1,6 +1,0 @@
-update-alternatives \
-	--install \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/libpdi_decl_hdf5_plugin.so \
-	libpdi_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5/libpdi_decl_hdf5_plugin.so \
-	20

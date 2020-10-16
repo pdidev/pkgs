@@ -1,0 +1,80 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+include /usr/share/dpkg/architecture.mk
+include /usr/share/mpi-default-dev/debian_defaults
+FLAVORS = $(shell dh_listpackages | grep '^libsion-.*-dev' | sed 's/^libsion-\(.*\)-dev/\1/')
+
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_clean:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		dh_auto_clean -Bbuild-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
+		$(RM) -r build-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) _mpi_forward.$${FLAVOR} ;\
+	done
+
+override_dh_auto_configure:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		mkdir -p _mpi_forward.$${FLAVOR} ;\
+		ln -sf /usr/bin/mpicc.$${FLAVOR}  _mpi_forward.$${FLAVOR}/mpicc ;\
+		ln -sf /usr/bin/mpicxx.$${FLAVOR} _mpi_forward.$${FLAVOR}/mpicxx ;\
+		ln -sf /usr/bin/mpif77.$${FLAVOR} _mpi_forward.$${FLAVOR}/mpif77 ;\
+		ln -sf /usr/bin/mpif90.$${FLAVOR} _mpi_forward.$${FLAVOR}/mpif90 ;\
+		export PATH="$${PWD}/_mpi_forward.$${FLAVOR}:$${PATH}" ;\
+		MPI_ARG="$$(printf 'mpi=%s' "$${SION_FLAVOR}" | sed -e 's/mpi=nompi/disable-mpi/' )" ;\
+		./configure \
+			--prefix=/usr/lib/$(DEB_HOST_MULTIARCH)/sionlib/$${FLAVOR} \
+			--compiler=gnu \
+			--disable-fortran \
+			--disable-parutils \
+			--force-$(DEB_HOST_ARCH_BITS) \
+			"--$${MPI_ARG}" ;\
+	done
+
+override_dh_auto_build:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		export PATH="$${PWD}/_mpi_forward.$${FLAVOR}:$${PATH}" ;\
+		dh_auto_build -Bbuild-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
+	done
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		export PATH="$${PWD}/_mpi_forward.$${FLAVOR}:$${PATH}" ;\
+		$(MAKE) \
+			INCDIR=$${PWD}/debian/tmp/usr/include \
+			LIBDIR=$${PWD}/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/sionlib/$${FLAVOR} \
+			BINDIR=$${PWD}/debian/tmp/usr/bin/sionlib/$${FLAVOR} \
+			-C build-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS)/build \
+			-f RealMakefile \
+			install-path install-libs install-parlibs install-utils install-config ;\
+	done
+
+override_dh_installdeb:
+	# execute_before_dh_installdeb is not available with debhelper 9
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		for SUFFIX in prerm postinst ;\
+		do sed \
+			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+			-e "s/#FLAVOR#/$${FLAVOR}/g" \
+			debian/libsion-FLAVOR-dev.$${SUFFIX} > debian/libsion-$${FLAVOR}-dev.$${SUFFIX} ;\
+		done ;\
+		dh_installdeb -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
+	done

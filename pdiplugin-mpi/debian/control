@@ -3,13 +3,14 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
-  cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
-  pkg-config,
+  cmake (>= 3.5),
+  libmpich-dev,
+  libopenmpi-dev,
   libpdi-dev,
   mpi-default-dev,
-  libhdf5-openmpi-dev (>= 1.8),
-  libhdf5-mpich-dev (>= 1.8)
+  mpich <!nocheck>,
+  openmpi-bin <!nocheck>,
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
@@ -17,16 +18,18 @@ Package: pdiplugin-mpi-mpich
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Recommends: mpich
+Enhances: libpdi1
 Provides: pdiplugin-mpi
-Description: MPI plugin for the Portable Data Interface library
+Description: MPI plugin for the PDI Data Interface
  The PDI mpi plugin interfaces PDI with MPI.
 
 Package: pdiplugin-mpi-openmpi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Recommends: openmpi-bin
+Enhances: libpdi1
 Provides: pdiplugin-mpi
-Description: MPI plugin for the Portable Data Interface library
+Description: MPI plugin for the PDI Data Interface
  The PDI mpi plugin interfaces PDI with MPI.
