@@ -19,7 +19,7 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi0
 Provides: pdiplugin-mpi
-Description: MPI plugin for the Portable Data Interface library
+Description: MPI plugin for the PDI Data Interface
  The PDI mpi plugin interfaces PDI with MPI.
 
 Package: pdiplugin-mpi-openmpi
@@ -28,5 +28,5 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi0
 Provides: pdiplugin-mpi
-Description: MPI plugin for the Portable Data Interface library
+Description: MPI plugin for the PDI Data Interface
  The PDI mpi plugin interfaces PDI with MPI.

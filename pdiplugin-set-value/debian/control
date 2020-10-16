@@ -1,4 +1,4 @@
-Source: pdiplugin-trace
+Source: pdiplugin-set-value
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
@@ -6,10 +6,10 @@ Build-Depends: debhelper (>= 9), cmake (>= 3.5), pkg-config, libpdi-dev
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
-Package: pdiplugin-trace
+Package: pdiplugin-set-value
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi0
-Description: Trace plugin for the PDI Data Interface
- The PDI trace plugin generates a trace of what happens in PDI data store.
+Description: Set Value plugin for the PDI Data Interface
+ The PDI Set Value plugin supports setting PDI metadata values from PDI itself.

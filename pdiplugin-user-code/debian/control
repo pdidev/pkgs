@@ -15,6 +15,6 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi0
-Description: user-code plugin for the Portable Data Interface library
+Description: user-code plugin for the PDI Data Interface
  The PDI user-code plugin enables one to call a user-defined function when a
  specified event occur or certain data becomes available.
