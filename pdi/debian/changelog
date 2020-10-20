@@ -1,3 +1,9 @@
+pdi (0.6.3-1) unstable devel; urgency=medium
+
+  * Upstream update to 0.6.3
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 20 Oct 2020 17:25:58 +0200
+
 pdi (0.6.2-1) unstable devel; urgency=medium
 
   * Upstream update to 0.6.2
