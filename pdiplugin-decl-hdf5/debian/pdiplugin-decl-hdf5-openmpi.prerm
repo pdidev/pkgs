@@ -1,5 +1,9 @@
+PKG_VERSION="#PKG_VERSION#"
 update-alternatives \
 	--remove \
-	libpdi_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-openmpi/libpdi_decl_hdf5_plugin.so
+	pdi-${PKG_VERSION}_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-openmpi/pdi/plugins_${PKG_VERSION}/libpdi_decl_hdf5_plugin.so
+
+
+#DEBHELPER#
 

@@ -7,7 +7,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the Portable Data Interface library
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/%{name}/-/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/pdi_plugin_path_install/pdi-pdi_plugin_path_install.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
 BuildRequires:  make

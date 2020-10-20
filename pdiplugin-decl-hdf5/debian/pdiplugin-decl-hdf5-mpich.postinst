@@ -5,9 +5,13 @@ then
 else
 	PRIORITY=10
 fi
+PKG_VERSION="#PKG_VERSION#"
 update-alternatives \
 	--install \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/libpdi_decl_hdf5_plugin.so \
-	libpdi_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich/libpdi_decl_hdf5_plugin.so \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_${PKG_VERSION}/libpdi_decl_hdf5_plugin.so \
+	pdi-${PKG_VERSION}_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich/pdi/plugins_${PKG_VERSION}/libpdi_decl_hdf5_plugin.so \
 	"${PRIORITY}"
+
+#DEBHELPER#
+

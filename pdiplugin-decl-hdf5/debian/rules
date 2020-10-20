@@ -4,6 +4,8 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+include /usr/share/dpkg/architecture.mk
+
 ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 else
@@ -11,6 +13,8 @@ else
 endif
 
 FLAVORS = serial openmpi mpich
+
+PKG_VERSION := $(shell dpkg-parsechangelog -S version)
 
 %:
 	dh $@ --parallel -Dplugins/decl_hdf5
@@ -21,7 +25,7 @@ configure_serial:
 	dh_auto_configure -Bbuild-serial -- \
 		-DBUILD_HDF5_PARALLEL=OFF \
 		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5cc \
-		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5 \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5/pdi/plugins_$(PKG_VERSION)/ \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
 
@@ -29,7 +33,7 @@ configure_openmpi:
 	dh_auto_configure -Bbuild-openmpi -- \
 		-DBUILD_HDF5_PARALLEL=ON \
 		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5pcc.openmpi \
-		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-openmpi \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-openmpi/pdi/plugins_$(PKG_VERSION)/ \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
 
@@ -37,9 +41,14 @@ configure_mpich:
 	dh_auto_configure -Bbuild-mpich -- \
 		-DBUILD_HDF5_PARALLEL=ON \
 		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/h5pcc.mpich \
-		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdiplugin-decl-hdf5-mpich/pdi/plugins_$(PKG_VERSION)/ \
 		$(CMAKEFLAGS) \
 		-DCMAKE_BUILD_TYPE=Release
+
+override_dh_installdeb:
+	dh_installdeb -Bbuild-serial  -DPKG_VERSION=$(PKG_VERSION)
+	dh_installdeb -Bbuild-openmpi -DPKG_VERSION=$(PKG_VERSION)
+	dh_installdeb -Bbuild-mpich   -DPKG_VERSION=$(PKG_VERSION)
 
 override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: build-%

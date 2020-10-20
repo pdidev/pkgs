@@ -1,2 +1,1 @@
-usr/lib/*/pdiplugin-mpi-mpich/lib*.so
-usr/lib/*/pdiplugin-mpi-mpich/pdi/plugins/*/lib*.so
+usr/lib/*/pdiplugin-mpi-mpich/pdi/*/*
