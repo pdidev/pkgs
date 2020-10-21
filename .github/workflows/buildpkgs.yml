@@ -23,7 +23,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        ref: repo
         path: repo
     - name: Install deps
       run: |
@@ -32,6 +31,7 @@ jobs:
         pip3.8 install -r pkg_builder/requirements.txt
         git -C repo config user.email "github.action@example.com"
         git -C repo config user.name  "Github Action"
+        git -C repo fetch origin repo
     - name: Build packages
       env:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
