@@ -4,18 +4,13 @@ on:
     branches: [ master ]
   pull_request:
   schedule:
-    - cron:  '0 2 * * *' # nightly build at 2AM
+    - cron:  '0 2 * * 6' # weekly build on Saturday, 2AM
 jobs:
   buildpkgs:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout packages
       uses: actions/checkout@v2
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        ref: repo
-        path: repo
     - name: Checkout builder script
       uses: actions/checkout@v2
       with:
@@ -25,26 +20,34 @@ jobs:
       uses: actions/setup-python@v2
       with:
        python-version: '3.8'
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        ref: repo
+        path: repo
     - name: Install deps
       run: |
-        sudo mkdir -p /etc/apt/source.list.d/
-        echo "deb http://repo.aptly.info/ squeeze main" | sudo tee /etc/apt/source.list.d/aptly.list
-        sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys ED75B5A4483DA07C
         sudo apt-get update
         sudo apt-get install devscripts equivs aptly gpgv1 expect
         pip3.8 install -r pkg_builder/requirements.txt
+        git -C repo config user.email "github.action@example.com"
+        git -C repo config user.name  "Github Action"
     - name: Build packages
       env:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
       run: |
-        rm -rf repo/*
+        if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]
+        then
+            NEW_BRANCH="repo.${GITHUB_HEAD_REF}"
+        elif [ "${GITHUB_REF}" == "refs/heads/master" ]
+        then
+            NEW_BRANCH="repo"
+        else
+            NEW_BRANCH="${GITHUB_REF/*\/}"
+        fi
+        git -C repo checkout --orphan "${NEW_BRANCH}"
         cp -a repo.template/* repo/
         unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
-        git -C repo config user.email "github.action@example.com"
-        git -C repo config user.name  "Github Action"
         git -C repo add -A .
-        git -C repo commit --amend -aC HEAD
-    - name: Publish packages
-      if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
-      run: |
-        git -C repo push -f
+        git -C repo commit -C origin/repo
+        git -C repo push -f origin "${NEW_BRANCH}"
