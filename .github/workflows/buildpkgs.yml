@@ -16,39 +16,56 @@ jobs:
       with:
         repository: jbigot/pkg_builder
         path: pkg_builder
+        ref: v2
     - name: Setup python
       uses: actions/setup-python@v2
       with:
        python-version: '3.8'
-    - name: Checkout repository
+    - name: Checkout debian repo
       uses: actions/checkout@v2
       with:
-        path: repo
+        repository: pdidev/repo
+        path: repo.debian
+    - name: Checkout fedora repo
+      uses: actions/checkout@v2
+      with:
+        repository: pdidev/repo
+        path: repo.fedora
+    - name: Checkout ubuntu repo
+      uses: actions/checkout@v2
+      with:
+        repository: pdidev/repo
+        path: repo.ubuntu
     - name: Install deps
       run: |
         sudo apt-get update
         sudo apt-get install devscripts equivs aptly gpgv1 expect
         pip3.8 install -r pkg_builder/requirements.txt
-        git -C repo config user.email "github.action@example.com"
-        git -C repo config user.name  "Github Action"
-        git -C repo fetch origin repo
     - name: Build packages
       env:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
       run: |
         if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]
         then
-            NEW_BRANCH="repo.${GITHUB_HEAD_REF}"
+            NEW_BRANCH="${GITHUB_HEAD_REF}."
         elif [ "${GITHUB_REF}" == "refs/heads/master" ]
         then
-            NEW_BRANCH="repo"
+            NEW_BRANCH=""
         else
-            NEW_BRANCH="${GITHUB_REF/*\/}"
+            NEW_BRANCH="${GITHUB_REF/*\/}."
         fi
-        git -C repo checkout --orphan "${NEW_BRANCH}"
-        git -C repo rm -rf .
-        cp -a repo.template/* repo/
+        for DISTRIB in debian fedora ubuntu
+        do
+            git -C repo.${DISTRIB} config user.email "github.action@example.com"
+            git -C repo.${DISTRIB} config user.name  "Github Action"
+            git -C repo.${DISTRIB} fetch origin ${DISTRIB}
+            git -C repo.${DISTRIB} checkout --orphan "${NEW_BRANCH}${DISTRIB}"
+            git -C repo.${DISTRIB} rm -rf .
+        done
         unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
-        git -C repo add -A .
-        git -C repo commit -C origin/repo
-        git -C repo push -f origin "${NEW_BRANCH}"
+        for DISTRIB in debian fedora ubuntu
+        do
+            git -C repo.${DISTRIB} add -A .
+            git -C repo.${DISTRIB} commit -C origin/${DISTRIB}
+            git -C repo.${DISTRIB} push -f origin "${NEW_BRANCH}${DISTRIB}"
+        done
