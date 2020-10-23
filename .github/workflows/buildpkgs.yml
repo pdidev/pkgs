@@ -26,16 +26,19 @@ jobs:
       with:
         repository: pdidev/repo
         path: repo.debian
+        ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
     - name: Checkout fedora repo
       uses: actions/checkout@v2
       with:
         repository: pdidev/repo
         path: repo.fedora
+        ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
     - name: Checkout ubuntu repo
       uses: actions/checkout@v2
       with:
         repository: pdidev/repo
         path: repo.ubuntu
+        ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
     - name: Install deps
       run: |
         sudo apt-get update
