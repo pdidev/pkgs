@@ -65,6 +65,7 @@ jobs:
             git -C repo.${DISTRIB} checkout --orphan "${NEW_BRANCH}${DISTRIB}"
             git -C repo.${DISTRIB} rm -rf .
         done
+        sed "s%pdidev/repo/%pdidev/repo/${NEW_BRANCH}%g" -i build.conf
         unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
         for DISTRIB in debian fedora ubuntu
         do
