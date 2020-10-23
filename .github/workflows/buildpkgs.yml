@@ -46,7 +46,7 @@ jobs:
             NEW_BRANCH="${GITHUB_REF/*\/}"
         fi
         git -C repo checkout --orphan "${NEW_BRANCH}"
-        git -C repo clean -fdx
+        git -C repo rm -rf .
         cp -a repo.template/* repo/
         unbuffer python3.8 pkg_builder/pkgbuild -j 3 -p "${KEY_PASSPHRASE}"
         git -C repo add -A .
