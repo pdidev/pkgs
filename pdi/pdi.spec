@@ -5,7 +5,7 @@ Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        the Portable Data Interface library
+Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
@@ -32,14 +32,14 @@ The %{name}-devel package contains C/C++ header files for developing
 applications or plugins that use %{name}.
 
 %package     -n lib%{name}%{_sover}
-Summary:        the Portable Data Interface library
+Summary:        the PDI Data Interface
 
 %description -n lib%{name}%{_sover}
 PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
 %package     -n lib%{name}-f90.%{_sover}
-Summary:        the Portable Data Interface library
+Summary:        the PDI Data Interface
 Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n lib%{name}-f90.%{_sover}
@@ -47,14 +47,14 @@ PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
 %package     -n lib%{name}-pysupport.%{_sover}
-Summary:        the Portable Data Interface library
+Summary:        the PDI Data Interface
 
 %description -n lib%{name}-pysupport.%{_sover}
 PDI is a library that aims to decouple high-performance simulation
 codes from Input/Output concerns.
 
 %package     -n python3-%{name}
-Summary:        the Portable Data Interface library
+Summary:        the PDI Data Interface
 Requires:       lib%{name}-pysupport.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n python3-%{name}

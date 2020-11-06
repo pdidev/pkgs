@@ -4,7 +4,7 @@ Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        MPI plugin for the Portable Data Interface library
+Summary:        MPI plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
@@ -15,14 +15,14 @@ BuildRequires:  pdi-devel = %{version}, openmpi-devel
 The PDI mpi plugin interfaces PDI with MPI.
 
 %package openmpi
-Summary: MPI plugin for the Portable Data Interface library, OpenMPI version
+Summary: MPI plugin for the PDI Data Interface, OpenMPI version
 BuildRequires:  hdf5-openmpi-devel >= 1.8
 
 %description openmpi
 The PDI mpi plugin interfaces PDI with MPI.
 
 %package mpich
-Summary: MPI plugin for the Portable Data Interface library. MPich version
+Summary: MPI plugin for the PDI Data Interface. MPich version
 BuildRequires:  hdf5-mpich-devel >= 1.8
 
 %description mpich
