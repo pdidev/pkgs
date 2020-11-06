@@ -4,7 +4,7 @@ Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        Decl'HDF5 plugin for the Portable Data Interface library
+Summary:        Decl'HDF5 plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
@@ -17,7 +17,7 @@ declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
 a simple declarative interface to access a large subset of it.
 
 %package openmpi
-Summary: Decl'HDF5 plugin for the Portable Data Interface library, OpenMPI version
+Summary: Decl'HDF5 plugin for the PDI Data Interface, OpenMPI version
 BuildRequires:  hdf5-openmpi-devel >= 1.8
 
 %description openmpi
@@ -26,7 +26,7 @@ declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
 a simple declarative interface to access a large subset of it.
 
 %package mpich
-Summary: Decl'HDF5 plugin for the Portable Data Interface library, MPich version
+Summary: Decl'HDF5 plugin for the PDI Data Interface, MPich version
 BuildRequires:  hdf5-mpich-devel >= 1.8
 
 %description mpich

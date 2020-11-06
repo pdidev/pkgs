@@ -1,10 +1,10 @@
 %global _vpath_builddir .
-Name:           pdiplugin-trace
+Name:           pdiplugin-serialize
 Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        Trace plugin for the PDI Data Interface
+Summary:        Serialize plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.5, gcc, gcc-c++
@@ -12,7 +12,8 @@ BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}
 
 %description
-The PDI trace plugin generates a trace of what happens in PDI data store.
+The PDI serialize plugin supports serialization of complex types into a
+representation all I/O libraries should support.
 
 %prep
 %autosetup -n pdi-%{version}
@@ -20,7 +21,7 @@ The PDI trace plugin generates a trace of what happens in PDI data store.
 %build
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
-	plugins/trace
+	plugins/serialize
 %make_build
 
 %install
@@ -42,7 +43,3 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Oct 16 2020 - Pending release on prerelease <julien.bigot@cea.fr>
 - Pending release on prerelease
-* Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.2
-* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Initial Release
