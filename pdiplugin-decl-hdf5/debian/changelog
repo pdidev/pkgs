@@ -1,8 +1,8 @@
-pdiplugin-decl-hdf5 (9999prerelease-1) unstable devel; urgency=medium
+pdiplugin-decl-hdf5 (9999master-1) unstable devel; urgency=medium
 
-  * Pending release on prerelease
+  * Pending release on master
 
- -- Pending release on prerelease <julien.bigot@cea.fr>  Fri, 16 Oct 2020 00:00:00 +0000
+ -- Pending release on master <julien.bigot@cea.fr>  Fri, 16 Oct 2020 00:00:00 +0000
 
 pdiplugin-decl-hdf5 (0.6.2-1) unstable devel; urgency=medium
 

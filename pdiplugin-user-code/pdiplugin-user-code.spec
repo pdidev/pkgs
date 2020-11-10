@@ -1,12 +1,12 @@
 %global _vpath_builddir .
 Name:           pdiplugin-user-code
-Version:        prerelease
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        user-code plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++
 BuildRequires:  make
 BuildRequires:  pdi-devel = %{version}
@@ -41,8 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Fri Oct 16 2020 - Pending release on prerelease <julien.bigot@cea.fr>
-- Pending release on prerelease
+* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+- Pending release on master
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
