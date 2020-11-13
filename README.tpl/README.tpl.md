@@ -2,7 +2,7 @@
 
 This is the repository that holds the ${distribs} packages of PDI and related projects.
 
-The list of repositories for all distributions is available at: https://github.com/pdidev/pkgs/tree/master/
+The list of repositories for all distributions is available at: https://github.com/pdidev/repo/
 
 ## Install the packages
 
