@@ -1,13 +1,13 @@
 %global _vpath_builddir .
 %define _sover  0
 Name:           pdi
-Version:        master
+Version:        prerelease
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/prerelease/pdi-prerelease.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
 BuildRequires:  make
@@ -115,8 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
-* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
-- Pending release on master
+* Fri Oct 16 2020 - Pending release on prerelease <julien.bigot@cea.fr>
+- Pending release on prerelease
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.2
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
