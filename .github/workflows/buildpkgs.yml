@@ -16,7 +16,6 @@ jobs:
       with:
         repository: jbigot/pkg_builder
         path: pkg_builder
-        ref: v2
     - name: Setup python
       uses: actions/setup-python@v2
       with:
