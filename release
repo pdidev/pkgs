@@ -15,13 +15,13 @@ sed \
 	's%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*.tar.bz2%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/{upstream_version}/pdi-{upstream_version}.tar.bz2%' \
 	-i build.conf
 sed \
-	-e "s/Pending release on master <julien.bigot@cea.fr>  Fri, 16 Oct 2020 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
+	-e "s/Pending release on master <julien.bigot@cea.fr>  Thu, 26 Oct 2020 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
 	-e "s/(9999master-1)/(${VERSION}-1)/" \
 	-e "s/\* Pending release on master/* Upstream update to ${VERSION}/" \
 	-i  pdi*/debian/changelog
 sed \
 	-e 's#https://gitlab.maisondelasimulation.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*.tar.gz#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz#'
-	-e "Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
+	-e "Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
 	-e "s/Version: .*/Version:        ${VERSION}/" \
 	-e "s/- Pending release on master/- Upstream update to ${VERSION}/" \
 	-i pdi*/*.spec
