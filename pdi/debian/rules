@@ -25,6 +25,7 @@ override_dh_auto_configure: debian/libpdi-dev.install
 	dh_auto_configure --parallel -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_PYTHON=ON \
+		-DPython3_EXECUTABLE=/usr/bin/python3 \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
 		$(CMAKEFLAGS) \

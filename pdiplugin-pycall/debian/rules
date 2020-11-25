@@ -18,4 +18,5 @@ endif
 override_dh_auto_configure:
 	dh_auto_configure --parallel -D plugins/pycall -- \
 		$(CMAKEFLAGS) \
+		-DPython3_EXECUTABLE=/usr/bin/python3 \
 		-DCMAKE_BUILD_TYPE=Release

@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-user-code
-Version:        0.6.3
+Version:        0.6.5
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -41,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.so
 
 %changelog
+* Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.6.5
 * Tue Oct 20 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.3
 * Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>

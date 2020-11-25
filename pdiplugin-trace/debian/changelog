@@ -1,3 +1,9 @@
+pdiplugin-trace (0.6.5-1) unstable devel; urgency=medium
+
+  * Version bump to 0.6.5
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Wed, 25 Nov 2020 09:22:26 +0100
+
 pdiplugin-trace (0.6.3-1) unstable devel; urgency=medium
 
   * Upstream update to 0.6.3
