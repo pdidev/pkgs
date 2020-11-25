@@ -25,7 +25,17 @@ Homepage: http://flowvr.sourceforge.net/
 Package: flowvr
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends},
+  freeglut3-dev,
+  libglew-dev,
+  libgraphviz-dev,
+  libhwloc-dev,
+  libopenmpi-dev,
+  libxi-dev,
+  libxml2-dev,
+  libxmu-dev,
+  libxslt1-dev,
+  mesa-common-dev
 Description: the FlowVR in situ and in transit processing middleware
  FlowVR is an open source middleware to augment parallel simulations running on
  thousands of cores with in situ processing capabilities and live steering.

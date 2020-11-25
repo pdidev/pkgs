@@ -6,7 +6,7 @@ License:        LGPLv2
 Group:          Development/Libraries/C and C++
 Summary:        the FlowVR in situ and in transit processing middleware
 Url:            http://flowvr.sourceforge.net/FlowVRDoc.html
-Source0:        https://gitlab.inria.fr/flowvr/flowvr-ex/-/archive/f3938ecc7aa8d7ea5211554480a5a99237c61fbb/flowvr-ex-f3938ecc7aa8d7ea5211554480a5a99237c61fbb.tar.gz
+Source0:        https://gitlab.inria.fr/%{name}/flowvr-ex/-/archive/v%{version}/flowvr-ex-v%{version}.tar.gz
 BuildRequires:  cmake >= 3.5, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  make
 BuildRequires:  doxygen
@@ -33,7 +33,7 @@ FlowVR offers a very flexible environment while enabling high performance
 asynchronous in situ and in transit processing.
 
 %prep
-%autosetup -n flowvr-ex-f3938ecc7aa8d7ea5211554480a5a99237c61fbb
+%autosetup -n %{name}-ex-v%{version}
 
 %build
 %cmake3 \
@@ -69,5 +69,5 @@ ln -s %{base_install_dir}/opt/flowvr/bin/flowvr-suite-config.sh %{base_install_d
 %ghost /etc/profile.d/flowvr-suite-config.sh
 
 %changelog
-* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+* Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release
