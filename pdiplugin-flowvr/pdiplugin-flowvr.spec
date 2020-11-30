@@ -1,0 +1,53 @@
+%global _vpath_builddir .
+Name:           pdiplugin-flowvr
+Version:        master
+Release:        0
+License:        BSD-3-Clause
+Group:          Development/Libraries/C and C++
+Summary:        FlowVR plugin for the PDI Data Interface
+Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
+BuildRequires:  cmake >= 3.5, gcc, gcc-c++
+BuildRequires:  make
+BuildRequires:  flowvr
+BuildRequires:  freeglut-devel
+BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  mesa-libGLU-devel
+BuildRequires:  pdi-devel = %{version}
+BuildRequires:  python3-yaml
+
+%description
+The PDI FlowVR plugin supports application coupling through the FlowVR software.
+
+%prep
+%autosetup -n pdi-%{version}
+
+%build
+. /opt/flowvr/bin/flowvr-suite-config.sh
+%cmake3 \
+	-DCMAKE_BUILD_TYPE=Release \
+	plugins/flowvr
+%make_build
+
+%install
+. /opt/flowvr/bin/flowvr-suite-config.sh
+rm -rf $RPM_BUILD_ROOT
+%make_install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
+%files
+%license LICENSE
+%doc README.md
+%{_libdir}/pdi/*/lib*.so
+%{python3_sitearch}/pdi_flowvr
+
+%changelog
+* Fri Oct 16 2020 - Pending release on master <julien.bigot@cea.fr>
+- Initial Release
