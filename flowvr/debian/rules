@@ -6,8 +6,12 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+include /usr/share/dpkg/architecture.mk
+
+export PYTHON_LIBS_INSTALL_DIR = $(shell /usr/bin/python3 -c "import sys; import distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_python_lib(plat_specific=False))")
+
 %:
-	dh $@ --parallel
+	dh $@ --parallel --with python3
 
 override_dh_auto_configure:
 	dh_auto_configure --parallel -- \
@@ -19,6 +23,14 @@ override_dh_auto_configure:
 		-DBUILD_FLOWVR_GLGRAPH=OFF \
 		-DBUILD_FLOWVR_GLTRACE=ON \
 		-DCMAKE_INSTALL_PREFIX=/opt/flowvr
+
+dh_link: debian/flowvr.links
+
+debian/flowvr.links: debian/flowvr.links.in
+	sed \
+		-e 's%@PYTHON_LIBS_INSTALL_DIR@%$(PYTHON_LIBS_INSTALL_DIR)%g' \
+		-e 's%@DEB_HOST_MULTIARCH@%$(DEB_HOST_MULTIARCH)%g' \
+		$< > $@
 
 override_dh_shlibdeps:
 	dh_shlibdeps -l/opt/flowvr/lib
