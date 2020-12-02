@@ -3,7 +3,7 @@ Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  c++-compiler,
+  dh-python,
   cmake (>= 3.0),
   doxygen,
   freeglut3-dev,

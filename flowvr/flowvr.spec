@@ -77,21 +77,21 @@ for N in *
 do
 	%{__ln_s} -f "/opt/%{name}/lib/flowvr/python/${N}" "%{buildroot}%{python3_sitelib}/${N}"
 done
-mkdir -p %{buildroot}%{_datadir}
-%{__ln_s} -f "/opt/%{name}/share/flowvr" "%{buildroot}%{_datadir}/%{name}"
-
+mkdir -p %{buildroot}%{_docdir}
+%{__ln_s} -f "/opt/%{name}/share/flowvr/doc/FlowVR" "%{buildroot}%{_docdir}/%{name}"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%docdir /opt/%{name}/share/flowvr/doc/
+%docdir /opt/%{name}/share/flowvr/examples/
 /opt/%{name}
 %{_bindir}/*
-%{_includedir}/
+%{_includedir}/*
 %{_libdir}/*
 %{python3_sitelib}/*
-%{_datadir}/%{name}
-%doc /opt/%{name}/share/flowvr/doc/*
+%doc %{_docdir}/%{name}
 %license flowvr/flowvr-base/COPYING
 
 %changelog
