@@ -24,13 +24,5 @@ override_dh_auto_configure:
 		-DBUILD_FLOWVR_GLTRACE=ON \
 		-DCMAKE_INSTALL_PREFIX=/opt/flowvr
 
-dh_link: debian/flowvr.links
-
-debian/flowvr.links: debian/flowvr.links.in
-	sed \
-		-e 's%@PYTHON_LIBS_INSTALL_DIR@%$(PYTHON_LIBS_INSTALL_DIR)%g' \
-		-e 's%@DEB_HOST_MULTIARCH@%$(DEB_HOST_MULTIARCH)%g' \
-		$< > $@
-
 override_dh_shlibdeps:
 	dh_shlibdeps -l/opt/flowvr/lib
