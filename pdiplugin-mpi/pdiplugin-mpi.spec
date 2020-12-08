@@ -9,21 +9,21 @@ Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
 BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
 BuildRequires:  make
-BuildRequires:  pdi-devel = %{version}, openmpi-devel
+BuildRequires:  pdi-devel = %{version}
 
 %description
 The PDI mpi plugin interfaces PDI with MPI.
 
 %package openmpi
 Summary: MPI plugin for the PDI Data Interface, OpenMPI version
-BuildRequires:  hdf5-openmpi-devel >= 1.8
+BuildRequires:  openmpi-devel
 
 %description openmpi
 The PDI mpi plugin interfaces PDI with MPI.
 
 %package mpich
-Summary: MPI plugin for the PDI Data Interface. MPich version
-BuildRequires:  hdf5-mpich-devel >= 1.8
+Summary: MPI plugin for the PDI Data Interface, MPich version
+BuildRequires:  mpich-devel
 
 %description mpich
 The PDI mpi plugin interfaces PDI with MPI.
