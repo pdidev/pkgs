@@ -1,31 +1,31 @@
-Source: pdiplugin-mpi
+Source: pdiplugin-fti
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   cmake (>= 3.5),
-  pkg-config,
+  libfti-mpich-dev,
+  libfti-openmpi-dev,
   libpdi-dev,
   mpi-default-dev,
-  mpich, libmpich-dev,
-  openmpi-bin, libopenmpi-dev
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
-Package: pdiplugin-mpi-mpich
+Package: pdiplugin-fti-mpich
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi1
-Provides: pdiplugin-mpi
-Description: MPI plugin for the PDI Data Interface
- The PDI mpi plugin interfaces PDI with MPI.
+Provides: pdiplugin-fti
+Description: FTI plugin for the PDI Data Interface
+ The PDI fti plugin interfaces PDI with FTI.
 
-Package: pdiplugin-mpi-openmpi
+Package: pdiplugin-fti-openmpi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi1
-Provides: pdiplugin-mpi
-Description: MPI plugin for the PDI Data Interface
- The PDI mpi plugin interfaces PDI with MPI.
+Provides: pdiplugin-fti
+Description: FTI plugin for the PDI Data Interface
+ The PDI fti plugin interfaces PDI with FTI.

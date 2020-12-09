@@ -10,6 +10,6 @@ Package: pdiplugin-set-value
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Enhances: libpdi1
 Description: Set Value plugin for the PDI Data Interface
  The PDI Set Value plugin supports setting PDI metadata values from PDI itself.

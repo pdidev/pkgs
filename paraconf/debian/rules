@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE ?= 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
@@ -9,22 +7,14 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 ifeq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
 	DHFLAGS += --with fortran_mod
 endif
-
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
 FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
 
 %:
 	dh $@ --parallel $(DHFLAGS)
 
-override_dh_auto_configure: debian/libparaconf-dev.install
+override_dh_auto_configure:
 	dh_auto_configure --parallel -D paraconf -- \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
 		-DCMAKE_BUILD_TYPE=Release
-
-debian/libparaconf-dev.install: debian/libparaconf-dev.install.in debian/libparaconf-dev.fortran-mod
-ifneq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
-	cat $^ > $@
-else
-	cat $< > $@
-endif
