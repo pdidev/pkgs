@@ -10,6 +10,6 @@ Package: pdiplugin-trace
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Enhances: libpdi1
 Description: Trace plugin for the PDI Data Interface
  The PDI trace plugin generates a trace of what happens in PDI data store.

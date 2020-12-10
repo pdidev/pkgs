@@ -8,7 +8,7 @@ Group:          Development/Libraries/C and C++
 Summary:        a library for fast and efficient multilevel checkpointing
 Url:            https://github.com/leobago/%{name}
 Source0:        https://github.com/leobago/%{name}/archive/v%{version}.tar.gz
-BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.4
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.4
 BuildRequires:  openssl-devel
 
 %description
@@ -75,39 +75,30 @@ checkpointing in large scale supercomputers
 %autosetup
 
 %build
-mkdir build-openmpi
-pushd build-openmpi
-module load mpi/openmpi-%{_arch}
+for MPI_VERSION in openmpi mpich
+do
+mkdir -p build-${MPI_VERSION}
+pushd build-${MPI_VERSION}
+module load mpi/${MPI_VERSION}-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_LIBDIR=${MPI_LIB} \
-	-DINSTALL_CMAKEDIR=%{_datadir}/FTI/openmpi/cmake \
+	-DINSTALL_CMAKEDIR=${MPI_BIN}/../share/FTI/cmake \
 	-DENABLE_OPENSSL=ON \
 	..
 %make_build
 module purge
 popd
-mkdir build-mpich
-pushd build-mpich
-module load mpi/mpich-%{_arch}
-%cmake3 \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_INSTALL_LIBDIR=${MPI_LIB} \
-	-DINSTALL_CMAKEDIR=%{_datadir}/FTI/mpich/cmake \
-	-DENABLE_OPENSSL=ON \
-	..
-%make_build
-module purge
-popd
+done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-module load mpi/openmpi-%{_arch}
-%make_install -C build-openmpi
+for MPI_VERSION in openmpi mpich
+do
+module load mpi/${MPI_VERSION}-%{_arch}
+%make_install -C build-${MPI_VERSION}
 module purge
-module load mpi/mpich-%{_arch}
-%make_install -C build-mpich
-module purge
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -120,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %files openmpi-devel
 %license LICENSE
 %doc README.md
-%{_datadir}/FTI/openmpi
+%{_libdir}/openmpi/share/FTI
 %{_libdir}/openmpi/lib/*.a
 
 %files -n lib%{name}-openmpi-%{_sover}
@@ -131,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %files mpich-devel
 %license LICENSE
 %doc README.md
-%{_datadir}/FTI/mpich
+%{_libdir}/mpich/share/FTI
 %{_libdir}/mpich/lib/*.a
 
 %files -n lib%{name}-mpich-%{_sover}

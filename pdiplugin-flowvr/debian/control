@@ -15,6 +15,6 @@ Package: pdiplugin-flowvr
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Enhances: libpdi1
 Description: FlowVR plugin for the PDI Data Interface
   The PDI FlowVR plugin supports application coupling through the FlowVR software.

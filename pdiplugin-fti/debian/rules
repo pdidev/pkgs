@@ -5,30 +5,27 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-FLAVORS = serial openmpi mpich
+FLAVORS = openmpi mpich
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
 %:
-	dh $@ --parallel -Dplugins/decl_hdf5
+	dh $@ --parallel -D plugins/fti
 
 override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
 configure_%: FLAVOR=$(subst configure_,,$@)
-configure_%: H5CC=h5pcc.$(FLAVOR)
-configure_%: BUILD_HDF5_PARALLEL=ON
-configure_serial: H5CC=h5cc
-configure_serial: BUILD_HDF5_PARALLEL=OFF
 configure_%:
-	#TODO: -DBUILD_TESTING=ON when PDI issue #274 is fixed
+	#TODO: -DBUILD_TESTING=ON when PDI issue #276 is fixed
 	dh_auto_configure -Bbuild-$(FLAVOR) -- \
-		-DBUILD_HDF5_PARALLEL=$(BUILD_HDF5_PARALLEL) \
-		-DBUILD_TESTING=$(BUILD_HDF5_PARALLEL) \
-		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$(H5CC) \
+		-DBUILD_TESTING=OFF \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_PREFIX_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$(FLAVOR)/ \
 		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$(FLAVOR) \
-		-DCMAKE_BUILD_TYPE=Release
+		-DMPI_C_COMPILER=mpicc.$(FLAVOR) \
+		-DMPI_CXX_COMPILER=mpicxx.$(FLAVOR)
 
 define installdeb
-dh_installdeb: pdiplugin-decl-hdf5-$(1).$(2)
-pdiplugin-decl-hdf5-$(1).$(2): pdiplugin-decl-hdf5-FLAVOR.$(2)
+dh_installdeb: pdiplugin-fti-$(1).$(2)
+pdiplugin-fti-$(1).$(2): pdiplugin-fti-FLAVOR.$(2)
 	# dh_installdeb -D is not available with debhelper 9, we use sed
 	sed \
 		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \

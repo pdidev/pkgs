@@ -1,5 +1,5 @@
 %global _vpath_builddir .
-%define _sover  0
+%define _sover  1
 Name:           pdi
 Version:        master
 Release:        0
@@ -8,9 +8,8 @@ Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
-BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
-BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0,
-BuildRequires:  make
+BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
+BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0
 BuildRequires:  zpp, paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1
 BuildRequires:  pybind11-devel >= 2.3.0, python3-devel >= 3.5, python3-numpy
 
@@ -20,12 +19,13 @@ codes from Input/Output concerns.
 
 %package devel
 Summary:        Development files for %{name}
+Requires:       gcc-gfortran%{_isa}
 Requires:       lib%{name}-f90.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       paraconf-devel >= 0.4.0
-Requires:       spdlog-devel >= 1.3.1
 Requires:       pybind11-devel >= 2.3.0
+Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       python3-devel >= 3.5, python3-numpy
+Requires:       spdlog-devel >= 1.3.1
 
 %description devel
 The %{name}-devel package contains C/C++ header files for developing
@@ -103,13 +103,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 
 %files -n lib%{name}%{_sover}
-%{_libdir}/lib%{name}.so.%{_sover}*
+%{_libdir}/lib%{name}.so.*
 
 %files -n lib%{name}-f90.%{_sover}
-%{_libdir}/lib%{name}_f90.so.%{_sover}*
+%{_libdir}/lib%{name}_f90.so.*
 
 %files -n lib%{name}-pysupport.%{_sover}
-%{_libdir}/lib%{name}_pysupport.so.%{_sover}*
+%{_libdir}/lib%{name}_pysupport.so.*
 
 %files -n python3-%{name}
 %{python3_sitearch}/pdi/*

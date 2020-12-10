@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE = 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
@@ -11,6 +9,8 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 	dh $@ --parallel
 
 override_dh_auto_configure:
+	#TODO: -DBUILD_TESTING=ON when PDI issue #276 is fixed
 	. /opt/flowvr/bin/flowvr-suite-config.sh && \
 	dh_auto_configure --parallel -D plugins/flowvr -- \
+		-DBUILD_TESTING=OFF \
 		-DCMAKE_BUILD_TYPE=Release

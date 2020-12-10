@@ -9,8 +9,7 @@ Summary:        A library that provides a simple query language to access a Yaml
 Url:            https://github.com/pdidev/%{name}
 Source0:        https://github.com/pdidev/%{name}/archive/%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%name-root
-BuildRequires:  cmake >= 3.5
-BuildRequires:  make, gcc, gcc-gfortran
+BuildRequires:  gcc, gcc-gfortran, make, cmake >= 3.5
 BuildRequires:  pkgconfig(yaml-0.1)
 
 %description
