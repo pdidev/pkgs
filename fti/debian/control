@@ -2,7 +2,7 @@ Source: fti
 Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), dh-exec,
+Build-Depends: debhelper (>= 9),
   cmake (>= 3.4),
   libssl-dev,
   mpi-default-dev,
@@ -39,6 +39,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
   libfti-openmpi-1 (= ${binary:Version}),
+  libssl-dev,
   openmpi-bin, libopenmpi-dev
 Provides: libfti-dev
 Description: a library for fast and efficient multilevel checkpointing
@@ -52,6 +53,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
   libfti-mpich-1 (= ${binary:Version}),
+  libssl-dev,
   mpich, libmpich-dev
 Description: a library for fast and efficient multilevel checkpointing
  FTI stands for Fault Tolerance Interface and is a library that aims to give

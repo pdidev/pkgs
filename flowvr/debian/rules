@@ -1,13 +1,10 @@
 #!/usr/bin/make -f
 
-# export DH_VERBOSE ?= 1
-
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-
 export PYTHON_LIBS_INSTALL_DIR = $(shell /usr/bin/python3 -c "import sys; import distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_python_lib(plat_specific=False))")
 
 %:

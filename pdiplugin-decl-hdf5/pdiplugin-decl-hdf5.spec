@@ -7,8 +7,7 @@ Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
-BuildRequires:  cmake >= 3.10, gcc, gcc-c++, gcc-gfortran
-BuildRequires:  make
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
 BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.8
 
 %description

@@ -7,8 +7,7 @@ Group:          Development/Libraries/C and C++
 Summary:        the FlowVR in situ and in transit processing middleware
 Url:            http://flowvr.sourceforge.net/FlowVRDoc.html
 Source0:        https://gitlab.inria.fr/%{name}/%{name}-ex/-/archive/v%{version}/%{name}-ex-v%{version}.tar.gz
-BuildRequires:  cmake >= 3.5, gcc, gcc-c++, gcc-gfortran
-BuildRequires:  make
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
 BuildRequires:  doxygen
 BuildRequires:  freeglut-devel
 BuildRequires:  glew-devel
@@ -25,6 +24,9 @@ BuildRequires:  mesa-libGLU-devel
 BuildRequires:  openmpi-devel
 BuildRequires:  python3-devel
 BuildRequires:  swig
+Requires:  hwloc-devel
+Requires:  openmpi-devel
+Requires:  python3-yaml
 
 %description
 FlowVR is an open source middleware to augment parallel simulations running on

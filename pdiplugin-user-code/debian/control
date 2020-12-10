@@ -3,8 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
-  cmake (>= 3.10) <!nocheck !stretch !xenial !bionic !disco>,
-  cmake (>= 3.5) <nocheck> <stretch> <xenial> <bionic> <disco>,
+  cmake (>= 3.5),
   pkg-config,
   libpdi-dev
 Standards-Version: 4.5.0
@@ -14,7 +13,7 @@ Package: pdiplugin-user-code
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi0
+Enhances: libpdi1
 Description: user-code plugin for the PDI Data Interface
  The PDI user-code plugin enables one to call a user-defined function when a
  specified event occur or certain data becomes available.

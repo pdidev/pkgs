@@ -5,44 +5,41 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-
+include /usr/share/mpi-default-dev/debian_defaults
 FLAVORS = openmpi mpich
-
-PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
 %:
 	dh $@ --parallel
 
 override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
-
-configure_openmpi:
-	dh_auto_configure -Bbuild-openmpi -- \
+configure_%: FLAVOR=$(subst configure_,,$@)
+configure_%:
+	dh_auto_configure -Bbuild-$(FLAVOR) -- \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_INCLUDEDIR=include/fti/openmpi/ \
-		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/fti/openmpi/ \
+		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/fti/$(FLAVOR)/ \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$(FLAVOR)/ \
+		-DCMAKE_INSTALL_PREFIX=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$(FLAVOR)/ \
 		-DENABLE_OPENSSL=ON \
-		-DINSTALL_CMAKEDIR=/usr/share/FTI/openmpi/cmake \
-		-DMPI_C_COMPILER=/usr/bin/mpicc.openmpi
+		-DMPI_C_COMPILER=/usr/bin/mpicc.$(FLAVOR)
 
-configure_mpich:
-	dh_auto_configure -Bbuild-mpich -- \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_INCLUDEDIR=include/fti/mpich/ \
-		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)/fti/mpich/ \
-		-DENABLE_OPENSSL=ON \
-		-DINSTALL_CMAKEDIR=/usr/share/FTI/mpich/cmake \
-		-DMPI_C_COMPILER=/usr/bin/mpicc.mpich
+define installdeb
+dh_installdeb: libfti-$(1)-1.$(2)
+libfti-$(1)-1.$(2): libfti-FLAVOR-1.$(2)
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	sed \
+		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+		-e 's/#FLAVOR#/$(1)/g' \
+		$$< > $$@
 
-# dh_installdeb -D is not available with debhelper 9
-dh_installdeb: libfti1-mpich.postinst libfti1-mpich.prerm libfti1-openmpi.postinst libfti1-openmpi.prerm
-
-%: %.tpl
-	sed 's/#PKG_VERSION#/$(PKG_VERSION)/g' $< > $@
+endef
+$(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
 
 override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
-build_%: build-%
-	dh_auto_build -B$<
+build_%: FLAVOR=$(subst build_,,$@)
+build_%:
+	dh_auto_build -Bbuild-$(FLAVOR)
 
 override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
-install_%: build-%
-	dh_auto_install -B$<
+install_%: FLAVOR=$(subst install_,,$@)
+install_%:
+	dh_auto_install -Bbuild-$(FLAVOR)

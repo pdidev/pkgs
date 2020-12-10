@@ -1,31 +1,31 @@
 %global _vpath_builddir .
-Name:           pdiplugin-mpi
+Name:           pdiplugin-fti
 Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
-Summary:        MPI plugin for the PDI Data Interface
+Summary:        FTI plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
 BuildRequires:  pdi-devel = %{version}
 
 %description
-The PDI mpi plugin interfaces PDI with MPI.
+The PDI fti plugin interfaces PDI with FTI.
 
 %package openmpi
-Summary: MPI plugin for the PDI Data Interface, OpenMPI version
-BuildRequires:  openmpi-devel
+Summary: FTI plugin for the PDI Data Interface, OpenFTI version
+BuildRequires: fti-openmpi-devel
 
 %description openmpi
-The PDI mpi plugin interfaces PDI with MPI.
+The PDI fti plugin interfaces PDI with FTI.
 
 %package mpich
-Summary: MPI plugin for the PDI Data Interface, MPich version
-BuildRequires:  mpich-devel
+Summary: FTI plugin for the PDI Data Interface, MPich version
+BuildRequires: fti-mpich-devel
 
 %description mpich
-The PDI mpi plugin interfaces PDI with MPI.
+The PDI fti plugin interfaces PDI with FTI.
 
 %prep
 %autosetup -n pdi-%{version}
@@ -37,7 +37,7 @@ module load mpi/openmpi-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/openmpi/lib/pdi/plugins_%{version}/ \
-	../plugins/mpi
+	../plugins/fti
 %make_build
 module purge
 popd
@@ -47,7 +47,7 @@ module load mpi/mpich-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/mpich/lib/pdi/plugins_%{version}/ \
-	../plugins/mpi
+	../plugins/fti
 %make_build
 module purge
 popd
@@ -84,12 +84,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>
-- Pending release on master
-* Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.5
-* Tue Oct 20 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.3
-* Thu Oct 15 2020 - Julien Bigot <julien.bigot@cea.fr>
-- Version bump to 0.6.2
-* Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release
