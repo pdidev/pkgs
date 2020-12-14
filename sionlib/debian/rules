@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+include /usr/share/dpkg/architecture.mk
+include /usr/share/mpi-default-dev/debian_defaults
+FLAVORS = openmpi mpich
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure: $(foreach flavor,$(FLAVORS),configure_$(flavor))
+configure_%: FLAVOR=$(subst configure_,,$@)
+configure_%:
+	./configure \
+		--prefix=/usr/lib/$(DEB_HOST_MULTIARCH)/sionlib/$(FLAVOR) \
+		--compiler=gnu \
+		--disable-fortran \
+		--disable-parutils \
+		--force-$(DEB_HOST_ARCH_BITS) \
+		--mpi=$(FLAVOR:mpich=mpich3)
+
+define installdeb
+dh_installdeb: libsion-$(1)-1.$(2)
+libsion-$(1)-1.$(2): libsion-FLAVOR-1.$(2)
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	sed \
+		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+		-e 's/#FLAVOR#/$(1)/g' \
+		$$< > $$@
+
+endef
+$(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
+
+override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
+build_%: FLAVOR=$(subst build_,,$@)
+build_%:
+	dh_auto_build -Bbuild-linux-gomp-$(FLAVOR:mpich=mpich3)-$(DEB_HOST_ARCH_BITS)
+
+override_dh_auto_test:
+
+override_dh_auto_install: $(foreach flavor,$(FLAVORS),install_$(flavor))
+install_%: FLAVOR=$(subst install_,,$@)
+install_%:
+	make \
+		INCDIR=${PWD}/debian/tmp/usr/include \
+		LIBDIR=${PWD}/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/sionlib/$(FLAVOR) \
+		BINDIR=${PWD}/debian/tmp/usr/bin/sionlib/$(FLAVOR) \
+		-C build-linux-gomp-$(FLAVOR:mpich=mpich3)-$(DEB_HOST_ARCH_BITS)/build \
+		-f RealMakefile \
+		install-path install-libs install-parlibs install-utils install-config

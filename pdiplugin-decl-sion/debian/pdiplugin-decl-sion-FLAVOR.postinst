@@ -1,0 +1,27 @@
+#!
+set -e
+
+case #FLAVOR# in
+#ARCH_DEFAULT_MPI_IMPL#)
+	PRIORITY=30
+	;;
+*)
+	PRIORITY=10
+	;;
+esac
+
+case "$1" in
+configure)
+	update-alternatives \
+		--install \
+		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/libpdi_decl_sion_plugin.so \
+		pdi-#PKG_VERSION#_decl-sion_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
+		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/#FLAVOR#/libpdi_decl_sion_plugin.so \
+		"${PRIORITY}"
+;;
+*)
+	# nothing to do
+;;
+esac
+
+#DEBHELPER#
