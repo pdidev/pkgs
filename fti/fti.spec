@@ -3,7 +3,7 @@
 Name:           fti
 Version:        1.5.1
 Release:        0
-License:        LGPLv2
+License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        a library for fast and efficient multilevel checkpointing
 Url:            https://github.com/leobago/%{name}
@@ -17,10 +17,8 @@ computational scientists the means to perform fast and efficient multilevel
 checkpointing in large scale supercomputers
 
 %package headers
-Summary: a library for fast and efficient multilevel checkpointing, OpenMPI version
-BuildRequires: openmpi-devel
-Requires: openssl-devel
-Requires: openmpi-devel
+Summary: a library for fast and efficient multilevel checkpointing
+BuildArch: noarch
 
 %description headers
 FTI stands for Fault Tolerance Interface and is a library that aims to give

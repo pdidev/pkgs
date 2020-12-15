@@ -1,0 +1,26 @@
+Index: sionlib/src/utils/Makefile
+===================================================================
+--- sionlib.orig/src/utils/Makefile
++++ sionlib/src/utils/Makefile
+@@ -71,9 +71,8 @@ sionversion: sionversion.o ../lib/lib$(S
+ 
+ ###### sionconfig ######
+ install-config: sionconfig.in
+-	AINSTDIR=`(cd $(PREFIX) && pwd)`; \
+ 	sed -e "s!@ARCH@!$(ARCH)!" \
+-		-e "s!@INSTDIR@!$$AINSTDIR!" \
++		-e "s!@INSTDIR@!$(PREFIX)!" \
+ 		-e "s!@LIBNAME@!$(SION_LIBNAME_PAR)!" \
+ 		-e "s!@LIBSERNAME@!$(SION_LIBNAME_SER)!" \
+ 		-e "s!@HINTSLIB@!$(HINTSLIB)!" \
+@@ -82,8 +81,8 @@ install-config: sionconfig.in
+ 		-e "s!@CUDA_LIBRARIES@!$(CUDA_LIBRARIES)!" \
+ 		-e "s!@CUDA_LIBRARY_PATHS@!$(CUDA_LIBRARY_PATHS)!" \
+ 		-e "s!@SIONFWD_LIBS@!$(SIONFWD_LIBS)!" \
+-		sionconfig.in > $(PREFIX)/bin/sionconfig
+-	chmod 755 $(PREFIX)/bin/sionconfig; \
++		sionconfig.in > $(BINDIR)/sionconfig
++	chmod 755 $(BINDIR)/sionconfig; \
+ 
+ 
+ install: all

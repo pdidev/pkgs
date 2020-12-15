@@ -1,0 +1,6 @@
+#! /usr/bin/dh-exec
+
+/usr/bin/sionlib/mpich/sionconfig            /usr/bin/sionconfig.mpich
+/usr/bin/sionlib/mpich                       /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/mpich/bin
+/usr/include                                 /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/mpich/include
+/usr/lib/${DEB_HOST_MULTIARCH}/sionlib/mpich /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/mpich/lib
