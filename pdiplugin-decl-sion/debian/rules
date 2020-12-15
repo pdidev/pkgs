@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+include /usr/share/dpkg/architecture.mk
+FLAVORS = openmpi mpich
+PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
+
+%:
+	dh $@ --parallel -D plugins/decl_sion
+
+override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
+configure_%: FLAVOR=$(subst configure_,,$@)
+configure_%:
+	/usr/bin/sionconfig.$(FLAVOR) --cflags
+	/usr/bin/sionconfig.$(FLAVOR) --libs
+	dh_auto_configure -Bbuild-$(FLAVOR) -- \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$(FLAVOR) \
+		-DMPI_C_COMPILER=mpicc.$(FLAVOR) \
+		-DMPI_CXX_COMPILER=mpicxx.$(FLAVOR) \
+		-DSIONCONFIG=/usr/bin/sionconfig.$(FLAVOR)
+
+define installdeb
+dh_installdeb: pdiplugin-decl-sion-$(1).$(2)
+pdiplugin-decl-sion-$(1).$(2): pdiplugin-decl-sion-FLAVOR.$(2)
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	sed \
+		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+		-e 's/#FLAVOR#/$(1)/g' \
+		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+		$$< > $$@
+
+endef
+$(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
+
+override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
+build_%: FLAVOR=$(subst build_,,$@)
+build_%:
+	dh_auto_build -Bbuild-$(FLAVOR)
+
+override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
+install_%: FLAVOR=$(subst install_,,$@)
+install_%:
+	dh_auto_install -Bbuild-$(FLAVOR)
