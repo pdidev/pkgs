@@ -1,0 +1,47 @@
+Source: pdiplugin-decl-netcdf
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 9),
+  cmake (>= 3.5),
+  pkg-config,
+  libpdi-dev,
+  libnetcdf-dev,
+  mpi-default-dev,
+  libnetcdf-mpi-dev
+Standards-Version: 4.5.0
+Homepage: https://pdi.julien-bigot.fr/
+
+Package: pdiplugin-decl-netcdf
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi1
+Description: Decl'NetCDF plugin for the PDI Data Interface
+ The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in
+ a declarative way. Decl'NetCDF does not support the full NetCDF feature set but
+ offers a simple declarative interface to access a large subset of it.
+
+Package: pdiplugin-decl-netcdf-openmpi
+Build-Profiles: <!debian>
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-netcdf
+Enhances: libpdi1
+Description: Decl'NetCDF plugin for the PDI Data Interface
+ The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in
+ a declarative way. Decl'NetCDF does not support the full NetCDF feature set but
+ offers a simple declarative interface to access a large subset of it.
+
+Package: pdiplugin-decl-netcdf-mpich
+Build-Profiles: <!debian>
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-netcdf
+Enhances: libpdi1
+Description: Decl'NetCDF plugin for the PDI Data Interface
+ The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in
+ a declarative way. Decl'NetCDF does not support the full NetCDF feature set but
+ offers a simple declarative interface to access a large subset of it.
