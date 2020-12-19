@@ -9,7 +9,7 @@ include /usr/share/mpi-default-dev/debian_defaults
 FLAVORS = openmpi mpich
 
 %:
-	dh $@ --parallel
+	dh $@ -Bbuild-$(FLAVOR) --parallel
 
 override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
 configure_%: FLAVOR=$(subst configure_,,$@)
@@ -40,6 +40,11 @@ override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: FLAVOR=$(subst build_,,$@)
 build_%:
 	dh_auto_build -Bbuild-$(FLAVOR)
+
+override_dh_auto_test:  $(foreach flavor,$(FLAVORS),test_$(flavor))
+test_%: FLAVOR=$(subst test_,,$@)
+test_%:
+	dh_auto_test -Bbuild-$(FLAVOR)
 
 override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
 install_%: FLAVOR=$(subst install_,,$@)

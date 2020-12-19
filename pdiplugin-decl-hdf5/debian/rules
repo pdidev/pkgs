@@ -46,6 +46,11 @@ build_%: FLAVOR=$(subst build_,,$@)
 build_%:
 	dh_auto_build -Bbuild-$(FLAVOR)
 
+override_dh_auto_test:  $(foreach flavor,$(FLAVORS),install_$(flavor))
+test_%: FLAVOR=$(subst install_,,$@)
+test_%:
+	dh_auto_test -Bbuild-$(FLAVOR)
+
 override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
 install_%: FLAVOR=$(subst install_,,$@)
 install_%:

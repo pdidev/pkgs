@@ -9,7 +9,7 @@ include /usr/share/dpkg/architecture.mk
 FLAVORS = serial
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
-%:
+%: $(foreach flavor,$(FLAVORS),%_(flavor))
 	dh $@ --parallel -Dplugins/decl_netcdf
 
 override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
@@ -39,6 +39,11 @@ override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: FLAVOR=$(subst build_,,$@)
 build_%:
 	dh_auto_build -Bbuild-$(FLAVOR)
+
+override_dh_auto_test:  $(foreach flavor,$(FLAVORS),install_$(flavor))
+test_%: FLAVOR=$(subst install_,,$@)
+test_%:
+	dh_auto_test -Bbuild-$(FLAVOR)
 
 override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
 install_%: FLAVOR=$(subst install_,,$@)

@@ -42,7 +42,6 @@ pushd build
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
-	-DBUILD_NetCDF_PARALLEL=OFF \
 	../plugins/decl_netcdf
 %make_build
 popd
@@ -52,7 +51,6 @@ module load mpi/openmpi-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
-	-DBUILD_NetCDF_PARALLEL=ON \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/openmpi/lib/pdi/plugins_%{version}/ \
 	../plugins/decl_netcdf	
 %make_build
@@ -64,7 +62,6 @@ module load mpi/mpich-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
-	-DBUILD_NetCDF_PARALLEL=ON \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/mpich/lib/pdi/plugins_%{version}/ \
 	../plugins/decl_netcdf
 %make_build
