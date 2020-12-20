@@ -5,8 +5,7 @@ Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9), dh-exec,
   mpi-default-dev,
   openmpi-bin, libopenmpi-dev,
-  mpich, libmpich-dev,
-  libc6-dev
+  mpich, libmpich-dev
 Standards-Version: 4.5.0
 Homepage: https://www.fz-juelich.de/ias/jsc/EN/Expertise/Support/Software/SIONlib/_node.html
 

@@ -74,18 +74,13 @@ EOF
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-SIONLIB_MPI=${MPI_VERSION}
-if [ ${MPI_VERSION} = mpich ]
-then
-	SIONLIB_MPI=mpich3
-fi
 ./configure \
 	--prefix="$(dirname ${MPI_BIN})" \
 	--compiler=gnu \
 	--disable-fortran \
 	--disable-parutils \
-	--mpi=${SIONLIB_MPI}
-%make_build -C build-linux-gomp-${SIONLIB_MPI}
+	--mpi=${MPI_VERSION/mpich/mpich3}
+%make_build -C build-linux-gomp-${MPI_VERSION/mpich/mpich3}
 module purge
 done
 
@@ -94,16 +89,11 @@ rm -rf $RPM_BUILD_ROOT
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-SIONLIB_MPI=${MPI_VERSION}
-if [ ${MPI_VERSION} = mpich ]
-then
-	SIONLIB_MPI=mpich3
-fi
 %{__make} \
 	BINDIR=%{?buildroot}${MPI_BIN} \
 	LIBDIR=%{?buildroot}${MPI_LIB} \
 	INCDIR=%{?buildroot}%{_includedir} \
-	-C build-linux-gomp-${SIONLIB_MPI}/build \
+	-C build-linux-gomp-${MPI_VERSION/mpich/mpich3}/build \
 	-f RealMakefile \
 	install-path install-libs install-parlibs install-utils install-config
 module purge

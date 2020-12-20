@@ -24,8 +24,8 @@ configure_%:
 		-DSIONCONFIG=/usr/bin/sionconfig.$(FLAVOR)
 
 define installdeb
-dh_installdeb: pdiplugin-decl-sion-$(1).$(2)
-pdiplugin-decl-sion-$(1).$(2): pdiplugin-decl-sion-FLAVOR.$(2)
+override_dh_installdeb: debian/pdiplugin-decl-sion-$(1).$(2)
+debian/pdiplugin-decl-sion-$(1).$(2): debian/pdiplugin-decl-sion-FLAVOR.$(2)
 	# dh_installdeb -D is not available with debhelper 9, we use sed
 	sed \
 		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
@@ -35,6 +35,8 @@ pdiplugin-decl-sion-$(1).$(2): pdiplugin-decl-sion-FLAVOR.$(2)
 
 endef
 $(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
+override_dh_installdeb:
+	dh_installdeb
 
 override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: FLAVOR=$(subst build_,,$@)

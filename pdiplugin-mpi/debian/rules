@@ -21,8 +21,8 @@ configure_%:
 		-DCMAKE_BUILD_TYPE=Release
 
 define installdeb
-dh_installdeb: pdiplugin-mpi-$(1).$(2)
-pdiplugin-mpi-$(1).$(2): pdiplugin-mpi-FLAVOR.$(2)
+override_dh_installdeb: debian/pdiplugin-mpi-$(1).$(2)
+debian/pdiplugin-mpi-$(1).$(2): debian/pdiplugin-mpi-FLAVOR.$(2)
 	# dh_installdeb -D is not available with debhelper 9, we use sed
 	sed \
 		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
@@ -32,6 +32,8 @@ pdiplugin-mpi-$(1).$(2): pdiplugin-mpi-FLAVOR.$(2)
 
 endef
 $(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
+override_dh_installdeb:
+	dh_installdeb
 
 override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: FLAVOR=$(subst build_,,$@)

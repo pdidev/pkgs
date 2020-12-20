@@ -23,8 +23,8 @@ configure_%:
 		-DMPI_C_COMPILER=/usr/bin/mpicc.$(FLAVOR)
 
 define installdeb
-dh_installdeb: libfti-$(1)-1.$(2)
-libfti-$(1)-1.$(2): libfti-FLAVOR-1.$(2)
+override_dh_installdeb: debian/libfti-$(1)-1.$(2)
+debian/libfti-$(1)-1.$(2): debian/libfti-FLAVOR-1.$(2)
 	# dh_installdeb -D is not available with debhelper 9, we use sed
 	sed \
 		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
@@ -33,6 +33,8 @@ libfti-$(1)-1.$(2): libfti-FLAVOR-1.$(2)
 
 endef
 $(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
+override_dh_installdeb:
+	dh_installdeb
 
 override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
 build_%: FLAVOR=$(subst build_,,$@)
