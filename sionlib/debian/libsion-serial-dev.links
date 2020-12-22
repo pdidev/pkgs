@@ -1,0 +1,6 @@
+#! /usr/bin/dh-exec
+
+/usr/bin/sionlib/serial/sionconfig            /usr/bin/sionconfig.serial
+/usr/bin/sionlib/serial                       /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/serial/bin
+/usr/include                                  /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/serial/include
+/usr/lib/${DEB_HOST_MULTIARCH}/sionlib/serial /usr/lib/${DEB_HOST_MULTIARCH}/sionlib/serial/lib

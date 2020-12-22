@@ -4,10 +4,13 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   cmake (>= 3.5),
+  libpdi-dev,
   libsion-mpich-dev,
   libsion-openmpi-dev,
-  libpdi-dev,
+  libsion-serial-dev,
   mpi-default-dev,
+  pdiplugin-mpi-mpich <!nocheck>,
+  pdiplugin-mpi-openmpi <!nocheck>,
   pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
@@ -16,8 +19,8 @@ Package: pdiplugin-decl-sion-mpich
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi1
 Provides: pdiplugin-decl-sion
+Enhances: libpdi1
 Description: Decl'SION plugin for the PDI Data Interface
  The PDI decl-sion plugin interfaces PDI with SIONlib.
 
@@ -25,7 +28,7 @@ Package: pdiplugin-decl-sion-openmpi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Enhances: libpdi1
 Provides: pdiplugin-decl-sion
+Enhances: libpdi1
 Description: Decl'SION plugin for the PDI Data Interface
  The PDI decl-sion plugin interfaces PDI with SIONlib.

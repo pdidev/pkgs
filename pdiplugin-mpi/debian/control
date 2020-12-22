@@ -4,11 +4,13 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   cmake (>= 3.5),
-  pkg-config,
+  libmpich-dev,
+  libopenmpi-dev,
   libpdi-dev,
   mpi-default-dev,
-  mpich, libmpich-dev,
-  openmpi-bin, libopenmpi-dev
+  mpich,
+  openmpi-bin,
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

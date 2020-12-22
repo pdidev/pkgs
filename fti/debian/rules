@@ -6,47 +6,43 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
-FLAVORS = openmpi mpich
+# openmpi < 4.0.2 does not support running as root
+ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
+	DISABLED_TESTS_FLAVOR = openmpi
+else
+	DISABLED_TESTS_FLAVOR = no_flavor
+endif
+
 
 %:
-	dh $@ -Bbuild-$(FLAVOR) --parallel
+	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ; \
+	for FLAVOR in openmpi mpich ; \
+	do export FLAVOR ; \
+		dh $@ --parallel -Bbuild-$${FLAVOR} -plibfti-$${FLAVOR}-1 -plibfti-$${FLAVOR}-dev  || exit 1 ; \
+	done
 
-override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
-configure_%: FLAVOR=$(subst configure_,,$@)
-configure_%:
-	dh_auto_configure -Bbuild-$(FLAVOR) -- \
+override_dh_auto_configure:
+	dh_auto_configure -- \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/fti/$(FLAVOR)/ \
-		-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$(FLAVOR)/ \
-		-DCMAKE_INSTALL_PREFIX=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$(FLAVOR)/ \
+		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/fti/$${FLAVOR}/ \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
+		-DCMAKE_INSTALL_PREFIX=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
 		-DENABLE_OPENSSL=ON \
-		-DMPI_C_COMPILER=/usr/bin/mpicc.$(FLAVOR)
+		-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
+		-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
+		-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
+		-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR}
 
-define installdeb
-override_dh_installdeb: debian/libfti-$(1)-1.$(2)
-debian/libfti-$(1)-1.$(2): debian/libfti-FLAVOR-1.$(2)
-	# dh_installdeb -D is not available with debhelper 9, we use sed
-	sed \
-		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-		-e 's/#FLAVOR#/$(1)/g' \
-		$$< > $$@
+override_dh_auto_test:
+	[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test
 
-endef
-$(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
 override_dh_installdeb:
+	# execute_before_dh_installdeb is not available with debhelper 9
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	for SUFFIX in prerm postinst ; \
+	do sed \
+		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+		-e "s/#FLAVOR#/$${FLAVOR}/g" \
+		debian/libfti-FLAVOR-1.$${SUFFIX} > debian/libfti-$${FLAVOR}-1.$${SUFFIX} ; \
+	done
 	dh_installdeb
-
-override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
-build_%: FLAVOR=$(subst build_,,$@)
-build_%:
-	dh_auto_build -Bbuild-$(FLAVOR)
-
-override_dh_auto_test:  $(foreach flavor,$(FLAVORS),test_$(flavor))
-test_%: FLAVOR=$(subst test_,,$@)
-test_%:
-	dh_auto_test -Bbuild-$(FLAVOR)
-
-override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
-install_%: FLAVOR=$(subst install_,,$@)
-install_%:
-	dh_auto_install -Bbuild-$(FLAVOR)

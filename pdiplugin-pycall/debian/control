@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   cmake (>= 3.5),
-  pkg-config,
-  libpdi-dev
+  libpdi-dev,
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
