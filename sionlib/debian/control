@@ -16,7 +16,6 @@ Package: libsion-headers
 Architecture: all
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Provides: libsion-dev
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several
  thousands of processors into one or a small number of physical files. For
@@ -46,6 +45,7 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
   libsion-headers (= ${binary:Version}),
   mpich, libmpich-dev
+Provides: libsion-dev
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several
  thousands of processors into one or a small number of physical files. For
@@ -60,6 +60,7 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
   libsion-headers (= ${binary:Version}),
   mpich, libmpich-dev
+Provides: libsion-dev
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several
  thousands of processors into one or a small number of physical files. For
