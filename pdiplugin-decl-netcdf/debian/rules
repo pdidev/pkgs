@@ -6,6 +6,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
+PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 # openmpi < 4.0.2 does not support running as root
 ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
 	DISABLED_TESTS_FLAVOR = openmpi
@@ -16,18 +17,16 @@ endif
 
 %:
 	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ; \
-	for FLAVOR in openmpi mpich ; \
+	for FLAVOR in serial mpi ; \
 	do export FLAVOR ; \
-		dh $@ --parallel -Bbuild-$${FLAVOR} -plibfti-$${FLAVOR}-1 -plibfti-$${FLAVOR}-dev  || exit 1 ; \
+		dh $@ --parallel -D plugins/decl_netcdf -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR}  || exit 1 ; \
 	done
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/fti/$${FLAVOR}/ \
-		-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
-		-DCMAKE_INSTALL_PREFIX=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
-		-DENABLE_OPENSSL=ON \
+		-DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/netcdf/$${FLAVOR}/lib/ \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
 		-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
 		-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
 		-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
@@ -43,6 +42,7 @@ override_dh_installdeb:
 	do sed \
 		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
 		-e "s/#FLAVOR#/$${FLAVOR}/g" \
-		debian/libfti-FLAVOR-1.$${SUFFIX} > debian/libfti-$${FLAVOR}-1.$${SUFFIX} ; \
+		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+		debian/pdiplugin-decl-netcdf-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-netcdf-$${FLAVOR}.$${SUFFIX} ; \
 	done
 	dh_installdeb

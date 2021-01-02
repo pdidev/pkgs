@@ -4,10 +4,12 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9),
   cmake (>= 3.4),
+  libmpich-dev,
+  libopenmpi-dev,
   libssl-dev,
   mpi-default-dev,
-  openmpi-bin, libopenmpi-dev,
-  mpich, libmpich-dev
+  mpich,
+  openmpi-bin
 Standards-Version: 4.5.0
 Homepage: https://github.com/leobago/fti
 

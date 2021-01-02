@@ -7,7 +7,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz
+Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0
 BuildRequires:  zpp, paraconf-devel >= 0.4.0, spdlog-devel >= 1.3.1

@@ -5,48 +5,50 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-FLAVORS = serial openmpi mpich
+include /usr/share/mpi-default-dev/debian_defaults
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
+# openmpi < 4.0.2 does not support running as root
+ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
+	DISABLED_TESTS_FLAVOR = openmpi
+else
+	DISABLED_TESTS_FLAVOR = no_flavor
+endif
+
 
 %:
-	dh $@ --parallel -Dplugins/decl_hdf5
+	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ; \
+	for FLAVOR in serial openmpi mpich ; \
+	do export FLAVOR ; \
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ; \
+		dh $@ --parallel -D plugins/decl_hdf5 -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} || exit 1 ; \
+	done
 
-override_dh_auto_configure:  $(foreach flavor,$(FLAVORS),configure_$(flavor))
-configure_%: FLAVOR=$(subst configure_,,$@)
-configure_%: H5CC=h5pcc.$(FLAVOR)
-configure_%: BUILD_HDF5_PARALLEL=ON
-configure_serial: H5CC=h5cc
-configure_serial: BUILD_HDF5_PARALLEL=OFF
-configure_%:
-	#TODO: -DBUILD_TESTING=ON when PDI issue #274 is fixed
-	dh_auto_configure -Bbuild-$(FLAVOR) -- \
-		-DBUILD_HDF5_PARALLEL=$(BUILD_HDF5_PARALLEL) \
-		-DBUILD_TESTING=$(BUILD_HDF5_PARALLEL) \
-		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$(H5CC) \
-		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$(FLAVOR) \
-		-DCMAKE_BUILD_TYPE=Release
+override_dh_auto_configure:
+	#TODO: -DBUILD_TESTING=ON after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/274
+	H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ; \
+	BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ; \
+	dh_auto_configure -- \
+		-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
+		-DBUILD_TESTING=$${BUILD_HDF5_PARALLEL} \
+		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
+		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
+		-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
+		-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
+		-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR}
 
-define installdeb
-override_dh_installdeb: debian/pdiplugin-decl-hdf5-$(1).$(2)
-debian/pdiplugin-decl-hdf5-$(1).$(2): debian/pdiplugin-decl-hdf5-FLAVOR.$(2)
-	# dh_installdeb -D is not available with debhelper 9, we use sed
-	sed \
-		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-		-e 's/#FLAVOR#/$(1)/g' \
-		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-		$$< > $$@
+override_dh_auto_test:
+	[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test
 
-endef
-$(eval $(foreach suffix,prerm postinst,$(foreach flavor,$(FLAVORS),$(call installdeb,$(flavor),$(suffix)))))
 override_dh_installdeb:
+	# execute_before_dh_installdeb is not available with debhelper 9
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	for SUFFIX in prerm postinst ; \
+	do sed \
+		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+		-e "s/#FLAVOR#/$${FLAVOR}/g" \
+		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+		debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ; \
+	done
 	dh_installdeb
-
-override_dh_auto_build: $(foreach flavor,$(FLAVORS),build_$(flavor))
-build_%: FLAVOR=$(subst build_,,$@)
-build_%:
-	dh_auto_build -Bbuild-$(FLAVOR)
-
-override_dh_auto_install:  $(foreach flavor,$(FLAVORS),install_$(flavor))
-install_%: FLAVOR=$(subst install_,,$@)
-install_%:
-	dh_auto_install -Bbuild-$(FLAVOR)

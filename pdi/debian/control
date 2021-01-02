@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9), dh-exec, dh-python,
   dh-fortran-mod <!stretch !xenial !bionic>,
-  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
   cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
+  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
   gfortran | fortran-compiler,
   libgmock-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,
   libgtest-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,

@@ -6,8 +6,8 @@ Build-Depends: debhelper (>= 9), dh-exec,
   dh-fortran-mod <!stretch !xenial !bionic>,
   cmake (>= 3.5),
   gfortran | fortran-compiler,
-  pkg-config,
-  libyaml-dev
+  libyaml-dev,
+  pkg-config
 Standards-Version: 4.5.0
 Homepage: https://github.com/pdidev/paraconf
 

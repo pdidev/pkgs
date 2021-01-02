@@ -9,8 +9,8 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	#TODO: -DBUILD_TESTING=ON when PDI issue #276 is fixed
-	. /opt/flowvr/bin/flowvr-suite-config.sh && \
 	dh_auto_configure --parallel -D plugins/flowvr -- \
-		-DBUILD_TESTING=OFF \
 		-DCMAKE_BUILD_TYPE=Release
+
+#TODO: Re-enable tests after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/277
+override_dh_auto_test:

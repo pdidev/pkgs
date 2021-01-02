@@ -3,9 +3,11 @@ Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9), dh-exec,
+  libmpich-dev,
+  libopenmpi-dev,
   mpi-default-dev,
-  openmpi-bin, libopenmpi-dev,
-  mpich, libmpich-dev
+  mpich,
+  openmpi-bin
 Standards-Version: 4.5.0
 Homepage: https://www.fz-juelich.de/ias/jsc/EN/Expertise/Support/Software/SIONlib/_node.html
 
@@ -13,8 +15,7 @@ Homepage: https://www.fz-juelich.de/ias/jsc/EN/Expertise/Support/Software/SIONli
 Package: libsion-headers
 Architecture: all
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, libc6-dev
-Provides: libsion-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several
  thousands of processors into one or a small number of physical files. For
@@ -44,6 +45,22 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
   libsion-headers (= ${binary:Version}),
   mpich, libmpich-dev
+Provides: libsion-dev
+Description: a parallel input output library, OpenMPI version
+ SIONlib is a library for writing and reading binary data to/from several
+ thousands of processors into one or a small number of physical files. For
+ parallel access to files only the open and close functions are collective while
+ writing and reading file can be done asynchronously. SIONlib provides a SIONlib
+ file handle which substitutes the C file pointer.
+
+
+Package: libsion-serial-dev
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends},
+  libsion-headers (= ${binary:Version}),
+  mpich, libmpich-dev
+Provides: libsion-dev
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several
  thousands of processors into one or a small number of physical files. For
