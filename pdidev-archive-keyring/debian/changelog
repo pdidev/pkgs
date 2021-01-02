@@ -1,3 +1,9 @@
+pdidev-archive-keyring (2021.01.02) unstable; urgency=medium
+
+  * Auto-update repository path if installed following instructions
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 02 Jan 2021 14:29:19 +0100
+
 pdidev-archive-keyring (2020.05.10) unstable; urgency=medium
 
   * Initial release
