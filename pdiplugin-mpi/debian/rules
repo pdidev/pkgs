@@ -6,6 +6,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
+FLAVORS = openmpi mpich
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 # openmpi < 4.0.2 does not support running as root
 ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
@@ -16,33 +17,57 @@ endif
 
 
 %:
-	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ; \
-	for FLAVOR in openmpi mpich ; \
-	do export FLAVOR ; \
-		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ; \
-		dh $@ --parallel -D plugins/mpi -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR}  || exit 1 ; \
+	dh $@ --parallel -D plugins/mpi
+
+override_dh_auto_clean:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_clean -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
 	done
 
 override_dh_auto_configure:
-	dh_auto_configure -Bbuild-$${FLAVOR} -- \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
-		-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
-		-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
-		-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
-		-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR}
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} -- \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
+			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
+			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
+			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
+			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} ;\
+	done
+
+override_dh_auto_build:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
+	done
 
 override_dh_auto_test:
-	[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
+		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
+	done
+
+override_dh_auto_install:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
+	done
 
 override_dh_installdeb:
-	# dh_installdeb -D is not available with debhelper 9, we use sed
-	for SUFFIX in prerm postinst ; \
-	do sed \
-		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-		-e "s/#FLAVOR#/$${FLAVOR}/g" \
-		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-		debian/pdiplugin-mpi-FLAVOR.$${SUFFIX} > debian/pdiplugin-mpi-$${FLAVOR}.$${SUFFIX} ; \
-	done
 	# execute_before_dh_installdeb is not available with debhelper 9
-	dh_installdeb
+	# dh_installdeb -D is not available with debhelper 9, we use sed
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		for SUFFIX in prerm postinst ;\
+		do sed \
+			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+			-e "s/#FLAVOR#/$${FLAVOR}/g" \
+			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+			debian/pdiplugin-mpi-FLAVOR.$${SUFFIX} > debian/pdiplugin-mpi-$${FLAVOR}.$${SUFFIX} ;\
+		done ;\
+		dh_installdeb -ppdiplugin-mpi-$${FLAVOR} ;\
+	done

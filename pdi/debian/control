@@ -23,15 +23,13 @@ Package: libpdi1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: pdiplugin-all
 Recommends:
-  pdiplugin-decl-hdf5,
-  pdiplugin-mpi,
-  pdiplugin-pycall,
   pdiplugin-serialize,
   pdiplugin-set-value,
   pdiplugin-trace,
   pdiplugin-user-code
-Description: the PDI Data Interface
+Description: the PDI Data , main library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
@@ -39,7 +37,7 @@ Package: libpdi-f90.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi1 (= ${binary:Version})
-Description: the PDI Data Interface
+Description: the PDI Data Interface for fortran
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
@@ -47,7 +45,7 @@ Package: libpdi-pysupport1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi1 (= ${binary:Version})
-Description: the PDI Data Interface
+Description: the PDI Data Interface python support library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
@@ -55,7 +53,7 @@ Package: python3-pdi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi-pysupport1 (= ${binary:Version})
-Description: the PDI Data Interface
+Description: the PDI Data Interface python module
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
@@ -71,7 +69,31 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
   pybind11-dev (>= 2.3.0),
   python3-dev (>= 3.5),
   python3-numpy
-Recommends: cmake (>= 3.5), pkg-config
-Description: Development files for pdi
+Recommends: cmake, pkg-config, pdiplugin-all
+Description: Development files for PDI
  The pdi-dev package contains C/C++/Fortran header files for developing
- applications or plugins that use pdi.
+ applications or plugins that use PDI.
+
+Package: pdiplugin-all
+Architecture: any
+Section: all
+Depends:
+  pdiplugin-decl-hdf5-mpich,
+  pdiplugin-decl-hdf5-openmpi,
+  pdiplugin-decl-hdf5-serial,
+  pdiplugin-decl-netcdf-mpich,
+  pdiplugin-decl-netcdf-openmpi,
+  pdiplugin-decl-sion-mpich,
+  pdiplugin-decl-sion-openmpi,
+  pdiplugin-decl-sion-serial,
+  pdiplugin-flowvr,
+  pdiplugin-fti,
+  pdiplugin-mpi,
+  pdiplugin-pycall,
+  pdiplugin-serialize,
+  pdiplugin-set-value,
+  pdiplugin-trace,
+  pdiplugin-user-code
+Description: PDI plugins, full set
+ This is a metapackage depending on all available PDI plug-ins to make
+ installation easier.

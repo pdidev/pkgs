@@ -25,9 +25,22 @@ Description: Decl'NetCDF plugin for the PDI Data Interface
  a declarative way. Decl'NetCDF does not support the full NetCDF feature set but
  offers a simple declarative interface to access a large subset of it.
 
-Package: pdiplugin-decl-netcdf-mpi
-# TODO: Disabled until https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=977545
-Build-Profiles: <!debian !ubuntu !bionic !xenial>
+Package: pdiplugin-decl-netcdf-mpich
+#TODO: Disabled until https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=977545
+Build-Profiles: <disabled>
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-netcdf
+Enhances: libpdi1
+Description: Decl'NetCDF plugin for the PDI Data Interface
+ The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in
+ a declarative way. Decl'NetCDF does not support the full NetCDF feature set but
+ offers a simple declarative interface to access a large subset of it.
+
+Package: pdiplugin-decl-netcdf-openmpi
+#TODO: Disabled until https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=977545
+Build-Profiles: <disabled>
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}

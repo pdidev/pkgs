@@ -58,8 +58,7 @@ Package: libsion-serial-dev
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends},
-  libsion-headers (= ${binary:Version}),
-  mpich, libmpich-dev
+  libsion-headers (= ${binary:Version})
 Provides: libsion-dev
 Description: a parallel input output library, OpenMPI version
  SIONlib is a library for writing and reading binary data to/from several

@@ -32,3 +32,14 @@ Provides: pdiplugin-decl-sion
 Enhances: libpdi1
 Description: Decl'SION plugin for the PDI Data Interface
  The PDI decl-sion plugin interfaces PDI with SIONlib.
+
+Package: pdiplugin-decl-sion-serial
+#TODO: Disabled until https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/288
+Build-Profiles: <disabled>
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: pdiplugin-decl-sion
+Enhances: libpdi1
+Description: Decl'SION plugin for the PDI Data Interface
+ The PDI decl-sion plugin interfaces PDI with SIONlib.

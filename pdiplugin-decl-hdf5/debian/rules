@@ -7,6 +7,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
+FLAVORS = serial openmpi mpich
 # openmpi < 4.0.2 does not support running as root
 ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
 	DISABLED_TESTS_FLAVOR = openmpi
@@ -16,39 +17,63 @@ endif
 
 
 %:
-	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ; \
-	for FLAVOR in serial openmpi mpich ; \
-	do export FLAVOR ; \
-		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ; \
-		dh $@ --parallel -D plugins/decl_hdf5 -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} || exit 1 ; \
+	dh $@ --parallel -D plugins/decl_hdf5
+
+override_dh_auto_clean:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_clean -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
 override_dh_auto_configure:
 	#TODO: -DBUILD_TESTING=ON after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/274
-	H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ; \
-	BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ; \
-	dh_auto_configure -- \
-		-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
-		-DBUILD_TESTING=$${BUILD_HDF5_PARALLEL} \
-		-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
-		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
-		-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
-		-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
-		-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR}
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ;\
+		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
+		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
+			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
+			-DBUILD_TESTING=$${BUILD_HDF5_PARALLEL} \
+			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
+			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
+			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
+			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
+			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} ;\
+	done
+
+override_dh_auto_build:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
+	done
 
 override_dh_auto_test:
-	[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
+		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
+	done
+
+override_dh_auto_install:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
+	done
 
 override_dh_installdeb:
 	# execute_before_dh_installdeb is not available with debhelper 9
 	# dh_installdeb -D is not available with debhelper 9, we use sed
-	for SUFFIX in prerm postinst ; \
-	do sed \
-		-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-		-e "s/#FLAVOR#/$${FLAVOR}/g" \
-		-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-		debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ; \
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do  \
+		for SUFFIX in prerm postinst ;\
+		do sed \
+			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+			-e "s/#FLAVOR#/$${FLAVOR}/g" \
+			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
+			debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ;\
+		done ;\
+		dh_installdeb -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
-	dh_installdeb
