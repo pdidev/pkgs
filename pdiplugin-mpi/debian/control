@@ -8,8 +8,8 @@ Build-Depends: debhelper (>= 9),
   libopenmpi-dev,
   libpdi-dev,
   mpi-default-dev,
-  mpich,
-  openmpi-bin,
+  mpich <!nocheck>,
+  openmpi-bin <!nocheck>,
   pkg-config
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
@@ -18,6 +18,7 @@ Package: pdiplugin-mpi-mpich
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: mpich
 Enhances: libpdi1
 Provides: pdiplugin-mpi
 Description: MPI plugin for the PDI Data Interface
@@ -27,6 +28,7 @@ Package: pdiplugin-mpi-openmpi
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: openmpi-bin
 Enhances: libpdi1
 Provides: pdiplugin-mpi
 Description: MPI plugin for the PDI Data Interface
