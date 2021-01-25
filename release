@@ -6,24 +6,41 @@ then
 	exit 1
 fi
 
-AUTHOR:="Julien Bigot <julien.bigot@.cea.fr>"
-DEB_DATE:="$(date -R)"
-RPM_DATE:="$(LC_ALL=C date "+%a %b %d %Y")"
+AUTHOR="Julien Bigot <julien.bigot@.cea.fr>"
+DEB_DATE="$(date -R)"
+RPM_DATE="$(LC_ALL=C date "+%a %b %d %Y")"
 VERSION="$1"
+PKG_VERSION="$(echo "${VERSION}"|sed 's/-/~/g')"
+DEB_VERSION="{upstream_version}"
+RPM_VERSION="%{version}"
+RPM_VERSION="%{version}"
+if [ "x${VERSION}" != "x${PKG_VERSION}" ]
+then
+	DEB_VERSION="${VERSION}"
+	RPM_VERSION="${VERSION}"
+fi
 
 sed \
-	's%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*.tar.bz2%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/{upstream_version}/pdi-{upstream_version}.tar.bz2%' \
+	"s%https://gitlab\.maisondelasimulation\.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*\.tar\.[a-zA-Z0-9]*%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${DEB_VERSION}/pdi-${DEB_VERSION}.tar.bz2%" \
 	-i build.conf
 sed \
-	-e "s/Pending release on master <julien.bigot@cea.fr>  Thu, 26 Oct 2020 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
-	-e "s/(9999master-1)/(${VERSION}-1)/" \
+	-e "s/Pending release on master <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
+	-e "s/(9999master-1)/(${PKG_VERSION}-1)/" \
 	-e "s/\* Pending release on master/* Upstream update to ${VERSION}/" \
 	-i  pdi*/debian/changelog
 sed \
-	-e 's#https://gitlab.maisondelasimulation.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*.tar.gz#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.gz#'
-	-e "Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
-	-e "s/Version: .*/Version:        ${VERSION}/" \
+	-e "s#https://gitlab\.maisondelasimulation\.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*\.tar\.[a-zA-Z0-9]*#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${RPM_VERSION}/pdi-${RPM_VERSION}.tar.gz#" \
+	-e "s/Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
+	-e "s/Version: .*/Version:        ${PKG_VERSION}/" \
 	-e "s/- Pending release on master/- Upstream update to ${VERSION}/" \
+	-e "s/=\s*master\b/= %{version}/" \
 	-i pdi*/*.spec
 
-rm pdi-unmaster
+if [ "x${VERSION}" != "x${PKG_VERSION}" ]
+then
+	sed \
+		-e "s/%autosetup.*/%autosetup -n pdi-${VERSION}/" \
+		-i pdi*/*.spec
+fi
+
+# rm release
