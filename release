@@ -26,13 +26,13 @@ sed \
 sed \
 	-e "s/Pending release on master <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
 	-e "s/(9999master-1)/(${PKG_VERSION}-1)/" \
-	-e "s/\* Pending release on master/* Upstream update to ${VERSION}/" \
+	-e "s/\* Pending release on master/* Upstream release ${VERSION}/" \
 	-i  pdi*/debian/changelog
 sed \
-	-e "s#https://gitlab\.maisondelasimulation\.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*\.tar\.[a-zA-Z0-9]*#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${RPM_VERSION}/pdi-${RPM_VERSION}.tar.gz#" \
+	-e "s#https://gitlab\.maisondelasimulation\.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*\.tar\.[a-zA-Z0-9]*#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${RPM_VERSION}/pdi-${RPM_VERSION}.tar.bz2#" \
 	-e "s/Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
 	-e "s/Version: .*/Version:        ${PKG_VERSION}/" \
-	-e "s/- Pending release on master/- Upstream update to ${VERSION}/" \
+	-e "s/- Pending release on master/- Upstream release ${VERSION}/" \
 	-e "s/=\s*master\b/= %{version}/" \
 	-i pdi*/*.spec
 
