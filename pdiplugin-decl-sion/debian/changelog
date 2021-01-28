@@ -1,5 +1,5 @@
-pdiplugin-decl-sion (9999master-1) unstable devel; urgency=medium
+pdiplugin-decl-sion (1.0.0-1) unstable devel; urgency=medium
 
   * Initial Release
 
- -- Pending release on master <julien.bigot@cea.fr>  Thu, 26 Oct 2020 00:00:00 +0000
+ -- Julien Bigot <julien.bigot@.cea.fr>  Thu, 28 Jan 2021 16:07:15 +0100

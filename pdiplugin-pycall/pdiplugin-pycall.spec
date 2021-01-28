@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-pycall
-Version:        master
+Version:        1.0.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -41,8 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>
-- Pending release on master
+* Thu Jan 28 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.0.0
 * Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.6.5
 * Tue Oct 20 2020 - Julien Bigot <julien.bigot@cea.fr>

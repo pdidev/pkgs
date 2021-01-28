@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-decl-netcdf
-Version:        master
+Version:        1.0.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -8,7 +8,7 @@ Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
-BuildRequires:  pdi-devel = master, netcdf-devel >= 1.8
+BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 1.8
 
 %description
 The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in a
@@ -110,5 +110,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>
+* Thu Jan 28 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Initial Release
