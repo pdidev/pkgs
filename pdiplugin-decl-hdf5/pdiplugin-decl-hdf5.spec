@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-decl-hdf5
-Version:        master
+Version:        v1.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -113,8 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Sat Feb 27 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sat Feb 27 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release v1.0
 * Thu Jan 28 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.0.0
 * Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>

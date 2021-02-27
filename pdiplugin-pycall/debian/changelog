@@ -1,6 +1,6 @@
-pdiplugin-pycall (1614428254master-1) unstable devel; urgency=medium
+pdiplugin-pycall (1614428348v1.0-1) unstable devel; urgency=medium
 
-  * Upstream release master
+  * Upstream release v1.0
 
  -- Pending release on master <julien.bigot@cea.fr>  Sat, 27 Feb 2021 13:17:34 +0100
 
