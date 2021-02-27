@@ -6,41 +6,52 @@ then
 	exit 1
 fi
 
+VERSION="$1"
 AUTHOR="Julien Bigot <julien.bigot@.cea.fr>"
 DEB_DATE="$(date -R)"
 RPM_DATE="$(LC_ALL=C date "+%a %b %d %Y")"
-VERSION="$1"
-PKG_VERSION="$(echo "${VERSION}"|sed 's/-/~/g')"
-DEB_VERSION="{upstream_version}"
-RPM_VERSION="%{version}"
-RPM_VERSION="%{version}"
-if [ "x${VERSION}" != "x${PKG_VERSION}" ]
+DEB_PKG_VERSION="$(echo "${VERSION}"|sed 's/-/~/g')"
+RPM_PKG_VERSION="$(echo "${VERSION}"|sed 's/-/~/g')"
+BCF_SRC_VERSION="{upstream_version}"
+RPM_SRC_VERSION="%{version}"
+if [ "x${VERSION}" != "x${DEB_PKG_VERSION}" ]
 then
-	DEB_VERSION="${VERSION}"
-	RPM_VERSION="${VERSION}"
+	BCF_SRC_VERSION="${VERSION}"
+	RPM_SRC_VERSION="${VERSION}"
+fi
+if [[ ! ${VERSION} =~ ^x[0-9].* ]]
+then
+	DEB_PKG_VERSION="$(date '+%s')${VERSION}"
+	BCF_SRC_VERSION="${VERSION}"
+fi
+
+if [ "x${VERSION}" == "xmaster" ]
+then
+	AUTHOR="Pending release on master <julien.bigot@cea.fr>"
+	sed "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release master/" -i pdi*/*.spec
+	sed 1p -i pdi/debian/changelog pdiplugin*/debian/changelog
+	sed "1s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/" -i  pdi/debian/changelog pdiplugin*/debian/changelog
 fi
 
 sed \
-	"s%https://gitlab\.maisondelasimulation\.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*\.tar\.[a-zA-Z0-9]*%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${DEB_VERSION}/pdi-${DEB_VERSION}.tar.bz2%" \
+	"s%https://gitlab\.maisondelasimulation\.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*\.tar\.[a-zA-Z0-9]*%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${BCF_SRC_VERSION}/pdi-${BCF_SRC_VERSION}.tar.bz2%" \
 	-i build.conf
 sed \
 	-e "s/Pending release on master <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
-	-e "s/(9999master-1)/(${PKG_VERSION}-1)/" \
-	-e "s/\* Pending release on master/* Upstream release ${VERSION}/" \
-	-i  pdi*/debian/changelog
+	-e "s/([0-9]*master-1)/(${DEB_PKG_VERSION}-1)/" \
+	-e "s/\* Upstream release master/* Upstream release ${VERSION}/" \
+	-i  pdi/debian/changelog pdiplugin*/debian/changelog
 sed \
-	-e "s#https://gitlab\.maisondelasimulation\.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*\.tar\.[a-zA-Z0-9]*#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${RPM_VERSION}/pdi-${RPM_VERSION}.tar.bz2#" \
-	-e "s/Thu Nov 26 2020 - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
-	-e "s/Version: .*/Version:        ${PKG_VERSION}/" \
-	-e "s/- Pending release on master/- Upstream release ${VERSION}/" \
+	-e "s#https://gitlab\.maisondelasimulation\.fr/pdidev/[^/]*/-/archive/[^/]*/[^/]*\.tar\.[a-zA-Z0-9]*#https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${RPM_SRC_VERSION}/pdi-${RPM_SRC_VERSION}.tar.bz2#" \
+	-e "s/[A-Za-z]* [A-Za-z]* [0-9]* [0-9]* - Pending release on master <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
+	-e "s/Version: .*/Version:        ${RPM_PKG_VERSION}/" \
+	-e "s/- Upstream release master/- Upstream release ${VERSION}/" \
 	-e "s/=\s*master\b/= %{version}/" \
 	-i pdi*/*.spec
 
-if [ "x${VERSION}" != "x${PKG_VERSION}" ]
+if [ "x${VERSION}" != "x${RPM_PKG_VERSION}" ]
 then
 	sed \
 		-e "s/%autosetup.*/%autosetup -n pdi-${VERSION}/" \
 		-i pdi*/*.spec
 fi
-
-# rm release
