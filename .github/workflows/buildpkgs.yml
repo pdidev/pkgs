@@ -1,10 +1,6 @@
-name: buildpkgs
+name: Pull request build
 on:
-  push:
-    branches: [ master ]
   pull_request:
-  schedule:
-    - cron:  '0 2 * * 6' # weekly build on Saturday, 2AM
 jobs:
   buildpkgs:
     runs-on: ubuntu-20.04
@@ -46,16 +42,8 @@ jobs:
     - name: Build packages
       env:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+        NEW_BRANCH: "${{ github.head_ref }}."
       run: |
-        if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]
-        then
-            NEW_BRANCH="${GITHUB_HEAD_REF}."
-        elif [ "${GITHUB_REF}" == "refs/heads/master" ]
-        then
-            NEW_BRANCH=""
-        else
-            NEW_BRANCH="${GITHUB_REF/*\/}."
-        fi
         for DISTRIB in debian fedora ubuntu
         do
             git -C repo.${DISTRIB} config user.email "github.action@example.com"
