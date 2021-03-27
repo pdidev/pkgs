@@ -1,3 +1,9 @@
+pdiplugin-user-code (1616841928master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Sat, 27 Mar 2021 11:45:28 +0100
+
 pdiplugin-user-code (1.1.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.1.0
