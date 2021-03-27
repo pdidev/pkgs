@@ -1,0 +1,53 @@
+name: pdi-master build
+on:
+  push:
+    branches: [ pdi-master ]
+  schedule:
+    - cron:  '27 2 * * *' # daily build at 2:27AM
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        distrib: [ debian, fedora, ubuntu ]
+    steps:
+      - name: Checkout packages
+        uses: actions/checkout@v2
+        with:
+          ref: pdi-master
+      - name: Checkout builder script
+        uses: actions/checkout@v2
+        with:
+          repository: jbigot/pkg_builder
+          path: pkg_builder
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Checkout distrib repo
+        uses: actions/checkout@v2
+        with:
+          repository: pdidev/repo
+          path: repo.${{ matrix.distrib }}
+          ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install devscripts equivs aptly gpgv1 expect
+          pip3.8 install -r pkg_builder/requirements.txt
+      - name: Build packages
+        env:
+          KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+          DISTRIB: ${{ matrix.distrib }}
+          NEW_BRANCH: pdi-master.
+        run: |
+          git -C repo.${DISTRIB} config user.email "github.action@example.com"
+          git -C repo.${DISTRIB} config user.name  "Github Action"
+          git -C repo.${DISTRIB} fetch origin ${DISTRIB}
+          git -C repo.${DISTRIB} checkout --orphan "${NEW_BRANCH}${DISTRIB}"
+          git -C repo.${DISTRIB} rm -rf .
+          sed "s%pdidev/repo/%pdidev/repo/${NEW_BRANCH}%g" -i build.conf
+          unbuffer python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
+          git -C repo.${DISTRIB} add -A .
+          git -C repo.${DISTRIB} commit -C origin/${DISTRIB}
+          git -C repo.${DISTRIB} push -f origin "${NEW_BRANCH}${DISTRIB}"
