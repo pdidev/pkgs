@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-serialize
-Version:        master
+Version:        1.1.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -40,8 +40,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Sat Mar 27 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sat Mar 27 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.1.0
 * Sat Feb 27 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.0.1
 * Thu Jan 28 2021 - Julien Bigot <julien.bigot@.cea.fr>

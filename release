@@ -19,7 +19,7 @@ then
 	BCF_SRC_VERSION="${VERSION}"
 	RPM_SRC_VERSION="${VERSION}"
 fi
-if [[ ! ${VERSION} =~ ^x[0-9].* ]]
+if [[ ! ${VERSION} =~ ^[0-9].* ]]
 then
 	DEB_PKG_VERSION="$(date '+%s')${VERSION}"
 	BCF_SRC_VERSION="${VERSION}"
