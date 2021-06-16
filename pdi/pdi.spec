@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  1
 Name:           pdi
-Version:        master
+Version:        1.2.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -115,8 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
-* Sat Mar 27 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Wed Jun 16 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.2.0
 * Sat Mar 27 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.1.0
 * Sat Feb 27 2021 - Julien Bigot <julien.bigot@.cea.fr>
