@@ -45,12 +45,11 @@ override_dh_auto_build:
 	done
 
 override_dh_auto_test:
-	#TODO: Re-enable decl_sion_03_F after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/286
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-sion-$${FLAVOR} -- ARGS+="-E decl_sion_03_F" ;\
+		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-sion-$${FLAVOR} ;\
 	done
 
 override_dh_auto_install:

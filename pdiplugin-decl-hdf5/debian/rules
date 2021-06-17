@@ -26,14 +26,13 @@ override_dh_auto_clean:
 	done
 
 override_dh_auto_configure:
-	#TODO: -DBUILD_TESTING=ON after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/274
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
 		H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ;\
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
 			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
-			-DBUILD_TESTING=$${BUILD_HDF5_PARALLEL} \
+			-DBUILD_TESTING=ON \
 			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
 			-DCMAKE_BUILD_TYPE=Release \
@@ -51,14 +50,13 @@ override_dh_auto_build:
 
 override_dh_auto_test:
 	#TODO: re-enable decl_hdf5_05_C after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/290
-	#TODO: remove --no-parallel after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/296
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export CTEST_FLAGS="" ;\
 		[ "mpich" != "$${FLAVOR}" ] || export CTEST_FLAGS="-E decl_hdf5_05_C" ;\
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} --no-parallel -- ARGS="$${CTEST_FLAGS}" ;\
+		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- ARGS="$${CTEST_FLAGS}" ;\
 	done
 
 override_dh_auto_install:
