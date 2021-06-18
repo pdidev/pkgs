@@ -6,7 +6,7 @@ License:        MIT
 URL:            https://github.com/jbigot/zpp
 Source0:        https://github.com/jbigot/zpp/archive/%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  python3-devel
+BuildRequires:  python3-devel, python-setuptools
 
 %description
 Zpp transforms bash in a pre-processor for F90 source files. It offers a set of

@@ -37,6 +37,8 @@ Description: Decl'SION plugin for the PDI Data Interface
 
 Package: pdiplugin-decl-sion-serial
 Architecture: any
+#TODO: Disabled due to https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/347
+Build-Profiles: <disabled>
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-sion

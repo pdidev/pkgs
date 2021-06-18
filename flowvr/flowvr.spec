@@ -8,6 +8,7 @@ Summary:        the FlowVR in situ and in transit processing middleware
 Url:            http://flowvr.sourceforge.net/FlowVRDoc.html
 Source0:        https://gitlab.inria.fr/%{name}/%{name}-ex/-/archive/v%{version}/%{name}-ex-v%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
+BuildRequires:  chrpath
 BuildRequires:  doxygen
 BuildRequires:  freeglut-devel
 BuildRequires:  glew-devel
@@ -53,6 +54,8 @@ asynchronous in situ and in transit processing.
 %install
 rm -rf $RPM_BUILD_ROOT
 %make_install
+# remove rpath from the libs as it is wrong
+chrpath -d %{buildroot}/opt/%{name}/lib/flowvr/python/*.so
 # We remove this as it is not python3 compatible
 rm %{buildroot}/opt/%{name}/lib/flowvr/python/spy_module.py
 # Link from /opt to the expected locations

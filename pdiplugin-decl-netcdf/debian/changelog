@@ -1,6 +1,6 @@
-pdiplugin-decl-netcdf (1623921638master-1) unstable devel; urgency=medium
+pdiplugin-decl-netcdf (1.2.1-1) unstable devel; urgency=medium
 
-  * Upstream release master
+  * Upstream release 1.2.1
 
  -- Pending release on master <julien.bigot@cea.fr>  Thu, 17 Jun 2021 11:20:38 +0200
 
