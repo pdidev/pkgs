@@ -6,7 +6,7 @@ export PYBIND11_USE_CMAKE=1
 export PYBUILD_NAME=pybind11
 
 CONFIGURE_ARGS=-DPYBIND11_INSTALL:BOOL=ON
-ifeq (,$(filter xenial nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 CONFIGURE_ARGS+=-DPYBIND11_TEST:BOOL=ON \
 	-DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/$(shell py3versions -d)
 else

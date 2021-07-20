@@ -9,7 +9,7 @@ include /usr/share/mpi-default-dev/debian_defaults
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-mpi-' | sed 's/^pdiplugin-mpi-//')
 # openmpi < 4.0.2 does not support running as root
-ifneq (,$(filter stretch buster xenial bionic, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter buster bionic, $(DEB_BUILD_PROFILES)))
 	DISABLED_TESTS_FLAVOR = openmpi
 else
 	DISABLED_TESTS_FLAVOR = no_flavor

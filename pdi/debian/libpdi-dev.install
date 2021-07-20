@@ -3,4 +3,4 @@ usr/bin/*
 usr/include/*
 usr/lib/*/*.so
 usr/share/*
-usr/lib/*/fortran/*/*.mod <stretch> <xenial> <bionic>
+usr/lib/*/fortran/*/*.mod <bionic>

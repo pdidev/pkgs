@@ -3,12 +3,12 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 9), dh-exec, dh-python,
-  dh-fortran-mod <!stretch !xenial !bionic>,
-  cmake (>= 3.5) <stretch> <xenial> <bionic> <disco>,
-  cmake (>= 3.10) <!stretch !xenial !bionic !disco>,
+  dh-fortran-mod <!bionic>,
+  cmake (>= 3.5) <bionic>,
+  cmake (>= 3.10) <!bionic>,
   gfortran | fortran-compiler,
-  libgmock-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,
-  libgtest-dev (>= 1.8.0) <!stretch !xenial !bionic !disco>,
+  libgmock-dev (>= 1.8.0) <!bionic>,
+  libgtest-dev (>= 1.8.0) <!bionic>,
   libparaconf-dev (>= 0.4.0),
   libspdlog-dev (>= 1:1.3.1),
   pkg-config,
