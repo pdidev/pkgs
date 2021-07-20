@@ -50,14 +50,11 @@ override_dh_auto_build:
 	done
 
 override_dh_auto_test:
-	#TODO: re-enable decl_hdf5_05_C after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/290
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
-		export CTEST_FLAGS="" ;\
-		[ "mpich" != "$${FLAVOR}" ] || export CTEST_FLAGS="-E decl_hdf5_05_C" ;\
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- ARGS="$${CTEST_FLAGS}" ;\
+		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
 override_dh_auto_install:
