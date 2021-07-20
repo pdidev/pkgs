@@ -1,0 +1,35 @@
+name: Test PDI issue fix branch
+on:
+  push:
+    branches: [ 'pdi-issue-fix/*' ]
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        distrib: [ debian, fedora, ubuntu ]
+    steps:
+      - name: Checkout packages
+        uses: actions/checkout@v2
+        with:
+          ref: "${{ github.head_ref }}"
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Checkout builder script
+        uses: actions/checkout@v2
+        with:
+          repository: jbigot/pkg_builder
+          path: pkg_builder
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install devscripts equivs aptly gpgv1
+          pip3.8 install -r pkg_builder/requirements.txt
+      - name: Build packages
+        env:
+          KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+          DISTRIB: ${{ matrix.distrib }}
+        run: |
+          python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
