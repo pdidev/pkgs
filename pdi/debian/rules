@@ -1,16 +1,11 @@
 #!/usr/bin/make -f
 
-ifeq (,$(filter xenial, $(DEB_BUILD_PROFILES)))
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-endif
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-ifneq (,$(filter stretch xenial bionic disco, $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
-endif
-ifeq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
 	DHFLAGS += --with python3,fortran_mod
 else
 	DHFLAGS += --with python3

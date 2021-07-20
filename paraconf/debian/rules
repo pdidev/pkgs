@@ -4,7 +4,7 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifeq (,$(filter stretch xenial bionic, $(DEB_BUILD_PROFILES)))
+ifeq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
 	DHFLAGS += --with fortran_mod
 endif
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
