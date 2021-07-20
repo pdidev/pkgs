@@ -11,9 +11,9 @@ FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-fti-' | sed 's/^pdiplugin-f
 #TODO: re-enable mpich tests after https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/issues/299
 # openmpi < 4.0.2 does not support running as root
 ifneq (,$(filter buster bionic, $(DEB_BUILD_PROFILES)))
-	DISABLED_TESTS_FLAVOR = openmpi mpich
+	DISABLED_TESTS_FLAVOR = openmpi
 else
-	DISABLED_TESTS_FLAVOR = mpich
+	DISABLED_TESTS_FLAVOR = no_flavor
 endif
 
 
