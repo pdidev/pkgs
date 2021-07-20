@@ -39,15 +39,14 @@ jobs:
         env:
           KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
           DISTRIB: ${{ matrix.distrib }}
-          NEW_BRANCH: ""
         run: |
           git -C repo.${DISTRIB} config user.email "github.action@example.com"
           git -C repo.${DISTRIB} config user.name  "Github Action"
           git -C repo.${DISTRIB} fetch origin ${DISTRIB}
-          git -C repo.${DISTRIB} checkout --orphan "${NEW_BRANCH}${DISTRIB}"
+          git -C repo.${DISTRIB} checkout --orphan "${DISTRIB}"
           git -C repo.${DISTRIB} rm -rf .
-          sed "s%pdidev/repo/%pdidev/repo/${NEW_BRANCH}%g" -i build.conf
+          sed "s%pdidev/repo/%pdidev/repo/%g" -i build.conf
           unbuffer python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
           git -C repo.${DISTRIB} add -A .
           git -C repo.${DISTRIB} commit -C origin/${DISTRIB}
-          git -C repo.${DISTRIB} push -f origin "${NEW_BRANCH}${DISTRIB}"
+          git -C repo.${DISTRIB} push -f origin "${DISTRIB}"
