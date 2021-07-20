@@ -2,7 +2,7 @@ Source: zpp
 Section: unknown
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9), dh-python,
+Build-Depends: debhelper (>= 11), dh-python,
   python3-all,
   python3-setuptools
 Standards-Version: 4.4.1

@@ -2,7 +2,7 @@ Source: fti
 Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper (>= 11),
   cmake (>= 3.4),
   libmpich-dev,
   libopenmpi-dev,
