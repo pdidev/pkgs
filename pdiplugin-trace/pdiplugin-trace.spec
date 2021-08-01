@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-trace
-Version:        master
+Version:        1.3.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -39,8 +39,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Sun Aug 01 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sun Aug 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.3.0
 * Tue Jul 20 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.2.2
 * Fri Jun 18 2021 - Julien Bigot <julien.bigot@.cea.fr>

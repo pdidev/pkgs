@@ -8,6 +8,9 @@ ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 	DHFLAGS += --with python3
 else
+	ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+		CMAKEFLAGS += -DBUILD_TESTING=OFF
+	endif
 	DHFLAGS += --with python3,fortran_mod
 endif
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))

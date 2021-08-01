@@ -60,7 +60,7 @@ override_dh_auto_install:
 	done
 
 override_dh_installdeb:
-	# execute_before_dh_installdeb is not available with debhelper 9
+	# execute_before_dh_installdeb is not available before debhelper 12
 	# dh_installdeb -D is not available before debhelper 13, we use sed
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
