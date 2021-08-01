@@ -1,3 +1,9 @@
+pdiplugin-flowvr (1627825047master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Sun, 01 Aug 2021 15:37:27 +0200
+
 pdiplugin-flowvr (1.2.2-1) unstable devel; urgency=medium
 
   * Upstream release 1.2.2
