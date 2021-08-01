@@ -4,9 +4,17 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+	CMAKEFLAGS += -DBUILD_TESTING=OFF
+endif
+ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
+	CMAKEFLAGS += -DBUILD_TESTING=OFF
+endif
+
 %:
 	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure --parallel -D plugins/serialize -- \
-		-DCMAKE_BUILD_TYPE=Release
+		-DCMAKE_BUILD_TYPE=Release \
+		$(CMAKEFLAGS)

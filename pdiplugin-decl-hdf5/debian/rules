@@ -8,11 +8,15 @@ include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-decl-hdf5-' | sed 's/^pdiplugin-decl-hdf5-//')
-# openmpi < 4.0.2 does not support running as root
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+	DISABLED_TESTS_FLAVOR = $(FLAVORS)
+else
 ifneq (,$(filter buster bionic, $(DEB_BUILD_PROFILES)))
+	# openmpi < 4.0.2 does not support running as root
 	DISABLED_TESTS_FLAVOR = openmpi
 else
 	DISABLED_TESTS_FLAVOR = no_flavor
+endif
 endif
 
 
@@ -30,9 +34,10 @@ override_dh_auto_configure:
 	do  \
 		H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ;\
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
+		BUILD_TESTING=OFF; echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || BUILD_TESTING=ON; \
 		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
 			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
-			-DBUILD_TESTING=ON \
+			-DBUILD_TESTING=$${BUILD_TESTING} \
 			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
 			-DCMAKE_BUILD_TYPE=Release \
@@ -53,7 +58,7 @@ override_dh_auto_test:
 	do \
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
+		echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
 override_dh_auto_install:
@@ -63,7 +68,7 @@ override_dh_auto_install:
 	done
 
 override_dh_installdeb:
-	# execute_before_dh_installdeb is not available with debhelper 9
+	# execute_before_dh_installdeb is not available before debhelper 12
 	# dh_installdeb -D is not available before debhelper 13, we use sed
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
