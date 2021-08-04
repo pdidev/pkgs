@@ -2,43 +2,43 @@ pdiplugin-flowvr (1.3.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.3.1
 
- -- Pending release on master <julien.bigot@cea.fr>  Tue, 03 Aug 2021 14:45:11 +0200
+ -- Karol Sierociński <ksiero@man.poznan.pl>  Tue, 03 Aug 2021 14:45:11 +0200
 
 pdiplugin-flowvr (1.3.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.3.0
 
- -- Pending release on master <julien.bigot@cea.fr>  Sun, 01 Aug 2021 15:37:27 +0200
+ -- Julien Bigot <julien.bigot@cea.fr>  Sun, 01 Aug 2021 15:37:27 +0200
 
 pdiplugin-flowvr (1.2.2-1) unstable devel; urgency=medium
 
   * Upstream release 1.2.2
 
- -- Pending release on master <julien.bigot@cea.fr>  Sat, 19 Jun 2021 16:51:18 +0200
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 19 Jun 2021 16:51:18 +0200
 
 pdiplugin-flowvr (1.2.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.2.1
 
- -- Pending release on master <julien.bigot@cea.fr>  Thu, 17 Jun 2021 11:20:38 +0200
+ -- Julien Bigot <julien.bigot@cea.fr>  Thu, 17 Jun 2021 11:20:38 +0200
 
 pdiplugin-flowvr (1.2.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.2.0
 
- -- Pending release on master <julien.bigot@cea.fr>  Sat, 27 Mar 2021 11:45:28 +0100
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 27 Mar 2021 11:45:28 +0100
 
 pdiplugin-flowvr (1.1.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.1.0
 
- -- Pending release on master <julien.bigot@cea.fr>  Sat, 27 Mar 2021 11:37:26 +0100
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 27 Mar 2021 11:37:26 +0100
 
 pdiplugin-flowvr (16144482851.0.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.0.1
 
- -- Pending release on master <julien.bigot@cea.fr>  Sat, 27 Feb 2021 13:17:34 +0100
+ -- Julien Bigot <julien.bigot@cea.fr>  Sat, 27 Feb 2021 13:17:34 +0100
 
 pdiplugin-flowvr (1.0.0-1) unstable devel; urgency=medium
 

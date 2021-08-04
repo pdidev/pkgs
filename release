@@ -37,7 +37,7 @@ sed \
 	"s%https://gitlab\.maisondelasimulation\.fr/pdidev/pdi/-/archive/[^/]*/pdi-[^/]*\.tar\.[a-zA-Z0-9]*%https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/${BCF_SRC_VERSION}/pdi-${BCF_SRC_VERSION}.tar.bz2%" \
 	-i build.conf
 sed \
-	-e "s/Pending release on master <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* 00:00:00 +0000/${AUTHOR}  ${DEB_DATE}/" \
+	-e "s/Pending release on master <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* [0-9]*:[0-9]*:[0-9]* +[0-9]*/${AUTHOR}  ${DEB_DATE}/" \
 	-e "s/([0-9]*master-1)/(${DEB_PKG_VERSION}-1)/" \
 	-e "s/\* Upstream release master/* Upstream release ${VERSION}/" \
 	-i  pdi/debian/changelog pdiplugin*/debian/changelog

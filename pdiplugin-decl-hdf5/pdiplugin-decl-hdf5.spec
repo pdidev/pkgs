@@ -114,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Tue Aug 03 2021 - Julien Bigot <julien.bigot@.cea.fr>
+* Tue Aug 03 2021 - Karol Sierociński <ksiero@man.poznan.pl>
 - Upstream release 1.3.1
 * Sun Aug 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.3.0
