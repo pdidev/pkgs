@@ -1,3 +1,9 @@
+pdiplugin-trace (1636457567master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Tue, 09 Nov 2021 12:32:47 +0100
+
 pdiplugin-trace (1.4.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.4.0
