@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-flowvr
-Version:        master
+Version:        1.4.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -48,8 +48,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi_flowvr
 
 %changelog
-* Wed Aug 04 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Tue Nov 09 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.4.0
 * Tue Aug 03 2021 - Karol Sierociński <ksiero@man.poznan.pl>
 - Upstream release 1.3.1
 * Sun Aug 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
