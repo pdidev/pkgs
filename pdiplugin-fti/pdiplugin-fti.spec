@@ -1,6 +1,6 @@
 %global _vpath_builddir .
 Name:           pdiplugin-fti
-Version:        master
+Version:        1.4.1
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -83,8 +83,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Tue Nov 09 2021 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.4.1
 * Tue Nov 09 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.0
 * Tue Aug 03 2021 - Karol Sierociński <ksiero@man.poznan.pl>
