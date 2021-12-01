@@ -1,6 +1,6 @@
-pdiplugin-decl-hdf5 (1637092662master-1) unstable devel; urgency=medium
+pdiplugin-decl-hdf5 (1.4.3-1) unstable devel; urgency=medium
 
-  * Upstream release master
+  * Upstream release 1.4.3
 
  -- Pending release on master <julien.bigot@cea.fr>  Tue, 16 Nov 2021 13:57:42 -0600
 
