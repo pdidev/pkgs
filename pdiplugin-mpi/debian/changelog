@@ -1,3 +1,9 @@
+pdiplugin-mpi (1638396387master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Wed, 01 Dec 2021 23:06:27 +0100
+
 pdiplugin-mpi (1.4.3-1) unstable devel; urgency=medium
 
   * Upstream release 1.4.3
