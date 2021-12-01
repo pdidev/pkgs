@@ -1,5 +1,5 @@
 Name:           pdiplugin-pycall
-Version:        1.4.3
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -40,6 +40,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
+* Sun Mar 06 2022 - Pending release on master <julien.bigot@cea.fr>
+- Upstream release master
 * Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
 - updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>

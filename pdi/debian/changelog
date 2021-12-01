@@ -1,3 +1,9 @@
+pdi (1638396387master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Tue, 25 Jan 2022 17:42:10 +0100
+
 pdi (1.4.3-2) unstable devel; urgency=medium
 
   * Fix pdiplugin-all to not depend on all variants of the plugins
