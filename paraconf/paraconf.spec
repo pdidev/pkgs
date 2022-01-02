@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  0
 Name:           paraconf
-Version:        0.4.9
+Version:        0.4.15
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -88,6 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 03 2022 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.4.15
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.4.9
 * Thu Feb 6 2020 - Karol Sierociński ksiero@man.poznan.pl
