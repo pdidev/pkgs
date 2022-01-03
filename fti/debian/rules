@@ -32,6 +32,7 @@ override_dh_auto_configure:
 			-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/fti/$${FLAVOR}/ \
 			-DCMAKE_INSTALL_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
 			-DCMAKE_INSTALL_PREFIX=/usr/lib/$(DEB_HOST_MULTIARCH)/fti/$${FLAVOR}/ \
+			-DENABLE_EXAMPLES=OFF \
 			-DENABLE_OPENSSL=ON \
 			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
 			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
@@ -69,6 +70,10 @@ override_dh_installdeb:
 			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
 			-e "s/#FLAVOR#/$${FLAVOR}/g" \
 			debian/libfti-FLAVOR-1.$${SUFFIX} > debian/libfti-$${FLAVOR}-1.$${SUFFIX} ;\
+		sed \
+			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
+			-e "s/#FLAVOR#/$${FLAVOR}/g" \
+			debian/libfti-FLAVOR-dev.$${SUFFIX} > debian/libfti-$${FLAVOR}-dev.$${SUFFIX} ;\
 		done ;\
 		dh_installdeb -plibfti-$${FLAVOR}-1 -plibfti-$${FLAVOR}-dev ;\
 	done

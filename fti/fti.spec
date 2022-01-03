@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  1
 Name:           fti
-Version:        1.5.1
+Version:        1.6
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -81,8 +81,9 @@ module load mpi/${MPI_VERSION}-%{_arch}
 %cmake3 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_LIBDIR=${MPI_LIB} \
-	-DINSTALL_CMAKEDIR=${MPI_BIN}/../share/FTI/cmake \
+	-DENABLE_EXAMPLES=OFF \
 	-DENABLE_OPENSSL=ON \
+	-DINSTALL_CMAKEDIR=${MPI_BIN}/../share/FTI/cmake \
 	..
 %make_build
 module purge
@@ -129,5 +130,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/*.so
 
 %changelog
+* Mon Jan 03 2022 - Julien Bigot <julien.bigot@cea.fr>
+- Bump version to 1.6
 * Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

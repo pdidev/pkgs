@@ -1,0 +1,13 @@
+#!
+set -e
+
+case "$1" in
+*)
+	update-alternatives \
+		--remove \
+		share-FTI \
+		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/fti/#FLAVOR#/share/FTI
+;;
+esac
+
+#DEBHELPER#
