@@ -78,14 +78,9 @@ Package: pdiplugin-all
 Architecture: any
 Section: all
 Depends:
-  pdiplugin-decl-hdf5-mpich,
-  pdiplugin-decl-hdf5-openmpi,
-  pdiplugin-decl-hdf5-serial,
-  pdiplugin-decl-netcdf-mpich,
-  pdiplugin-decl-netcdf-openmpi,
-  pdiplugin-decl-sion-mpich,
-  pdiplugin-decl-sion-openmpi,
-  pdiplugin-decl-sion-serial,
+  pdiplugin-decl-hdf5,
+  pdiplugin-decl-netcdf,
+  pdiplugin-decl-sion,
   pdiplugin-flowvr,
   pdiplugin-fti,
   pdiplugin-mpi,

@@ -1,6 +1,5 @@
 #! /usr/bin/dh-exec
-usr/bin/*
 usr/include/*
 usr/lib/*/*.so
-usr/share/*
+usr/share/pdi/cmake/*
 usr/lib/*/fortran/*/*.mod <bionic>
