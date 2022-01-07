@@ -1,8 +1,15 @@
+pdi (1.4.3-2) unstable devel; urgency=medium
+
+  * Fix pdiplugin-all to not depend on all variants of the plugins
+  * Ship pdirun and env.bash with libpdi instead of libpdi-dev
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 25 Jan 2022 17:34:43 +0100
+
 pdi (1.4.3-1) unstable devel; urgency=medium
 
   * Upstream release 1.4.3
 
- -- Pending release on master <julien.bigot@cea.fr>  Tue, 16 Nov 2021 13:57:42 -0600
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 16 Nov 2021 13:57:42 -0600
 
 pdi (1.4.1-1) unstable devel; urgency=medium
 

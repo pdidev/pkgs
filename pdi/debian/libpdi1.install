@@ -1,1 +1,3 @@
+usr/bin/*
 usr/lib/*/libpdi.so.1*
+usr/share/pdi/env.bash
