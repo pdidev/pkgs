@@ -8,6 +8,7 @@ jobs:
   build_and_publish:
     runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
         distrib: [ debian, fedora, ubuntu ]
     steps:
@@ -32,8 +33,12 @@ jobs:
           ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
       - name: Install deps
         run: |
+          sudo curl -o /etc/apt/trusted.gpg.d/deb.myguard.nl.gpg https://deb.myguard.nl/pool/deb.myguard.nl.gpg
+          . /etc/os-release
+          echo "deb [arch=amd64] http://deb.myguard.nl $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/deb.myguard.nl.list
           sudo apt-get update
-          sudo apt-get install devscripts equivs aptly gpgv1 expect
+          sudo apt-get upgrade
+          sudo apt-get install devscripts equivs aptly
           pip3.8 install -r pkg_builder/requirements.txt
       - name: Build packages
         env:
@@ -47,7 +52,7 @@ jobs:
           git -C repo.${DISTRIB} checkout --orphan "${NEW_BRANCH}${DISTRIB}"
           git -C repo.${DISTRIB} rm -rf .
           sed "s%pdidev/repo/%pdidev/repo/${NEW_BRANCH}%g" -i build.conf
-          unbuffer python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
+          python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
           git -C repo.${DISTRIB} add -A .
           git -C repo.${DISTRIB} commit -C origin/${DISTRIB}
           git -C repo.${DISTRIB} push -f origin "${NEW_BRANCH}${DISTRIB}"

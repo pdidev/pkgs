@@ -10,6 +10,7 @@ jobs:
   build_and_publish:
     runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
         distrib: [ debian, fedora, ubuntu ]
     steps:
@@ -28,8 +29,12 @@ jobs:
           path: pkg_builder
       - name: Install deps
         run: |
+          sudo curl -o /etc/apt/trusted.gpg.d/deb.myguard.nl.gpg https://deb.myguard.nl/pool/deb.myguard.nl.gpg
+          . /etc/os-release
+          echo "deb [arch=amd64] http://deb.myguard.nl $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/deb.myguard.nl.list
           sudo apt-get update
-          sudo apt-get install devscripts equivs aptly gpgv1
+          sudo apt-get upgrade
+          sudo apt-get install devscripts equivs aptly
           pip3.8 install -r pkg_builder/requirements.txt
       - name: Build packages
         env:
