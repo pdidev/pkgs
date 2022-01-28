@@ -4,18 +4,17 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11), dh-exec, dh-python,
   dh-fortran-mod <!bionic>,
-  cmake (>= 3.5) <bionic> <nocheck>,
-  cmake (>= 3.10) <!bionic !nocheck>,
+  cmake (>= 3.10),
   gfortran | fortran-compiler,
-  libgmock-dev (>= 1.8.0) <!bionic !nocheck>,
-  libgtest-dev (>= 1.8.0) <!bionic !nocheck>,
-  libparaconf-dev (>= 0.4.0),
-  libspdlog-dev (>= 1:1.3.1),
+  libgmock-dev (>= 1.8) <!bionic !nocheck>,
+  libgtest-dev (>= 1.8) <!bionic !nocheck>,
+  libparaconf-dev (>= 0.4.14),
+  libspdlog-dev (>= 1:1.5.0),
   pkg-config,
   pybind11-dev (>= 2.3.0),
-  python3-dev (>= 3.5),
-  python3-numpy,
-  zpp
+  python3-dev (>= 3.6.5),
+  python3-numpy (>= 1.13.3),
+  zpp (>= 1.0.15)
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

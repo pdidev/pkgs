@@ -3,11 +3,10 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.5),
+  cmake (>= 3.10),
   libpdi-dev,
-  libsion-mpich-dev,
-  libsion-openmpi-dev,
-  libsion-serial-dev,
+  libsion-mpich-dev (>= 1.7.6),
+  libsion-openmpi-dev (>= 1.7.6),
   mpi-default-dev,
   mpich <!nocheck>,
   openmpi-bin <!nocheck>,

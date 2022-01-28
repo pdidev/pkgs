@@ -3,10 +3,9 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.5) <bionic> <nocheck>,
-  cmake (>= 3.10) <!bionic !nocheck>,
-  libgmock-dev (>= 1.8.0) <!bionic !nocheck>,
-  libgtest-dev (>= 1.8.0) <!bionic !nocheck>,
+  cmake (>= 3.10),
+  libgmock-dev (>= 1.8) <!bionic !nocheck>,
+  libgtest-dev (>= 1.8) <!bionic !nocheck>,
   libpdi-dev,
   pkg-config
 Standards-Version: 4.5.0

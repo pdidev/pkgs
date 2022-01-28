@@ -6,14 +6,14 @@ Group:          Development/Libraries/C and C++
 Summary:        FlowVR plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
-BuildRequires:  flowvr
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
+BuildRequires:  flowvr >= 2.3.2
 BuildRequires:  freeglut-devel
 BuildRequires:  mesa-libEGL-devel
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 BuildRequires:  pdi-devel = %{version}
-BuildRequires:  python3-yaml
+BuildRequires:  python3-yaml >= 3.12
 
 %description
 The PDI FlowVR plugin supports application coupling through the FlowVR software.

@@ -6,7 +6,7 @@ Group:          Development/Libraries/C and C++
 Summary:        FTI plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
 BuildRequires:  pdi-devel = %{version}
 
 %description
@@ -14,14 +14,14 @@ The PDI fti plugin interfaces PDI with FTI.
 
 %package openmpi
 Summary: FTI plugin for the PDI Data Interface, OpenFTI version
-BuildRequires: fti-openmpi-devel
+BuildRequires: fti-openmpi-devel >= 1.6
 
 %description openmpi
 The PDI fti plugin interfaces PDI with FTI.
 
 %package mpich
 Summary: FTI plugin for the PDI Data Interface, MPich version
-BuildRequires: fti-mpich-devel
+BuildRequires: fti-mpich-devel >= 1.6
 
 %description mpich
 The PDI fti plugin interfaces PDI with FTI.

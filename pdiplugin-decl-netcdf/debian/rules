@@ -33,8 +33,10 @@ override_dh_auto_configure:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
 		BUILD_TESTING=OFF; echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || BUILD_TESTING=ON; \
+		BUILD_NETCDF_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} -- \
 			-DBUILD_TESTING=$${BUILD_TESTING} \
+			-DBUILD_NETCDF_PARALLEL=$${BUILD_NETCDF_PARALLEL} \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/netcdf/$${FLAVOR}/lib/ \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \

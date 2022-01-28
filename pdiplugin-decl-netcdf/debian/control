@@ -3,12 +3,11 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.5) <bionic> <nocheck>,
-  cmake (>= 3.10) <!bionic !nocheck>,
-  libgmock-dev (>= 1.8.0) <!bionic !nocheck>,
-  libgtest-dev (>= 1.8.0) <!bionic !nocheck>,
-  libnetcdf-dev,
-  libnetcdf-mpi-dev <!bionic>,
+  cmake (>= 3.10),
+  libgmock-dev (>= 1.8) <!bionic !nocheck>,
+  libgtest-dev (>= 1.8) <!bionic !nocheck>,
+  libnetcdf-dev (>= 4.6.0),
+  libnetcdf-mpi-dev (>= 4.6.0) <!bionic>,
   libpdi-dev,
   mpi-default-dev,
   mpich <!nocheck>,

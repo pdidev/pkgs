@@ -3,9 +3,9 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.5),
-  libfti-mpich-dev,
-  libfti-openmpi-dev,
+  cmake (>= 3.10),
+  libfti-mpich-dev (>= 1.6),
+  libfti-openmpi-dev (>= 1.6),
   libpdi-dev,
   mpi-default-dev,
   mpich <!nocheck>,

@@ -6,7 +6,7 @@ Group:          Development/Libraries/C and C++
 Summary:        SIONlib plugin for the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.5
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
 BuildRequires:  pdi-devel = %{version}
 
 %description
@@ -14,14 +14,14 @@ The PDI decl-sion plugin interfaces PDI with SIONlib.
 
 %package openmpi
 Summary: SIONlib plugin for the PDI Data Interface, OpenSIONlib version
-BuildRequires: sionlib-openmpi-devel
+BuildRequires: sionlib-openmpi-devel >= 1.7.6
 
 %description openmpi
 The PDI decl-sion plugin interfaces PDI with SIONlib.
 
 %package mpich
 Summary: SIONlib plugin for the PDI Data Interface, MPich version
-BuildRequires: sionlib-mpich-devel
+BuildRequires: sionlib-mpich-devel >= 1.7.6
 
 %description mpich
 The PDI decl-sion plugin interfaces PDI with SIONlib.
