@@ -1,7 +1,7 @@
 %global _vpath_builddir .
 %define _sover  1
 Name:           sionlib
-Version:        %{_sover}.7.6
+Version:        %{_sover}.7.7
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -55,12 +55,23 @@ file handle which substitutes the C file pointer.
 %prep
 %autosetup -n sionlib
 patch -p1 << 'EOF'
---- old/src/utils/Makefile	2020-12-14 12:01:36.516557054 +0100
-+++ new/src/utils/Makefile	2020-12-14 12:15:11.292854706 +0100
-@@ -82,8 +82,8 @@
-		-e "s!@CUDA_LIBRARIES@!$(CUDA_LIBRARIES)!" \
-		-e "s!@CUDA_LIBRARY_PATHS@!$(CUDA_LIBRARY_PATHS)!" \
-		-e "s!@SIONFWD_LIBS@!$(SIONFWD_LIBS)!" \
+--- sionlib.orig/src/utils/Makefile
++++ sionlib/src/utils/Makefile
+@@ -76,9 +76,8 @@ sionversion: sionversion.o ../lib/lib$(S
+ 
+ ###### sionconfig ######
+ install-config: sionconfig.in
+-	AINSTDIR=`(cd $(PREFIX) && pwd)`; \
+ 	sed -e "s!@ARCH@!$(ARCH)!" \
+-		-e "s!@INSTDIR@!$$AINSTDIR!" \
++		-e "s!@INSTDIR@!$(PREFIX)!" \
+ 		-e "s!@LIBNAME@!$(SION_LIBNAME_PAR)!" \
+ 		-e "s!@LIBSERNAME@!$(SION_LIBNAME_SER)!" \
+ 		-e "s!@HINTSLIB@!$(HINTSLIB)!" \
+@@ -89,8 +88,8 @@ install-config: sionconfig.in
+ 		-e "s!@SIONFWD_LIBS@!$(SIONFWD_LIBS)!" \
+ 		-e "s!@IME_LIBS@!$(IMELIB_LIBPATH) $(IMELIB_LIB)!" \
+ 		-e "s!@IME_CFLAGS@!-D_SION_IME_NATIVE!" \
 -		sionconfig.in > $(PREFIX)/bin/sionconfig
 -	chmod 755 $(PREFIX)/bin/sionconfig; \
 +		sionconfig.in > $(BINDIR)/sionconfig
@@ -80,7 +91,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	--disable-fortran \
 	--disable-parutils \
 	--mpi=${MPI_VERSION/mpich/mpich3}
-%make_build -C build-linux-gomp-${MPI_VERSION/mpich/mpich3}
+%make_build -C build-linux-gomp*-${MPI_VERSION/mpich/mpich3}
 module purge
 done
 
@@ -93,7 +104,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	BINDIR=%{?buildroot}${MPI_BIN} \
 	LIBDIR=%{?buildroot}${MPI_LIB} \
 	INCDIR=%{?buildroot}%{_includedir} \
-	-C build-linux-gomp-${MPI_VERSION/mpich/mpich3}/build \
+	-C build-linux-gomp*-${MPI_VERSION/mpich/mpich3}/build \
 	-f RealMakefile \
 	install-path install-libs install-parlibs install-utils install-config
 module purge
@@ -116,5 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/bin/sion*
 
 %changelog
+* Tue Feb 01 2022 - Julien Bigot <julien.bigot@cea.fr>
+- Upstream update to 1.7.7
 * Mon Dec 14 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

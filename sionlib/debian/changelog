@@ -1,3 +1,9 @@
+sionlib (1.7.7-1) unstable devel; urgency=medium
+
+  * Upstream update to 1.7.7
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 01 Feb 2022 12:59:57 +0100
+
 sionlib (1.7.6-1) unstable devel; urgency=medium
 
   * Initial Release
