@@ -16,8 +16,8 @@ override_dh_auto_clean:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
-		dh_auto_clean -Bbuild-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
-		$(RM) -r build-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) _mpi_forward.$${FLAVOR} ;\
+		dh_auto_clean -Bbuild-linux-gomp*-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
+		$(RM) -r build-linux-gomp*-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) _mpi_forward.$${FLAVOR} ;\
 	done
 
 override_dh_auto_configure:
@@ -44,8 +44,11 @@ override_dh_auto_build:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export SION_FLAVOR="$$(printf '%s' "$${FLAVOR}" | sed -e 's/mpich/mpich3/' -e 's/serial/nompi/' )" ;\
+		find . -name "build-linux-gomp*-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS)" ;\
+		export BUILDDIR="$$( find . -name "build-linux-gomp*-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS)" )" ;\
 		export PATH="$${PWD}/_mpi_forward.$${FLAVOR}:$${PATH}" ;\
-		dh_auto_build -Bbuild-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS) -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
+		echo "dh_auto_build -B$${BUILDDIR} -plibsion-headers -plibsion-$${FLAVOR}-dev" ;\
+		dh_auto_build "-B$${BUILDDIR}" -plibsion-headers -plibsion-$${FLAVOR}-dev ;\
 	done
 
 override_dh_auto_test:
@@ -59,7 +62,7 @@ override_dh_auto_install:
 			INCDIR=$${PWD}/debian/tmp/usr/include \
 			LIBDIR=$${PWD}/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/sionlib/$${FLAVOR} \
 			BINDIR=$${PWD}/debian/tmp/usr/bin/sionlib/$${FLAVOR} \
-			-C build-linux-gomp-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS)/build \
+			-C build-linux-gomp*-$${SION_FLAVOR}-$(DEB_HOST_ARCH_BITS)/build \
 			-f RealMakefile \
 			install-path install-libs install-parlibs install-utils install-config ;\
 	done
