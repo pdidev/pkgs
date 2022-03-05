@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-decl-sion
 Version:        1.4.3
 Release:        0
@@ -34,16 +33,13 @@ The PDI decl-sion plugin interfaces PDI with SIONlib.
 for MPI_VERSION in openmpi mpich
 do
 mkdir build-${MPI_VERSION}
-pushd build-${MPI_VERSION}
 module load mpi/${MPI_VERSION}-%{_arch}
-ls ${MPI_BIN}
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_PDIPLUGINDIR=${MPI_LIB}/pdi/plugins_%{version}/ \
-	../plugins/decl_sion
-%make_build
-module purge
-popd
+	-S plugins/decl_sion \
+	-B build-${MPI_VERSION}
+%make_build -C build-${MPI_VERSION}
 done
 
 %install
@@ -77,6 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>

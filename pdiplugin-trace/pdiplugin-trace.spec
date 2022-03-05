@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-trace
 Version:        1.4.3
 Release:        0
@@ -17,14 +16,14 @@ The PDI trace plugin generates a trace of what happens in PDI data store.
 %autosetup -n pdi-%{version}
 
 %build
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
-	plugins/trace
-%make_build
+	-S plugins/trace
+%cmake_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install
+%cmake_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -39,6 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>

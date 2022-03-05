@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 %define _sover  0
 Name:           paraconf
 Version:        0.4.15
@@ -46,16 +45,16 @@ applications that use %{name}.
 %autosetup
 
 %build
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_FMODDIR=%{_fmoddir} \
 	-DINSTALL_FINCLUDEDIR=%{_fmoddir} \
-	paraconf
-%make_build
+    -S paraconf
+%cmake_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install
+%cmake_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -88,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Mon Jan 03 2022 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.4.15
 * Mon May 11 2020 - Julien Bigot <julien.bigot@cea.fr>

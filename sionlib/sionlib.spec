@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 %define _sover  1
 Name:           sionlib
 Version:        %{_sover}.7.7
@@ -127,6 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/bin/sion*
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Tue Feb 01 2022 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream update to 1.7.7
 * Mon Dec 14 2020 - Julien Bigot <julien.bigot@cea.fr>

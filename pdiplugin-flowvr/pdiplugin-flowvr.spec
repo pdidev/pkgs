@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-flowvr
 Version:        1.4.3
 Release:        0
@@ -24,15 +23,15 @@ The PDI FlowVR plugin supports application coupling through the FlowVR software.
 
 %build
 . /opt/flowvr/bin/flowvr-suite-config.sh
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
-	plugins/flowvr
-%make_build
+	-S plugins/flowvr
+%cmake_build
 
 %install
-. /opt/flowvr/bin/flowvr-suite-config.sh
 rm -rf $RPM_BUILD_ROOT
-%make_install
+. /opt/flowvr/bin/flowvr-suite-config.sh
+%cmake_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -48,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi_flowvr
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>
