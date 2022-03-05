@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           flowvr
 Version:        2.3.2
 Release:        0
@@ -39,7 +38,7 @@ asynchronous in situ and in transit processing.
 %autosetup -n %{name}-ex-v%{version}
 
 %build
-%cmake3 \
+%cmake \
 	-DOpenGL_GL_PREFERENCE=LEGACY \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_FLOWVRD_MPI_PLUGIN=OFF \
@@ -47,13 +46,12 @@ asynchronous in situ and in transit processing.
 	-DBUILD_FLOWVR_DOXYGEN=ON \
 	-DBUILD_FLOWVR_GLGRAPH=OFF \
 	-DBUILD_FLOWVR_GLTRACE=ON \
-	-DCMAKE_INSTALL_PREFIX=/opt/%{name} \
-	.
-%make_build
+	-DCMAKE_INSTALL_PREFIX=/opt/%{name}
+%cmake_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install
+%cmake_install
 # remove rpath from the libs as it is wrong
 chrpath -d %{buildroot}/opt/%{name}/lib/flowvr/python/*.so
 # We remove this as it is not python3 compatible
@@ -100,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %license flowvr/flowvr-base/COPYING
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Nov 25 2020 - Julien Bigot <julien.bigot@cea.fr>
 - Initial Release

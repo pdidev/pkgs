@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-decl-netcdf
 Version:        1.4.3
 Release:        0
@@ -39,46 +38,39 @@ a simple declarative interface to access a large subset of it.
 
 %build
 mkdir build
-pushd build
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
-	../plugins/decl_netcdf
-%make_build
-popd
-mkdir build-openmpi
-pushd build-openmpi
-module load mpi/openmpi-%{_arch}
-%cmake3 \
+	-DBUILD_NETCDF_PARALLEL=OFF \
+	-S plugins/decl_netcdf \
+	-B build
+%make_build -C build
+
+for MPI_VERSION in openmpi mpich
+do
+mkdir build-${MPI_VERSION}
+module load mpi/${MPI_VERSION}-%{_arch}
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
-	-DINSTALL_PDIPLUGINDIR=%{_libdir}/openmpi/lib/pdi/plugins_%{version}/ \
-	../plugins/decl_netcdf	
-%make_build
-module purge
-popd
-mkdir build-mpich
-pushd build-mpich
-module load mpi/mpich-%{_arch}
-%cmake3 \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DBUILD_TESTING=OFF \
-	-DINSTALL_PDIPLUGINDIR=%{_libdir}/mpich/lib/pdi/plugins_%{version}/ \
-	../plugins/decl_netcdf
-%make_build
-module purge
-popd
+	-DBUILD_NETCDF_PARALLEL=ON \
+	-DINSTALL_PDIPLUGINDIR=${MPI_LIB}/pdi/plugins_%{version}/ \
+	-S plugins/decl_netcdf \
+	-B build-${MPI_VERSION}
+%make_build -C build-${MPI_VERSION}
+done
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %make_install -C build
-module load mpi/openmpi-%{_arch}
-%make_install -C build-openmpi
+
+for MPI_VERSION in openmpi mpich
+do
+module load mpi/${MPI_VERSION}-%{_arch}
+%make_install -C build-${MPI_VERSION}
 module purge
-module load mpi/mpich-%{_arch}
-%make_install -C build-mpich
-module purge
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -111,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>

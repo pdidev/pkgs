@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 %define _sover  1
 Name:           pdi
 Version:        1.4.3
@@ -65,18 +64,18 @@ codes from Input/Output concerns.
 %autosetup
 
 %build
-%cmake3 \
+%cmake \
 	-DBUILD_DOCUMENTATION=OFF \
 	-DBUILD_PYTHON=ON \
 	-DINSTALL_FMODDIR=%{_fmoddir} \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/pdi/plugins_%{version}/ \
 	-DCMAKE_BUILD_TYPE=Release \
-	pdi
-%make_build
+	-S pdi
+%cmake_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install
+%cmake_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -115,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>

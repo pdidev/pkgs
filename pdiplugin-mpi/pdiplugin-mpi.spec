@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-mpi
 Version:        1.4.3
 Release:        0
@@ -31,35 +30,27 @@ The PDI mpi plugin interfaces PDI with MPI.
 %autosetup -n pdi-%{version}
 
 %build
-mkdir build-openmpi
-pushd build-openmpi
-module load mpi/openmpi-%{_arch}
-%cmake3 \
+for MPI_VERSION in openmpi mpich
+do
+mkdir build-${MPI_VERSION}
+module load mpi/${MPI_VERSION}-%{_arch}
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DINSTALL_PDIPLUGINDIR=%{_libdir}/openmpi/lib/pdi/plugins_%{version}/ \
-	../plugins/mpi
-%make_build
+	-DINSTALL_PDIPLUGINDIR=%{_libdir}/${MPI_VERSION}/lib/pdi/plugins_%{version}/ \
+	-S plugins/mpi \
+	-B build-${MPI_VERSION}
+%make_build -C build-${MPI_VERSION}
 module purge
-popd
-mkdir build-mpich
-pushd build-mpich
-module load mpi/mpich-%{_arch}
-%cmake3 \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DINSTALL_PDIPLUGINDIR=%{_libdir}/mpich/lib/pdi/plugins_%{version}/ \
-	../plugins/mpi
-%make_build
-module purge
-popd
+done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-module load mpi/openmpi-%{_arch}
-%make_install -C build-openmpi
+for MPI_VERSION in openmpi mpich
+do
+module load mpi/${MPI_VERSION}-%{_arch}
+%make_install -C build-${MPI_VERSION}
 module purge
-module load mpi/mpich-%{_arch}
-%make_install -C build-mpich
-module purge
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -83,6 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>

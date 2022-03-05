@@ -1,4 +1,3 @@
-%global _vpath_builddir .
 Name:           pdiplugin-serialize
 Version:        1.4.3
 Release:        0
@@ -19,14 +18,14 @@ representation all I/O libraries should support.
 %autosetup -n pdi-%{version}
 
 %build
-%cmake3 \
+%cmake \
 	-DCMAKE_BUILD_TYPE=Release \
-	plugins/serialize
-%make_build
+	-S plugins/serialize
+%cmake_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install
+%cmake_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -41,6 +40,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
+* Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
+- updated cmake invocation to be compatible with Fedora 36+
 * Wed Dec 01 2021 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.4.3
 * Mon Nov 15 2021 - Julien Bigot <julien.bigot@.cea.fr>
