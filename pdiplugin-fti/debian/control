@@ -19,7 +19,7 @@ Homepage: https://pdi.julien-bigot.fr/
 Package: pdiplugin-fti-mpich
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi1
 Provides: pdiplugin-fti
 Description: FTI plugin for the PDI Data Interface
@@ -28,7 +28,7 @@ Description: FTI plugin for the PDI Data Interface
 Package: pdiplugin-fti-openmpi
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Enhances: libpdi1
 Provides: pdiplugin-fti
 Description: FTI plugin for the PDI Data Interface

@@ -17,7 +17,7 @@ Homepage: https://github.com/leobago/fti
 Package: libfti-openmpi-1
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Provides: libfti1
 Description: a library for fast and efficient multilevel checkpointing
  FTI stands for Fault Tolerance Interface and is a library that aims to give
@@ -28,7 +28,7 @@ Description: a library for fast and efficient multilevel checkpointing
 Package: libfti-mpich-1
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Provides: libfti1
 Description: a library for fast and efficient multilevel checkpointing
  FTI stands for Fault Tolerance Interface and is a library that aims to give
