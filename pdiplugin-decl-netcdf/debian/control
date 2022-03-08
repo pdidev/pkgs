@@ -22,7 +22,7 @@ Homepage: https://pdi.julien-bigot.fr/
 Package: pdiplugin-decl-netcdf-serial
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-netcdf
 Enhances: libpdi1
 Description: Decl'NetCDF plugin for the PDI Data Interface
@@ -35,7 +35,7 @@ Package: pdiplugin-decl-netcdf-mpich
 Build-Profiles: <disabled>
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-netcdf
 Enhances: libpdi1
 Description: Decl'NetCDF plugin for the PDI Data Interface
@@ -48,7 +48,7 @@ Package: pdiplugin-decl-netcdf-openmpi
 Build-Profiles: <disabled>
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-netcdf
 Enhances: libpdi1
 Description: Decl'NetCDF plugin for the PDI Data Interface
