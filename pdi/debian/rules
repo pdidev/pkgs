@@ -4,12 +4,15 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
+ifneq (,$(filter buster, $(DEB_BUILD_PROFILES)))
+	CMAKEFLAGS += -DBUILD_BENCHMARKING=OFF
+endif
 ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
-	CMAKEFLAGS += -DBUILD_TESTING=OFF
+	CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
 	DHFLAGS += --with python3
 else
 	ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
-		CMAKEFLAGS += -DBUILD_TESTING=OFF
+		CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
 	endif
 	DHFLAGS += --with python3,fortran_mod
 endif
