@@ -8,7 +8,7 @@ Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
 BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10
-BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0
+BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
 
 %description
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a

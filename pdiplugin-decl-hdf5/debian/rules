@@ -36,6 +36,7 @@ override_dh_auto_configure:
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		BUILD_TESTING=OFF; echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || BUILD_TESTING=ON; \
 		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
+			-DBUILD_BENCHMARKING=$${BUILD_TESTING} \
 			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
 			-DBUILD_TESTING=$${BUILD_TESTING} \
 			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
