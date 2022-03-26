@@ -8,7 +8,7 @@ Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
-BuildRequires:  zpp >= 1.0.150.4.14, fmt-devel >= 6.1.2, paraconf-devel >= 0.4.14, spdlog-devel >= 1.5
+BuildRequires:  zpp >= 1.0.15, fmt-devel >= 6.1.2, paraconf-devel >= 0.4.14, spdlog-devel >= 1.5
 BuildRequires:  pybind11-devel >= 2.3, python3-devel >= 3.6.5, python3-numpy >= 1.13.3
 BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
 

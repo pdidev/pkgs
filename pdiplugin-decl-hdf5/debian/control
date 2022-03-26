@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
   cmake (>= 3.10),
-  libbenchmark-dev (>= 1.5) <!bionic !nocheck>,
+  libbenchmark-dev (>= 1.5) <!bionic !buster !nocheck>,
   libgmock-dev (>= 1.8) <!bionic !nocheck>,
   libgtest-dev (>= 1.8) <!bionic !nocheck>,
   libhdf5-dev (>= 1.10),
