@@ -1,8 +1,8 @@
-pdi (1638396387master-1) unstable devel; urgency=medium
+pdi (1.5.0-1) unstable devel; urgency=medium
 
-  * Upstream release master
+  * Upstream release 1.5.0
 
- -- Pending release on master <julien.bigot@cea.fr>  Tue, 25 Jan 2022 17:42:10 +0100
+ -- Julien Bigot <julien.bigot@.cea.fr>  Wed, 30 Mar 2022 20:41:26 +0200
 
 pdi (1.4.3-2) unstable devel; urgency=medium
 
