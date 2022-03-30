@@ -1,3 +1,9 @@
+pdiplugin-set-value (1648665922master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Wed, 30 Mar 2022 20:45:22 +0200
+
 pdiplugin-set-value (1.5.0-1) unstable devel; urgency=medium
 
   * Upstream release 1.5.0
