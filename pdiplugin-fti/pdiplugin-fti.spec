@@ -1,5 +1,5 @@
 Name:           pdiplugin-fti
-Version:        master
+Version:        1.5.1
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -74,8 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Wed Mar 30 2022 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Fri Apr 01 2022 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.5.1
 * Wed Mar 30 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.0
 * Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
