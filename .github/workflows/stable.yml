@@ -33,9 +33,8 @@ jobs:
           ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
       - name: Install deps
         run: |
-          sudo curl -o /etc/apt/trusted.gpg.d/deb.myguard.nl.gpg https://deb.myguard.nl/pool/deb.myguard.nl.gpg
-          . /etc/os-release
-          echo "deb [arch=amd64] http://deb.myguard.nl $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/deb.myguard.nl.list
+          curl -o - https://www.aptly.info/pubkey.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/aptly.gpg > /dev/null
+          echo "deb http://repo.aptly.info/ nightly main" | sudo tee /etc/apt/sources.list.d/aptly.list
           sudo apt-get update
           sudo apt-get upgrade
           sudo apt-get install devscripts equivs aptly
