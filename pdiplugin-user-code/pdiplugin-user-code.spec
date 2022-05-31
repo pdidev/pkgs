@@ -1,5 +1,5 @@
 Name:           pdiplugin-user-code
-Version:        master
+Version:        1.5.3
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -40,8 +40,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Fri Apr 01 2022 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Tue May 31 2022 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.5.3
 * Fri Apr 01 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.1
 * Wed Mar 30 2022 - Julien Bigot <julien.bigot@.cea.fr>
