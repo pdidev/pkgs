@@ -1,6 +1,6 @@
 %define _sover  1
 Name:           pdi
-Version:        1.5.4
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -115,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Sat Jun 11 2022 - Pending release on master <julien.bigot@cea.fr>
+- Upstream release master
 * Sat Jun 11 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.4
 * Tue May 31 2022 - Julien Bigot <julien.bigot@.cea.fr>

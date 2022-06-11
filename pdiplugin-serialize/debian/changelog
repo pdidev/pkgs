@@ -1,3 +1,9 @@
+pdiplugin-serialize (1654961000master-1) unstable devel; urgency=medium
+
+  * Upstream release master
+
+ -- Pending release on master <julien.bigot@cea.fr>  Sat, 11 Jun 2022 17:23:20 +0200
+
 pdiplugin-serialize (1.5.4-1) unstable devel; urgency=medium
 
   * Upstream release 1.5.4
