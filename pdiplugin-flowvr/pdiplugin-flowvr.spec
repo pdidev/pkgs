@@ -1,5 +1,5 @@
 Name:           pdiplugin-flowvr
-Version:        master
+Version:        1.5.4
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -47,8 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi_flowvr
 
 %changelog
-* Thu Jun 02 2022 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sat Jun 11 2022 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.5.4
 * Tue May 31 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.3
 * Fri Apr 01 2022 - Julien Bigot <julien.bigot@.cea.fr>
