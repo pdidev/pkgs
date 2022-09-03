@@ -2,7 +2,7 @@
 set -e
 
 case #FLAVOR# in
-#ARCH_DEFAULT_MPI_IMPL#)
+mpi)
 	PRIORITY=30
 	;;
 serial)

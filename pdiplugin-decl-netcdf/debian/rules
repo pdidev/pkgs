@@ -13,7 +13,7 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 else
 ifneq (,$(filter buster bionic, $(DEB_BUILD_PROFILES)))
 	# openmpi < 4.0.2 does not support running as root
-	DISABLED_TESTS_FLAVOR = openmpi
+	DISABLED_TESTS_FLAVOR = mpi
 else
 	DISABLED_TESTS_FLAVOR = no_flavor
 endif
@@ -32,18 +32,24 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
-		BUILD_TESTING=OFF; echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || BUILD_TESTING=ON; \
+		INSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
+		BUILD_TESTING=OFF; echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || BUILD_TESTING=ON ;\
+		case "$${FLAVOR}" in \
+		serial) netCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/netCDF ;;\
+		mpi) netCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/netCDF_mpi ;;\
+		*) exit 1 ;;\
+		esac ;\
 		BUILD_NETCDF_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} -- \
 			-DBUILD_TESTING=$${BUILD_TESTING} \
 			-DBUILD_NETCDF_PARALLEL=$${BUILD_NETCDF_PARALLEL} \
 			-DCMAKE_BUILD_TYPE=Release \
-			-DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/netcdf/$${FLAVOR}/lib/ \
-			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
-			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
-			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
-			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
-			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} ;\
+			-DINSTALL_PDIPLUGINDIR=$${INSTALL_PDIPLUGINDIR} \
+			-DMPI_C_COMPILER=mpicc.$(ARCH_DEFAULT_MPI_IMPL) \
+			-DMPI_CXX_COMPILER=mpicxx.$(ARCH_DEFAULT_MPI_IMPL) \
+			-DMPI_Fortran_COMPILER=mpif90.$(ARCH_DEFAULT_MPI_IMPL) \
+			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$(ARCH_DEFAULT_MPI_IMPL) \
+			-DnetCDF_DIR=$${netCDF_DIR} ;\
 	done
 
 override_dh_auto_build:
@@ -56,7 +62,7 @@ override_dh_auto_test:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
-		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
 		echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
 
@@ -74,7 +80,6 @@ override_dh_installdeb:
 	do  \
 		for SUFFIX in prerm postinst ;\
 		do sed \
-			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
 			-e "s/#FLAVOR#/$${FLAVOR}/g" \
 			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
 			debian/pdiplugin-decl-netcdf-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-netcdf-$${FLAVOR}.$${SUFFIX} ;\

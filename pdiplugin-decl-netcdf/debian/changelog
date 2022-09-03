@@ -1,3 +1,9 @@
+pdiplugin-decl-netcdf (1.5.4-2) unstable devel; urgency=medium
+
+  * Fixed build
+
+ -- Julien Bigot <julien.bigot@.cea.fr>  Sun, 04 Sep 2022 21:10:53 +0200
+
 pdiplugin-decl-netcdf (1.5.4-1) unstable devel; urgency=medium
 
   * Upstream release 1.5.4
