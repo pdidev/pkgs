@@ -1,6 +1,6 @@
 %define _sover  0
 Name:           paraconf
-Version:        0.4.15
+Version:        0.4.16
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -87,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 12 2022 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 0.4.16
 * Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
 - updated cmake invocation to be compatible with Fedora 36+
 * Mon Jan 03 2022 - Julien Bigot <julien.bigot@cea.fr>
