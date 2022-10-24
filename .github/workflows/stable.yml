@@ -13,11 +13,11 @@ jobs:
         distrib: [ debian, fedora, ubuntu ]
     steps:
       - name: Checkout packages
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: "stable"
       - name: Checkout builder script
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: jbigot/pkg_builder
           path: pkg_builder
@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.8'
       - name: Checkout distrib repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: pdidev/repo
           path: repo.${{ matrix.distrib }}
