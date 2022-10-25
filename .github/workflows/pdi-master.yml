@@ -22,7 +22,7 @@ jobs:
           repository: jbigot/pkg_builder
           path: pkg_builder
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.8'
       - name: Checkout distrib repo
