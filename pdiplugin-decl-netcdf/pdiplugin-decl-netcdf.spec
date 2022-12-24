@@ -58,6 +58,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	-S plugins/decl_netcdf \
 	-B build-${MPI_VERSION}
 %make_build -C build-${MPI_VERSION}
+module purge
 done
 
 
@@ -105,6 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Nov 04 2022 - Pending release on master <julien.bigot@cea.fr>
 - Upstream release master
+- Fixed package build wrt. modules
 * Thu Nov 03 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.5
 * Sat Jun 11 2022 - Julien Bigot <julien.bigot@.cea.fr>
