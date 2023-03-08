@@ -1,6 +1,6 @@
-%define _sover  0
+%define _sover  1
 Name:           paraconf
-Version:        0.4.16
+Version:        1.0.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -79,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files -n lib%{name}%{_sover}
-%{_libdir}/lib%{name}.so.%{_sover}*
+%{_libdir}/lib%{name}.so.%{_sover}*	
 
 
 %files -n lib%{name}-f90.%{_sover}
@@ -87,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar 08 2023 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 1.0.0
 * Wed Oct 12 2022 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 0.4.16
 * Sat Mar 05 2022 - Julien Bigot <julien.bigot@cea.fr>
