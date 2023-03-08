@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 11), dh-exec,
 Standards-Version: 4.5.0
 Homepage: https://github.com/pdidev/paraconf
 
-Package: libparaconf0
+Package: libparaconf1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -19,10 +19,10 @@ Description: provide a simple query language to access a Yaml tree on top of lib
  Paraconf is a library that provides a simple query language to
  access a Yaml tree on top of libyaml.
 
-Package: libparaconf-f90.0
+Package: libparaconf-f90.1
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf0 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libparaconf1 (= ${binary:Version})
 Description: provide a simple query language to access a Yaml tree on top of libyaml
  Paraconf is a library that provides a simple query language to
  access a Yaml tree on top of libyaml.
@@ -30,7 +30,7 @@ Description: provide a simple query language to access a Yaml tree on top of lib
 Package: libparaconf-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
-  libparaconf-f90.0 (= ${binary:Version}),
+  libparaconf-f90.1 (= ${binary:Version}),
   libyaml-dev
 Recommends: cmake (>= 3.5), pkg-config
 Description: Development files for libparaconf
