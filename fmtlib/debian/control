@@ -1,0 +1,25 @@
+Source: fmtlib
+Section: devel
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper (>= 11),
+  cmake (>= 3.1),
+  libgmock-dev (>= 1.8) <!bionic !nocheck>,
+  libgtest-dev (>= 1.8) <!bionic !nocheck>
+Standards-Version: 4.5.1
+Homepage: https://fmt.dev/
+
+Package: libfmt-dev
+Architecture: any
+Section: libdevel
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts:
+  libcppformat1-dev,
+  libcppformat2-dev,
+  libfmt3-dev
+Description: fast type-safe C++ formatting library -- development files
+ This library provides fast, type-safe, small, C++11-aware replacement of
+ (s)printf and related machinery. In some cases it's noticeably faster
+ than boost::format, boost::lexical_cast and even sprintf itself.
+ .
+ This package contains the development files, include the static library.
