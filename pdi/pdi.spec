@@ -1,6 +1,6 @@
 %define _sover  1
 Name:           pdi
-Version:        master
+Version:        1.6.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -8,7 +8,7 @@ Summary:        the PDI Data Interface
 Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
 Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
-BuildRequires:  zpp >= 1.0.15, fmt-devel >= 6.1.2, paraconf-devel >= 0.4.16, spdlog-devel >= 1.5
+BuildRequires:  zpp >= 1.0.15, paraconf-devel >= 1.0.0, spdlog-devel >= 1.5
 BuildRequires:  pybind11-devel >= 2.3, python3-devel >= 3.6.5, python3-numpy >= 1.13.3
 BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
 
@@ -18,10 +18,9 @@ codes from Input/Output concerns.
 
 %package devel
 Summary:        Development files for %{name}
-Requires:       fmt-devel >= 6.1.2
 Requires:       gcc-gfortran%{_isa}
 Requires:       lib%{name}-f90.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       paraconf-devel >= 0.4.16
+Requires:       paraconf-devel >= 1.0.0
 Requires:       pybind11-devel >= 2.3.0
 Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       python3-devel >= 3.5, python3-numpy
@@ -115,8 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
-* Fri Nov 04 2022 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Thu Mar 09 2023 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.6.0
 * Thu Nov 03 2022 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.5.5
 * Sat Jun 11 2022 - Julien Bigot <julien.bigot@.cea.fr>

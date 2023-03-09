@@ -1,4 +1,0 @@
-usr/include/fmt/*
-usr/lib/*/cmake/fmt
-usr/lib/*/libfmt.a
-usr/lib/*/pkgconfig/fmt.pc
