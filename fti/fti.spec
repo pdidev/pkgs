@@ -6,7 +6,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        a library for fast and efficient multilevel checkpointing
 Url:            https://github.com/leobago/%{name}
-Source0:        https://github.com/leobago/%{name}/archive/v%{version}.tar.gz
+Source0:        https://github.com/leobago/%{name}/archive/refs/tags/v%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.4
 BuildRequires:  openssl-devel, zlib-devel
 
