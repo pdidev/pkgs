@@ -30,7 +30,7 @@ jobs:
       - name: Install deps
         run: |
           curl -o - https://www.aptly.info/pubkey.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/aptly.gpg > /dev/null
-          echo "deb http://repo.aptly.info/ nightly main" | sudo tee /etc/apt/sources.list.d/aptly.list
+          echo "deb http://repo.aptly.info/ squeeze main" | sudo tee /etc/apt/sources.list.d/aptly.list
           sudo apt-get update
           sudo apt-get upgrade
           sudo apt-get install devscripts equivs aptly
