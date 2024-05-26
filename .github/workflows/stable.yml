@@ -33,6 +33,7 @@ jobs:
           ssh-key: ${{ secrets.PDIDEV_REPO_KEY }}
       - name: Install deps
         run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           curl -o - https://www.aptly.info/pubkey.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/aptly.gpg > /dev/null
           echo "deb http://repo.aptly.info/ nightly main" | sudo tee /etc/apt/sources.list.d/aptly.list
           sudo apt-get update
