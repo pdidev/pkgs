@@ -14,6 +14,7 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 BuildRequires:  pdi-devel = %{version}
 BuildRequires:  python3-yaml >= 3.12
+BuildRequires:  python3-setuptools
 
 %description
 The PDI FlowVR plugin supports application coupling through the FlowVR software.

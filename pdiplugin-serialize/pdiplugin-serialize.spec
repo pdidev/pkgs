@@ -9,6 +9,7 @@ Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{ve
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
 BuildRequires:  pdi-devel = %{version}
 BuildRequires:  gtest-devel >= 1.8.0 , gmock-devel >= 1.8.0
+BuildRequires:  python3-setuptools
 
 %description
 The PDI serialize plugin supports serialization of complex types into a

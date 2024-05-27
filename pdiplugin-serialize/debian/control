@@ -7,7 +7,8 @@ Build-Depends: debhelper (>= 11),
   libgmock-dev (>= 1.8) <!bionic !nocheck>,
   libgtest-dev (>= 1.8) <!bionic !nocheck>,
   libpdi-dev,
-  pkg-config
+  pkg-config,
+  python3-setuptools
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

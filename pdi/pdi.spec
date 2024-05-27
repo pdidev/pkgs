@@ -11,6 +11,7 @@ BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
 BuildRequires:  zpp >= 1.0.15, paraconf-devel >= 1.0.0, spdlog-devel >= 1.5
 BuildRequires:  pybind11-devel >= 2.3, python3-devel >= 3.6.5, python3-numpy >= 1.13.3
 BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
+BuildRequires:  python3-setuptools
 
 %description
 PDI is a library that aims to decouple high-performance simulation

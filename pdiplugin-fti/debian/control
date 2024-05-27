@@ -12,7 +12,8 @@ Build-Depends: debhelper (>= 11),
   openmpi-bin <!nocheck>,
   pdiplugin-mpi-mpich <!nocheck>,
   pdiplugin-mpi-openmpi <!nocheck>,
-  pkg-config
+  pkg-config,
+  python3-setuptools
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

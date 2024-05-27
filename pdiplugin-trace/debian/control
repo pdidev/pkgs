@@ -5,7 +5,8 @@ Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
   cmake (>= 3.10),
   libpdi-dev,
-  pkg-config
+  pkg-config,
+  python3-setuptools
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
