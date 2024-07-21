@@ -1,8 +1,8 @@
-pdiplugin-fti (1678350672master-1) unstable devel; urgency=medium
+pdiplugin-fti (1.7.1-1) unstable devel; urgency=medium
 
-  * Upstream release master
+  * Upstream release 1.7.1
 
- -- Pending release on master <julien.bigot@cea.fr>  Thu, 09 Mar 2023 09:31:12 +0100
+ -- Julien Bigot <julien.bigot@.cea.fr>  Sun, 21 Jul 2024 17:45:08 +0200
 
 pdiplugin-fti (1.6.0-1) unstable devel; urgency=medium
 
