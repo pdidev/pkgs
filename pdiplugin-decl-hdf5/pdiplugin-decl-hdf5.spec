@@ -1,5 +1,5 @@
 Name:           pdiplugin-decl-hdf5
-Version:        1.7.1
+Version:        master
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -104,6 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Sun Jul 21 2024 - Pending release on master <julien.bigot@cea.fr>
+- Upstream release master
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.7.1
 * Thu Mar 09 2023 - Julien Bigot <julien.bigot@.cea.fr>
