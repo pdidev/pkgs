@@ -2,4 +2,3 @@
 usr/include/*
 usr/lib/*/*.so
 usr/share/pdi/cmake/*
-usr/lib/*/fortran/*/*.mod <bionic>

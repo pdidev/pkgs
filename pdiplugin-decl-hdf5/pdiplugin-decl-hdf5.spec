@@ -1,15 +1,13 @@
 Name:           pdiplugin-decl-hdf5
-Version:        master
+Version:        main
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
-Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.10
-BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10
-BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
-BuildRequires:  python3-setuptools
+Url:            https://github.com/pdidev/pdi
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/%{version}.tar.gz
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
+BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10.4
 
 %description
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -18,7 +16,7 @@ a simple declarative interface to access a large subset of it.
 
 %package openmpi
 Summary: Decl'HDF5 plugin for the PDI Data Interface, OpenMPI version
-BuildRequires:  hdf5-openmpi-devel >= 1.10
+BuildRequires:  hdf5-openmpi-devel >= 1.10.4
 
 %description openmpi
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -27,7 +25,7 @@ a simple declarative interface to access a large subset of it.
 
 %package mpich
 Summary: Decl'HDF5 plugin for the PDI Data Interface, MPich version
-BuildRequires:  hdf5-mpich-devel >= 1.10
+BuildRequires:  hdf5-mpich-devel >= 1.10.4
 
 %description mpich
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -104,8 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Sun Jul 21 2024 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sun Jul 21 2024 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.7.1
 * Thu Mar 09 2023 - Julien Bigot <julien.bigot@.cea.fr>

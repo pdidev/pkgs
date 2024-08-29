@@ -7,9 +7,6 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
-ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
-	CMAKEFLAGS += -DBUILD_TESTING=OFF
-endif
 
 %:
 	dh $@ --parallel

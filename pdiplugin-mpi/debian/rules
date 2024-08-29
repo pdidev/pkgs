@@ -6,14 +6,11 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+	CMAKEFLAGS += -DBUILD_TESTING=OFF
+endif
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-mpi-' | sed 's/^pdiplugin-mpi-//')
-# openmpi < 4.0.2 does not support running as root
-ifneq (,$(filter buster bionic, $(DEB_BUILD_PROFILES)))
-	DISABLED_TESTS_FLAVOR = openmpi
-else
-	DISABLED_TESTS_FLAVOR = no_flavor
-endif
 
 
 %:
@@ -34,7 +31,8 @@ override_dh_auto_configure:
 			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
 			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
 			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
-			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} ;\
+			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR}  \
+			$(CMAKEFLAGS);\
 	done
 
 override_dh_auto_build:
@@ -48,7 +46,7 @@ override_dh_auto_test:
 	do \
 		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		[ $${FLAVOR} = "$(DISABLED_TESTS_FLAVOR)" ] || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
+		dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
 	done
 
 override_dh_auto_install:

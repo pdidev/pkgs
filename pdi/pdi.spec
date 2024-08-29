@@ -1,16 +1,15 @@
 %define _sover  1
 Name:           pdi
-Version:        master
+Version:        main
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
-Url:            https://gitlab.maisondelasimulation.fr/pdidev/pdi
-Source0:        https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/%{version}/pdi-%{version}.tar.bz2
-BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.10
-BuildRequires:  zpp >= 1.0.15, paraconf-devel >= 1.0.0, spdlog-devel >= 1.5
-BuildRequires:  pybind11-devel >= 2.3, python3-devel >= 3.6.5, python3-numpy >= 1.13.3
-BuildRequires:  gtest-devel >= 1.8.0, gmock-devel >= 1.8.0, google-benchmark-devel >= 1.5.0
+Url:            https://github.com/pdidev/pdi
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/%{version}.tar.gz
+BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.16.3
+BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.5.0
+BuildRequires:  pybind11-devel >= 2.4.3, python3-devel >= 3.8.2, python3-numpy >= 1.17.4
 BuildRequires:  python3-setuptools
 
 %description
@@ -22,10 +21,11 @@ Summary:        Development files for %{name}
 Requires:       gcc-gfortran%{_isa}
 Requires:       lib%{name}-f90.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       paraconf-devel >= 1.0.0
-Requires:       pybind11-devel >= 2.3.0
+Requires:       pybind11-devel >= 2.4.3
 Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       python3-devel >= 3.5, python3-numpy
-Requires:       spdlog-devel >= 1.3.1
+Requires:       python3-devel >= 3.8.2, python3-numpy >= 1.17.4
+Requires:       spdlog-devel >= 1.5.0
+Requires:       python3-setuptools
 
 %description devel
 The %{name}-devel package contains C/C++ header files for developing
@@ -115,8 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
-* Sun Jul 21 2024 - Pending release on master <julien.bigot@cea.fr>
-- Upstream release master
+* Sun Jul 21 2024 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.7.1
 * Thu Mar 09 2023 - Julien Bigot <julien.bigot@.cea.fr>

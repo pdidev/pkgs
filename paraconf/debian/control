@@ -3,7 +3,7 @@ Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11), dh-exec,
-  dh-fortran-mod <!bionic>,
+  dh-fortran-mod,
   cmake (>= 3.5),
   gfortran | fortran-compiler,
   libyaml-dev,
@@ -30,9 +30,10 @@ Description: provide a simple query language to access a Yaml tree on top of lib
 Package: libparaconf-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
+  cmake (>= 3.5),
   libparaconf-f90.1 (= ${binary:Version}),
-  libyaml-dev
-Recommends: cmake (>= 3.5), pkg-config
+  libyaml-dev,
+  pkg-config
 Description: Development files for libparaconf
  The libparaconf-dev package contains C/C++/F90 header files for developing
  applications that use libparaconf.

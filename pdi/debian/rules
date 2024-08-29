@@ -4,31 +4,22 @@ export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 include /usr/share/dpkg/architecture.mk
-ifneq (,$(filter buster, $(DEB_BUILD_PROFILES)))
-	CMAKEFLAGS += -DBUILD_BENCHMARKING=OFF
-endif
-ifneq (,$(filter bionic, $(DEB_BUILD_PROFILES)))
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
-	DHFLAGS += --with python3
-else
-	ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
-		CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
-	endif
-	DHFLAGS += --with python3,fortran_mod
 endif
 FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
 FMODDIR := /usr/lib/$(DEB_HOST_MULTIARCH)/fortran/$(FC)
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
 %:
-	dh $@ --parallel $(DHFLAGS)
+	dh $@ --parallel --with python3,fortran_mod
 
 override_dh_auto_configure:
 	dh_auto_configure --parallel -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_PYTHON=ON \
-		-DPython3_EXECUTABLE=/usr/bin/python3 \
+		-DCMAKE_BUILD_TYPE=Release \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/ \
-		$(CMAKEFLAGS) \
-		-DCMAKE_BUILD_TYPE=Release
+		-DPython3_EXECUTABLE=/usr/bin/python3 \
+		$(CMAKEFLAGS)

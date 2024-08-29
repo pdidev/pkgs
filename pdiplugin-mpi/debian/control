@@ -3,16 +3,14 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.10),
+  cmake (>= 3.16.3),
   gfortran | fortran-compiler <!nocheck>,
   libmpich-dev,
   libopenmpi-dev,
   libpdi-dev,
   mpi-default-dev,
   mpich <!nocheck>,
-  openmpi-bin <!nocheck>,
-  pkg-config,
-  python3-setuptools
+  openmpi-bin <!nocheck>
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 

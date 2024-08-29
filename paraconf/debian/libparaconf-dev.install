@@ -3,4 +3,3 @@
 usr/lib/*/*.so
 usr/include/*
 usr/share/paraconf/cmake/*
-usr/lib/*/fortran/*/*.mod <bionic>

@@ -3,18 +3,14 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
-  cmake (>= 3.10),
-  libgmock-dev (>= 1.8) <!bionic !nocheck>,
-  libgtest-dev (>= 1.8) <!bionic !nocheck>,
-  libnetcdf-dev (>= 4.6.0),
-  libnetcdf-mpi-dev (>= 4.6.2) <!bionic>,
+  cmake (>= 3.16.3),
+  libnetcdf-dev (>= 4.7.3),
+  libnetcdf-mpi-dev (>= 4.7.3) <disabled>,
   libpdi-dev,
   pkg-config,
   mpi-default-dev,
-  mpi-default-bin <!bionic !nocheck>,
-  pdiplugin-mpi-mpich <!bionic !nocheck>,
-  pdiplugin-mpi-openmpi <!bionic !nocheck>,
-  python3-setuptools
+  mpi-default-bin <!nocheck>,
+  pdiplugin-mpi-openmpi <!nocheck disabled>
 Standards-Version: 4.5.0
 Homepage: https://pdi.julien-bigot.fr/
 
@@ -31,9 +27,8 @@ Description: Decl'NetCDF plugin for the PDI Data Interface
 
 #TODO: Depend on libblosc-dev due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1019055
 #TODO: Disabled until https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=977545
-#TODO: Disabled on bionic where libnetcdf-mpi-dev is not available
 Package: pdiplugin-decl-netcdf-mpi
-Build-Profiles: <disabled !bionic>
+Build-Profiles: <disabled>
 Architecture: any
 Section: libs
 Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
