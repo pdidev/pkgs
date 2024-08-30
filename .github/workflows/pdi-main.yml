@@ -1,7 +1,7 @@
-name: pdi-master build
+name: pdi-main build
 on:
   push:
-    branches: [ pdi-master ]
+    branches: [ pdi-main ]
   schedule:
     - cron:  '27 2 * * *' # daily build at 2:27AM
 jobs:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout packages
         uses: actions/checkout@v4
         with:
-          ref: pdi-master
+          ref: pdi-main
       - name: Checkout builder script
         uses: actions/checkout@v4
         with:
