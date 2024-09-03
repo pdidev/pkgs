@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11),
   cmake (>= 3.10),
+  gfortran | fortran-compiler <!nocheck>,
   libpdi-dev,
   libsion-mpich-dev (>= 1.7.6),
   libsion-openmpi-dev (>= 1.7.6),
