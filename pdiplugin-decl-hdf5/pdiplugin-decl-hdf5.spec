@@ -57,6 +57,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	-S plugins/decl_hdf5 \
 	-B build-${MPI_VERSION}
 %make_build -C build-${MPI_VERSION}
+module purge
 done
 
 
