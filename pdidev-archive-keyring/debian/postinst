@@ -4,7 +4,8 @@ case "$1" in
 configure)
 	if [ -f /etc/apt/sources.list.d/pdi.list ]
 	then
-		sed 's%https://raw.githubusercontent.com/pdidev/pkgs/repo/?%https://raw.githubusercontent.com/pdidev/repo/%' -i /etc/apt/sources.list.d/pdi.list
+		sed 's%https://raw.githubusercontent.com/pdidev/pkgs/repo/%https://repo.pdi.dev/%' -i /etc/apt/sources.list.d/pdi.list
+		sed 's%https://raw.githubusercontent.com/pdidev/repo/%https://repo.pdi.dev/%' -i /etc/apt/sources.list.d/pdi.list
 	fi
 ;;
 *)
