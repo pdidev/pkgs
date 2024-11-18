@@ -1,0 +1,63 @@
+name: 'build & deploy'
+on:
+  pull_request:
+  push:
+    branches: [ stable, pdi-main ]
+  schedule:
+    - cron: '27 1 3 * *' # monthly build on 1st of each month, 1:27AM => stable
+    - cron: '27 2 * * *' # daily build at 2:27AM => pdi-main
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        distrib: [ debian, fedora, ubuntu ]
+    steps:
+    - if: "github.event_name != 'schedule' || github.event.schedule != '27 2 * * *'"
+      name: Checkout packages
+      uses: actions/checkout@v4
+    - if: github.event.schedule == '27 2 * * *'
+      name: Checkout packages
+      uses: actions/checkout@v4
+      with: { ref: pdi-main }
+    - uses: pdidev/pkgs/.github/actions/build@stable
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        KEY_PASSPHRASE: "${{ secrets.KEY_PASSPHRASE }}"
+        distribution: "${{ matrix.distrib }}"
+  aggregate:
+    if: ${{ always() && github.event_name != 'pull_request' }} 
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+    - if: "github.event_name != 'schedule' || github.event.schedule != '27 2 * * *'"
+      name: Checkout packages
+      uses: actions/checkout@v4
+      with: { path: data }
+    - if: github.event.schedule == '27 2 * * *'
+      name: Checkout packages
+      uses: actions/checkout@v4
+      with: { path: data, ref: pdi-main }
+    - name: Aggregate sources
+      run: |
+        mkdir _site
+        cp data/README.tpl/index.html _site
+        rm -rf data
+    - uses: pdidev/pkgs/.github/actions/aggregate@stable
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  publish:
+    needs: aggregate
+    if: "github.event_name != 'pull_request'"
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
