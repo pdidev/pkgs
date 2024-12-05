@@ -21,11 +21,46 @@ jobs:
       name: Checkout packages
       uses: actions/checkout@v4
       with: { ref: pdi-main }
-    - uses: pdidev/pkgs/.github/actions/build@stable
+    - uses: docker/login-action@v3
+      with: { registry: "ghcr.io",  username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
+    - name: Checkout builder script
+      uses: actions/checkout@v4
       with:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        KEY_PASSPHRASE: "${{ secrets.KEY_PASSPHRASE }}"
-        distribution: "${{ matrix.distrib }}"
+        repository: jbigot/pkg_builder
+        path: pkg_builder
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'
+    - name: Install deps
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        curl -o - https://www.aptly.info/pubkey.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/aptly.gpg > /dev/null
+        echo "deb http://repo.aptly.info/ squeeze main" | sudo tee /etc/apt/sources.list.d/aptly.list
+        sudo apt-get update
+        sudo apt-get upgrade
+        sudo apt-get install devscripts equivs aptly
+        pip3.8 install -r pkg_builder/requirements.txt
+    - name: Build packages
+      env:
+        KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+        DISTRIB: ${{ matrix.distrib }}
+      run: |
+        python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
+        ls -R ./${{ matrix.distrib }}
+        echo -e '\n\n\n\n-----\n\n'
+        ls -R
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      id: artifact
+      with:
+        name: ${{ matrix.distrib }}
+        path: ./${{ matrix.distrib }}
+    - name: Make artifact descriptor container
+      run: |
+        echo "${{ github.run_id }}" > run_id
+        tar -c run_id | docker import - ghcr.io/pdidev/pkgs/lastbuild:${{ matrix.distrib }}
+        docker push ghcr.io/pdidev/pkgs/lastbuild:${{ matrix.distrib }}
   aggregate:
     if: ${{ always() && github.event_name != 'pull_request' }} 
     needs: build
@@ -44,9 +79,65 @@ jobs:
         mkdir _site
         cp data/README.tpl/index.html _site
         rm -rf data
-    - uses: pdidev/pkgs/.github/actions/aggregate@stable
+        for DISTRIB in debian fedora ubuntu pdi-main.debian pdi-main.fedora pdi-main.ubuntu
+        do
+          CID="$(docker create ghcr.io/pdidev/pkgs/lastbuild:debian /bin/bash)"
+          docker cp "${CID}:run_id" "${DISTRIB}.run_id"
+          echo "${DISTRIB}_run_id=$(cat ${DISTRIB}.run_id)\n" >> $GITHUB_OUTPUT
+        done
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
       with:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        name: debian
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.debian_run_id}}
+        path: _site/debian
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: fedora
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.fedora_run_id}}
+        path: _site/fedora
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: ubuntu
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.ubuntu_run_id}}
+        path: _site/ubuntu
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: pdi-main.debian
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.debian_run_id}}
+        path: _site/pdi-main.debian
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: pdi-main.fedora
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.fedora_run_id}}
+        path: _site/pdi-main.fedora
+    - uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: pdi-main.ubuntu
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{steps.ident.outputs.ubuntu_run_id}}
+        path: _site/pdi-main.ubuntu
+    - name: Link to pdi-master
+      run: |
+        cd _site
+        for DISTRIB in debian fedora ubuntu
+        do 
+          if [ -d "pdi-main.${DISTRIB}" ]
+          then ln -s "pdi-master.${DISTRIB}" "pdi-main.${DISTRIB}"
+          fi
+        done
+    - name: Upload page artifact
+      uses: actions/upload-pages-artifact@v3
   publish:
     needs: aggregate
     if: "github.event_name != 'pull_request'"
