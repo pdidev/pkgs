@@ -77,9 +77,6 @@ Section: all
 Depends:
   pdiplugin-decl-hdf5,
   pdiplugin-decl-netcdf,
-  pdiplugin-decl-sion,
-  pdiplugin-flowvr,
-  pdiplugin-fti,
   pdiplugin-mpi,
   pdiplugin-pycall,
   pdiplugin-serialize,
