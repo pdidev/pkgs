@@ -21,6 +21,14 @@ jobs:
       name: Checkout packages
       uses: actions/checkout@v4
       with: { ref: pdi-main }
+    - name: check version
+      id: version
+      run: |
+        set -x
+        if grep '^Version: *main' pdi/pdi.spec
+        then echo "pdi_prefix=pdi-main." >> $GITHUB_OUTPUT
+        else echo "pdi_prefix=" >> $GITHUB_OUTPUT
+        fi
     - uses: docker/login-action@v3
       with: { registry: "ghcr.io",  username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
     - name: Checkout builder script
@@ -34,6 +42,7 @@ jobs:
         python-version: '3.8'
     - name: Install deps
       run: |
+        set -x
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         curl -o - https://www.aptly.info/pubkey.txt | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/aptly.gpg > /dev/null
         echo "deb http://repo.aptly.info/ squeeze main" | sudo tee /etc/apt/sources.list.d/aptly.list
@@ -46,19 +55,20 @@ jobs:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         DISTRIB: ${{ matrix.distrib }}
       run: |
+        set -x
         python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
-        ls -R ./${{ matrix.distrib }}
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       id: artifact
       with:
-        name: ${{ matrix.distrib }}
-        path: ./${{ matrix.distrib }}
+        name: ${{steps.version.outputs.pdi_prefix}}${{ matrix.distrib }}
+        path: ./${{steps.version.outputs.pdi_prefix}}${{ matrix.distrib }}
     - name: Make artifact descriptor container
       run: |
+        set -x
         echo "${{ github.run_id }}" > run_id
-        tar -c run_id | docker import - ghcr.io/pdidev/pkgs/lastbuild:${{ matrix.distrib }}
-        docker push ghcr.io/pdidev/pkgs/lastbuild:${{ matrix.distrib }}
+        tar -c run_id | docker import - ghcr.io/pdidev/pkgs/lastbuild:${{steps.version.outputs.pdi_prefix}}${{ matrix.distrib }}
+        docker push ghcr.io/pdidev/pkgs/lastbuild:${{steps.version.outputs.pdi_prefix}}${{ matrix.distrib }}
   aggregate:
     if: ${{ always() && github.event_name != 'pull_request' }} 
     needs: build
@@ -75,6 +85,7 @@ jobs:
     - name: Aggregate sources
       id: ident
       run: |
+        set -x
         mkdir _site
         cp data/README.tpl/index.html _site
         rm -rf data
@@ -83,8 +94,8 @@ jobs:
           docker pull ghcr.io/pdidev/pkgs/lastbuild:${DISTRIB} || continue
           CID="$(docker create ghcr.io/pdidev/pkgs/lastbuild:${DISTRIB} /bin/bash)"
           docker cp "${CID}:run_id" "${DISTRIB}.run_id"
-          echo "${DISTRIB}_run_id=$(cat ${DISTRIB}.run_id)\n"
-          echo "${DISTRIB}_run_id=$(cat ${DISTRIB}.run_id)\n" >> $GITHUB_OUTPUT
+          RUN_ID="$(sed 's/\./_/g' <<< "${DISTRIB}_run_id")"
+          echo "${RUN_ID}=$(cat ${DISTRIB}.run_id)" >> $GITHUB_OUTPUT
         done
     - uses: actions/download-artifact@v4
       continue-on-error: true
@@ -112,33 +123,32 @@ jobs:
       with:
         name: pdi-main.debian
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        run-id: ${{steps.ident.outputs.debian_run_id}}
+        run-id: ${{steps.ident.outputs.pdi-main_debian_run_id}}
         path: _site/pdi-main.debian
     - uses: actions/download-artifact@v4
       continue-on-error: true
       with:
         name: pdi-main.fedora
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        run-id: ${{steps.ident.outputs.fedora_run_id}}
+        run-id: ${{steps.ident.outputs.pdi-main_fedora_run_id}}
         path: _site/pdi-main.fedora
     - uses: actions/download-artifact@v4
       continue-on-error: true
       with:
         name: pdi-main.ubuntu
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        run-id: ${{steps.ident.outputs.ubuntu_run_id}}
+        run-id: ${{steps.ident.outputs.pdi-main_ubuntu_run_id}}
         path: _site/pdi-main.ubuntu
     - name: Link to pdi-master
       run: |
+        set -x
         cd _site
         for DISTRIB in debian fedora ubuntu
         do 
           if [ -d "pdi-main.${DISTRIB}" ]
-          then ln -s "pdi-master.${DISTRIB}" "pdi-main.${DISTRIB}"
+          then ln -s "pdi-main.${DISTRIB}" "pdi-master.${DISTRIB}"
           fi
         done
-        cd ..
-        ls -R
     - name: Upload page artifact
       uses: actions/upload-pages-artifact@v3
   publish:

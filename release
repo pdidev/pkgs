@@ -31,6 +31,9 @@ then
 	sed "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release main/" -i pdi*/*.spec
 	sed 1p -i pdi/debian/changelog pdiplugin*/debian/changelog
 	sed "1s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/" -i  pdi/debian/changelog pdiplugin*/debian/changelog
+	sed 's/path: "/path: "pdi-main./' build.conf
+else
+	sed 's/path: "pdi-main\./path: "/' build.conf
 fi
 
 sed \
