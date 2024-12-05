@@ -1,6 +1,6 @@
 %define _sover  1
 Name:           pdi
-Version:        1.8.0
+Version:        main
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -115,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Thu Dec 05 2024 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Thu Dec 05 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.8.0
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
