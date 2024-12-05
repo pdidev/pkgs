@@ -1,5 +1,5 @@
 Name:           pdiplugin-pycall
-Version:        main
+Version:        1.8.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -40,8 +40,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Sun Jul 21 2024 - Pending release on main <julien.bigot@cea.fr>
-- Upstream release main
+* Thu Dec 05 2024 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.8.0
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.7.1
 * Thu Mar 09 2023 - Julien Bigot <julien.bigot@.cea.fr>
