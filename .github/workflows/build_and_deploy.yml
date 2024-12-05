@@ -80,6 +80,7 @@ jobs:
         rm -rf data
         for DISTRIB in debian fedora ubuntu pdi-main.debian pdi-main.fedora pdi-main.ubuntu
         do
+          docker pull ghcr.io/pdidev/pkgs/lastbuild:${DISTRIB} || continue
           CID="$(docker create ghcr.io/pdidev/pkgs/lastbuild:${DISTRIB} /bin/bash)"
           docker cp "${CID}:run_id" "${DISTRIB}.run_id"
           echo "${DISTRIB}_run_id=$(cat ${DISTRIB}.run_id)\n"
