@@ -25,6 +25,9 @@ jobs:
       id: version
       run: |
         set -x
+        echo "github.event.schedule == '27 2 * * *' ?"
+        echo "${{github.event.schedule}} == '27 2 * * *' ?"
+        echo "${{github.event.schedule == '27 2 * * *'}}"
         if grep '^Version: *main' pdi/pdi.spec
         then echo "pdi_prefix=pdi-main." >> $GITHUB_OUTPUT
         else echo "pdi_prefix=" >> $GITHUB_OUTPUT
