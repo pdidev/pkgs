@@ -6,7 +6,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/heads/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.16.3
 BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.5.0
 BuildRequires:  pybind11-devel >= 2.4.3, python3-devel >= 3.8.2, python3-numpy >= 1.17.4

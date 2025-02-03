@@ -5,7 +5,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/heads/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
 BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 4.7.3
 
