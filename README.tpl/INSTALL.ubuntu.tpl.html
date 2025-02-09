@@ -1,8 +1,8 @@
 <h3>On ${dist_release}</h3>
 <code>
-echo "deb [ arch=amd64 ] ${baseurl} ${codename} main" | sudo tee /etc/apt/sources.list.d/pdi.list > /dev/null
-sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg ${baseurl}/pdidev-archive-keyring.gpg
-sudo chmod a+r /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg /etc/apt/sources.list.d/pdi.list
-sudo apt update
+echo "deb [ arch=amd64 ] ${baseurl} ${codename} main" | sudo tee /etc/apt/sources.list.d/pdi.list > /dev/null<br>
+sudo wget -O /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg ${baseurl}/pdidev-archive-keyring.gpg<br>
+sudo chmod a+r /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg /etc/apt/sources.list.d/pdi.list<br>
+sudo apt update<br>
 sudo apt install pdidev-archive-keyring libpdi-dev pdiplugin-all
 </code>
