@@ -1,3 +1,9 @@
+pdiplugin-set-value (1739102879main-1) unstable devel; urgency=medium
+
+  * Upstream release main
+
+ -- Pending release on main <julien.bigot@cea.fr>  Sun, 09 Feb 2025 13:07:59 +0100
+
 pdiplugin-set-value (1.8.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.8.1
