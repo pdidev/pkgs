@@ -1,5 +1,5 @@
 Name:           pdiplugin-decl-hdf5
-Version:        main
+Version:        1.8.1
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -33,7 +33,7 @@ declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
 a simple declarative interface to access a large subset of it.
 
 %prep
-%autosetup -n pdi-%{version}
+%autosetup
 
 %build
 mkdir build
@@ -103,8 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Thu Dec 05 2024 - Pending release on main <julien.bigot@cea.fr>
-- Upstream release main
+* Sun Feb 09 2025 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.8.1
 * Thu Dec 05 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.8.0
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>

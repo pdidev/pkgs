@@ -1,5 +1,5 @@
 Name:           pdiplugin-trace
-Version:        main
+Version:        1.8.1
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
@@ -13,7 +13,7 @@ BuildRequires:  pdi-devel = %{version}
 The PDI trace plugin generates a trace of what happens in PDI data store.
 
 %prep
-%autosetup -n pdi-%{version}
+%autosetup
 
 %build
 %cmake \
@@ -38,8 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Thu Dec 05 2024 - Pending release on main <julien.bigot@cea.fr>
-- Upstream release main
+* Sun Feb 09 2025 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.8.1
 * Thu Dec 05 2024 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.8.0
 * Sun Jul 21 2024 - Julien Bigot <julien.bigot@.cea.fr>
