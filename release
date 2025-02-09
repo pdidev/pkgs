@@ -28,24 +28,34 @@ fi
 if [ "x${VERSION}" == "xmain" ]
 then
 	AUTHOR="Pending release on main <julien.bigot@cea.fr>"
-	sed "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release main/" -i pdi*/*.spec
-	sed 1p -i pdi/debian/changelog pdiplugin*/debian/changelog
-	sed "1s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/" -i  pdi/debian/changelog pdiplugin*/debian/changelog
-	sed 's/path: "/path: "pdi-main./' build.conf
+	sed \
+		-e 1p \
+		-e "1s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/" \
+		-i  pdi/debian/changelog pdiplugin*/debian/changelog
+	sed \
+		-e 's/path: "/path: "pdi-main./' \
+		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz%" \
+		-i build.conf
+	sed \
+		-e "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release main/" \
+		-e "s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz#" \
+		-i pdi*/*.spec
 else
-	sed 's/path: "pdi-main\./path: "/' build.conf
+	sed \
+		-e 's/path: "pdi-main\./path: "/' \
+		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/tags/${BCF_SRC_VERSION}.tar.gz%" \
+		-i build.conf
+	sed \
+		"s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/tags/${RPM_SRC_VERSION}.tar.gz#" \
+		-i pdi*/*.spec
 fi
 
-sed \
-	"s%https://github\.com/pdidev/pdi/archive/refs/heads/[^/]*\.tar\.[a-zA-Z0-9]*%https://github.com/pdidev/pdi/archive/refs/heads/${BCF_SRC_VERSION}.tar.gz%" \
-	-i build.conf
 sed \
 	-e "s/Pending release on main <julien.bigot@cea.fr>  [A-Za-z]*, [0-9]* [A-Za-z]* [0-9]* [0-9]*:[0-9]*:[0-9]* +[0-9]*/${AUTHOR}  ${DEB_DATE}/" \
 	-e "s/([0-9]*main-1)/(${DEB_PKG_VERSION}-1)/" \
 	-e "s/\* Upstream release main/* Upstream release ${VERSION}/" \
 	-i  pdi/debian/changelog pdiplugin*/debian/changelog
 sed \
-	-e "s#https://github\.com/pdidev/pdi/archive/refs/heads/[^/]*\.tar\.[a-zA-Z0-9]*#https://github.com/pdidev/pdi/archive/refs/heads/${RPM_SRC_VERSION}.tar.gz#" \
 	-e "s/[A-Za-z]* [A-Za-z]* [0-9]* [0-9]* - Pending release on main <julien.bigot@cea.fr>/${RPM_DATE} - ${AUTHOR}/" \
 	-e "s/Version: .*/Version:        ${RPM_PKG_VERSION}/" \
 	-e "s/- Upstream release main/- Upstream release ${VERSION}/" \
@@ -56,5 +66,9 @@ if [ "x${VERSION}" != "x${RPM_PKG_VERSION}" ]
 then
 	sed \
 		-e "s/%autosetup.*/%autosetup -n pdi-${VERSION}/" \
+		-i pdi*/*.spec
+else
+	sed \
+		-e "s/%autosetup.*/%autosetup/" \
 		-i pdi*/*.spec
 fi
