@@ -29,24 +29,25 @@ if [ "x${VERSION}" == "xmain" ]
 then
 	AUTHOR="Pending release on main <julien.bigot@cea.fr>"
 	sed \
-		-e 1p \
-		-e "1s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/" \
+		-e "1{h;s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/;p;x}" \
 		-i  pdi/debian/changelog pdiplugin*/debian/changelog
 	sed \
 		-e 's/path: "/path: "pdi-main./' \
-		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz%" \
+		-e 's#url: "https://repo.pdi.dev/#url: "https://repo.pdi.dev/pdi-main.#' \
+		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9{}%_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz%" \
 		-i build.conf
 	sed \
 		-e "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release main/" \
-		-e "s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz#" \
+		-e "s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9{}%_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz#" \
 		-i pdi*/*.spec
 else
 	sed \
 		-e 's/path: "pdi-main\./path: "/' \
-		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/tags/${BCF_SRC_VERSION}.tar.gz%" \
+		-e 's#url: "https://repo.pdi.dev/pdi-main.#url: "https://repo.pdi.dev/#' \
+		-e "s%https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9{}%_/]*\.tar.gz%https://github.com/pdidev/pdi/archive/refs/tags/${BCF_SRC_VERSION}.tar.gz%" \
 		-i build.conf
 	sed \
-		"s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/tags/${RPM_SRC_VERSION}.tar.gz#" \
+		-e "s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9{}%_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/tags/${RPM_SRC_VERSION}.tar.gz#" \
 		-i pdi*/*.spec
 fi
 
@@ -61,14 +62,3 @@ sed \
 	-e "s/- Upstream release main/- Upstream release ${VERSION}/" \
 	-e "s/=\s*main\b/= %{version}/" \
 	-i pdi*/*.spec
-
-if [ "x${VERSION}" != "x${RPM_PKG_VERSION}" ]
-then
-	sed \
-		-e "s/%autosetup.*/%autosetup -n pdi-${VERSION}/" \
-		-i pdi*/*.spec
-else
-	sed \
-		-e "s/%autosetup.*/%autosetup/" \
-		-i pdi*/*.spec
-fi

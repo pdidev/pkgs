@@ -5,7 +5,7 @@ License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Serialize plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/heads/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
 BuildRequires:  pdi-devel = %{version}
 
@@ -14,7 +14,7 @@ The PDI serialize plugin supports serialization of complex types into a
 representation all I/O libraries should support.
 
 %prep
-%autosetup
+%autosetup -n pdi-%{version}
 
 %build
 %cmake \

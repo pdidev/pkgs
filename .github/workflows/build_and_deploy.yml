@@ -143,16 +143,28 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         run-id: ${{steps.ident.outputs.pdi-main_ubuntu_run_id}}
         path: _site/pdi-main.ubuntu
-    - name: Link to pdi-master
+    - name: Add file list indexes
       run: |
         set -x
         cd _site
-        for DISTRIB in debian fedora ubuntu
-        do 
-          if [ -d "pdi-main.${DISTRIB}" ]
-          then ln -s "pdi-main.${DISTRIB}" "pdi-master.${DISTRIB}"
-          fi
-        done
+        find . \
+          -type d \
+          '!' -exec test -e "{}/index.html" \
+          -print \
+          -exec sh -c 'tree "$0" \
+            -H "." \
+            -L 1 \
+            --noreport \
+            --houtro ""
+            --dirsfirst \
+            --charset utf-8 \
+            -I "index.html" \
+            -T "PDI repository files" \
+            --ignore-case \
+            --timefmt "%Y-%b-%d %H:%M" \
+            -s \
+            -D \
+            -o "$0/index.html"' {} \;
     - name: Upload page artifact
       uses: actions/upload-pages-artifact@v3
   publish:
