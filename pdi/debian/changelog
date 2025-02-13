@@ -1,3 +1,10 @@
+pdi (1.8.1-2) unstable devel; urgency=medium
+
+  * Fix a bug with missing env script making pdirun fail,
+    see https://github.com/pdidev/pkgs/issues/57
+
+ -- Julien Bigot <julien.bigot@.cea.fr>  Thu, 13 Feb 2025 18:17:22 +0100
+
 pdi (1.8.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.8.1
