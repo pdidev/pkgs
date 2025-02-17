@@ -8,7 +8,7 @@ on:
     - cron: '27 2 * * *' # daily build at 2:27AM => pdi-main
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -42,7 +42,7 @@ jobs:
     - name: Setup python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.8'
+        python-version: '3.13'
     - name: Install deps
       run: |
         set -x
@@ -52,14 +52,14 @@ jobs:
         sudo apt-get update
         sudo apt-get upgrade
         sudo apt-get install devscripts equivs aptly
-        pip3.8 install -r pkg_builder/requirements.txt
+        pip3.13 install -r pkg_builder/requirements.txt
     - name: Build packages
       env:
         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
         DISTRIB: ${{ matrix.distrib }}
       run: |
         set -x
-        python3.8 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
+        python3.13 pkg_builder/pkgbuild -D ${DISTRIB} -j 3 -p "${KEY_PASSPHRASE}"
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       id: artifact
@@ -76,7 +76,7 @@ jobs:
   aggregate:
     if: ${{ always() && github.event_name != 'pull_request' }} 
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
     - if: "github.event_name != 'schedule' || github.event.schedule != '27 2 * * *'"
       name: Checkout packages
