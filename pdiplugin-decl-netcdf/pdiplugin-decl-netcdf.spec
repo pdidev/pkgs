@@ -1,11 +1,11 @@
 Name:           pdiplugin-decl-netcdf
-Version:        main
+Version:        1.8.3
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
 BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 4.7.3
 
@@ -103,8 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
-* Thu Feb 20 2025 - Pending release on main <julien.bigot@cea.fr>
-- Upstream release main
+* Tue Feb 25 2025 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.8.3
 * Thu Feb 20 2025 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.8.2
 * Sun Feb 09 2025 - Julien Bigot <julien.bigot@.cea.fr>
