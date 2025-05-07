@@ -1,11 +1,11 @@
 Name:           pdiplugin-decl-hdf5
-Version:        1.9.1
+Version:        main
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
 BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10.4
 
@@ -103,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Wed May 07 2025 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Wed May 07 2025 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.9.1
 * Mon Apr 07 2025 - Julien Bigot <julien.bigot@.cea.fr>

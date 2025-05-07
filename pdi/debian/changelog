@@ -1,3 +1,9 @@
+pdi (1746633588main-1) unstable devel; urgency=medium
+
+  * Upstream release main
+
+ -- Pending release on main <julien.bigot@cea.fr>  Wed, 07 May 2025 10:59:48 -0500
+
 pdi (1.9.1-1) unstable devel; urgency=medium
 
   * Upstream release 1.9.1
