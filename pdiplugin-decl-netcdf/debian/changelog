@@ -1,8 +1,8 @@
-pdiplugin-decl-netcdf (1744033510main-1) unstable devel; urgency=medium
+pdiplugin-decl-netcdf (1.9.1-1) unstable devel; urgency=medium
 
-  * Upstream release main
+  * Upstream release 1.9.1
 
- -- Pending release on main <julien.bigot@cea.fr>  Mon, 07 Apr 2025 15:45:10 +0200
+ -- Julien Bigot <julien.bigot@.cea.fr>  Wed, 07 May 2025 10:58:54 -0500
 
 pdiplugin-decl-netcdf (1.9.0-1) unstable devel; urgency=medium
 
