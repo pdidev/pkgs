@@ -1,11 +1,11 @@
 Name:           pdiplugin-serialize
-Version:        main
+Version:        1.9.2
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Serialize plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
 BuildRequires:  pdi-devel = %{version}
 
@@ -39,8 +39,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
-* Wed May 07 2025 - Pending release on main <julien.bigot@cea.fr>
-- Upstream release main
+* Fri Jun 13 2025 - Julien Bigot <julien.bigot@.cea.fr>
+- Upstream release 1.9.2
 * Wed May 07 2025 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.9.1
 * Mon Apr 07 2025 - Julien Bigot <julien.bigot@.cea.fr>
