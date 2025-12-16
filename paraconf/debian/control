@@ -4,7 +4,8 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11), dh-exec,
   dh-fortran-mod,
-  cmake (>= 3.5),
+  dh-sequence-fortran-mod,
+  cmake (>= 3.10),
   gfortran | fortran-compiler,
   libyaml-dev,
   pkg-config
@@ -29,8 +30,8 @@ Description: provide a simple query language to access a Yaml tree on top of lib
 
 Package: libparaconf-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
-  cmake (>= 3.5),
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod}, ${fortran:Depends},
+  cmake (>= 3.10),
   libparaconf-f90.1 (= ${binary:Version}),
   libyaml-dev,
   pkg-config

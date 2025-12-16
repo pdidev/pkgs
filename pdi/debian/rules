@@ -7,8 +7,15 @@ include /usr/share/dpkg/architecture.mk
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
 endif
-FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
-FMODDIR := /usr/lib/$(DEB_HOST_MULTIARCH)/fortran/$(FC)
+
+ifneq ("$(wildcard $(PATH_TO_FILE))","")
+    include /usr/share/debhelper/dh-fortran/fortran-support.mk
+    FMODDIR:= $(call get_fmoddir, $(FC_DEFAULT))
+else
+    FC:=$(shell basename $(shell readlink -f /usr/bin/gfortran))
+    FMODDIR:=/usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+endif
+
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
 %:

@@ -1,3 +1,10 @@
+paraconf (1.0.1-1) unstable devel; urgency=medium
+
+  * Version bump to 1.0.1
+  * Use dh-fortran to get FMODDIR
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 16 Dec 2025 13:17:15 +0100
+
 paraconf (1.0.0-1) unstable devel; urgency=medium
 
   * Version bump to 1.0.0

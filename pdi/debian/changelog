@@ -1,8 +1,14 @@
+pdi (1.9.2-2) unstable devel; urgency=medium
+
+  * Use dh-fortran to get FMODDIR
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Tue, 16 Dec 2025 13:15:41 +0100
+
 pdi (1.9.2-1) unstable devel; urgency=medium
 
   * Upstream release 1.9.2
 
- -- Pending release on main <julien.bigot@cea.fr>  Wed, 07 May 2025 10:59:48 -0500
+ -- Julien Bigot <julien.bigot@cea.fr>  Wed, 07 May 2025 10:59:48 -0500
 
 pdi (1.9.1-1) unstable devel; urgency=medium
 

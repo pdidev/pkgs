@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper (>= 11), dh-exec, dh-python,
   dh-fortran-mod,
+  dh-sequence-fortran-mod,
   cmake (>= 3.16.3),
   gfortran | fortran-compiler,
   libparaconf-dev (>= 1.0.0),
@@ -57,7 +58,7 @@ Package: libpdi-dev
 Architecture: any
 Section: libs
 Priority: optional
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod},
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod}, ${fortran:Depends},
   libpdi-f90.1 (= ${binary:Version}),
   python3-pdi (= ${binary:Version}),
   libparaconf-dev (>= 1.0.0),

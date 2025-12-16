@@ -4,8 +4,14 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-FC := $(shell basename $(shell readlink -f /usr/bin/gfortran))
-FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+ifneq ("$(wildcard $(PATH_TO_FILE))","")
+    include /usr/share/debhelper/dh-fortran/fortran-support.mk
+    FMODDIR:= $(call get_fmoddir, $(FC_DEFAULT))
+else
+    FC:=$(shell basename $(shell readlink -f /usr/bin/gfortran))
+    FMODDIR:=/usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+endif
+
 
 %:
 	dh $@ --parallel --with fortran_mod
