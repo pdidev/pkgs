@@ -22,6 +22,8 @@ PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 	dh $@ --parallel --with python3,fortran_mod
 
 override_dh_auto_configure:
+	dpkg -L libparaconf-dev
+	ls -lR $(shell dirname $(FMODDIR))
 	dh_auto_configure --parallel -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_PYTHON=ON \
