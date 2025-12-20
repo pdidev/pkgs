@@ -1,7 +1,9 @@
 #!
 set -e
 
-case #FLAVOR# in
+FLAVOR=`printf #PACKAGE#|sed 's/pdiplugin-decl-netcdf-//'`
+
+case ${FLAVOR} in
 mpi)
 	PRIORITY=30
 	;;
@@ -9,7 +11,7 @@ serial)
 	PRIORITY=20
 	;;
 *)
-	PRIORITY=10
+	exit 1
 	;;
 esac
 
@@ -19,7 +21,7 @@ configure)
 		--install \
 		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/libpdi_decl_netcdf_plugin.so \
 		pdi-#PKG_VERSION#_decl_netcdf_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/#FLAVOR#/libpdi_decl_netcdf_plugin.so \
+		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/${FLAVOR}/libpdi_decl_netcdf_plugin.so \
 		"${PRIORITY}"
 ;;
 *)

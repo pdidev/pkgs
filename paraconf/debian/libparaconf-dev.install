@@ -1,5 +1,3 @@
-#! /usr/bin/dh-exec
-
 usr/lib/*/*.so
 usr/include/*
 usr/share/paraconf/cmake/*

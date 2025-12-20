@@ -14,7 +14,7 @@ endif
 
 
 %:
-	dh $@ --parallel -D plugins/decl_netcdf
+	dh $@
 
 override_dh_auto_clean:
 	set -e; for FLAVOR in $(FLAVORS) ;\
@@ -25,22 +25,28 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
-		INSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
 		case "$${FLAVOR}" in \
-		serial) netCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/netCDF ;;\
-		mpi) netCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/netCDF_mpi ;;\
+		serial) \
+			netCDF_DIR=netCDF ;\
+			INSTALL_PDIPLUGINDIR=serial ;\
+			BUILD_NETCDF_PARALLEL=OFF ;\
+		;;\
+		mpi) \
+			netCDF_DIR=netCDF_mpi ;\
+			INSTALL_PDIPLUGINDIR=$(ARCH_DEFAULT_MPI_IMPL) ;\
+			BUILD_NETCDF_PARALLEL=ON ;\
+		;;\
 		*) exit 1 ;;\
 		esac ;\
-		BUILD_NETCDF_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
-		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} -- \
+		dh_auto_configure -D plugins/decl_netcdf -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} -- \
 			-DBUILD_NETCDF_PARALLEL=$${BUILD_NETCDF_PARALLEL} \
 			-DCMAKE_BUILD_TYPE=Release \
-			-DINSTALL_PDIPLUGINDIR=$${INSTALL_PDIPLUGINDIR} \
+			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${INSTALL_PDIPLUGINDIR} \
 			-DMPI_C_COMPILER=mpicc.$(ARCH_DEFAULT_MPI_IMPL) \
 			-DMPI_CXX_COMPILER=mpicxx.$(ARCH_DEFAULT_MPI_IMPL) \
 			-DMPI_Fortran_COMPILER=mpif90.$(ARCH_DEFAULT_MPI_IMPL) \
 			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$(ARCH_DEFAULT_MPI_IMPL) \
-			-DnetCDF_DIR=$${netCDF_DIR} \
+			-DnetCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/$${netCDF_DIR} \
 			$(CMAKEFLAGS) ;\
 	done
 
@@ -50,30 +56,25 @@ override_dh_auto_build:
 		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
 
-override_dh_auto_test:
-	set -e; for FLAVOR in $(FLAVORS) ;\
-	do \
-		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
-		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
-		echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
-	done
-
 override_dh_auto_install:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
 
-override_dh_installdeb:
-	# execute_before_dh_installdeb is not available before debhelper 12
-	# dh_installdeb -D is not available before debhelper 13, we use sed
+override_dh_auto_test:
+	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
 	set -e; for FLAVOR in $(FLAVORS) ;\
-	do  \
-		for SUFFIX in prerm postinst ;\
-		do sed \
-			-e "s/#FLAVOR#/$${FLAVOR}/g" \
-			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-			debian/pdiplugin-decl-netcdf-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-netcdf-$${FLAVOR}.$${SUFFIX} ;\
-		done ;\
-		dh_installdeb -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
+	do \
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
+		dh_auto_test -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
+
+override_dh_installdeb:
+	set -e; for FLAVOR in $(FLAVORS) ; do for SUFFIX in prerm postinst ;\
+		do cp debian/pdiplugin-decl-netcdf-FLAVOR.$${SUFFIX} debian/pdiplugin-decl-netcdf-$${FLAVOR}.$${SUFFIX} ;\
+	done; done
+	dh_installdeb \
+		-D PKG_VERSION=$(PKG_VERSION) \
+		-ppdiplugin-decl-netcdf-mpi \
+		-ppdiplugin-decl-netcdf-serial

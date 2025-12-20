@@ -8,10 +8,11 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
 
+
 %:
-	dh $@ --parallel
+	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure --parallel -D plugins/serialize -- \
+	dh_auto_configure -D plugins/serialize -- \
 		-DCMAKE_BUILD_TYPE=Release \
 		$(CMAKEFLAGS)

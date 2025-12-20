@@ -1,13 +1,11 @@
 #!
 set -e
 
-case "$1" in
-*)
-	update-alternatives \
-		--remove \
-		pdi-#PKG_VERSION#_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/#FLAVOR#/libpdi_decl_hdf5_plugin.so
-;;
-esac
+FLAVOR=`printf #PACKAGE#|sed 's/pdiplugin-decl-hdf5-//'`
+
+update-alternatives \
+	--remove \
+	pdi-#PKG_VERSION#_decl_hdf5_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
+	/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/${FLAVOR}/libpdi_decl_hdf5_plugin.so
 
 #DEBHELPER#

@@ -4,20 +4,29 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-ifneq ("$(wildcard $(PATH_TO_FILE))","")
+ifneq ("$(wildcard /usr/share/debhelper/dh-fortran/fortran-support.mk)","")
     include /usr/share/debhelper/dh-fortran/fortran-support.mk
-    FMODDIR:= $(call get_fmoddir, $(FC_DEFAULT))
+endif
+FC_DEFAULT ?= $(shell basename $(shell readlink /etc/alternatives/f95))
+# Workaround a bug in forky where FMODDIR is not updated for default gfortran
+ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)", "VERSION_CODENAME=forky")
+    FC_DEFAULT := $(shell basename $(shell readlink $(shell which $(FC_DEFAULT))))
+endif
+ifdef get_fmoddir
+    FMODDIR := $(call get_fmoddir, $(FC_DEFAULT))
 else
-    FC:=$(shell basename $(shell readlink -f /usr/bin/gfortran))
-    FMODDIR:=/usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+    FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(shell basename $(shell readlink -f $(shell which $(FC_DEFAULT))))
+endif
+# Workaround a bug in questing where FMODDIR is not updated for gfortran-15
+ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)/$(FC_DEFAULT)", "VERSION_CODENAME=questing/gfortran")
+    FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/gfortran-mod-16
 endif
 
 
 %:
-	dh $@ --parallel --with fortran_mod
+	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure --parallel -D paraconf -- \
+	dh_auto_configure -D paraconf -- \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
-		"-DINSTALL_FINCLUDEDIR=$(FMODDIR)" \
 		-DCMAKE_BUILD_TYPE=Release

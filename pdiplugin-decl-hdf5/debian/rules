@@ -14,7 +14,7 @@ endif
 
 
 %:
-	dh $@ --parallel -D plugins/decl_hdf5
+	dh $@
 
 override_dh_auto_clean:
 	set -e; for FLAVOR in $(FLAVORS) ;\
@@ -27,7 +27,7 @@ override_dh_auto_configure:
 	do  \
 		H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ;\
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
-		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
+		dh_auto_configure -D plugins/decl_hdf5 -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
 			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
 			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
@@ -45,31 +45,25 @@ override_dh_auto_build:
 		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
-override_dh_auto_test:
-	set -e; for FLAVOR in $(FLAVORS) ;\
-	do \
-		export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
-		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
-		echo "$(DISABLED_TESTS_FLAVOR)" | fgrep "$${FLAVOR}" || dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
-	done
-
 override_dh_auto_install:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
-override_dh_installdeb:
-	# execute_before_dh_installdeb is not available before debhelper 12
-	# dh_installdeb -D is not available before debhelper 13, we use sed
-	set -e; for FLAVOR in $(FLAVORS) ;\
-	do  \
-		for SUFFIX in prerm postinst ;\
-		do sed \
-			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-			-e "s/#FLAVOR#/$${FLAVOR}/g" \
-			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-			debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} > debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ;\
-		done ;\
-		dh_installdeb -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
+override_dh_auto_test:
+	set -e ;\
+	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+	for FLAVOR in $(FLAVORS) ;\
+	do \
+		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\
+		dh_auto_test -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
+
+override_dh_installdeb:
+	set -e; for FLAVOR in $(FLAVORS) ; do for SUFFIX in prerm postinst ;\
+		do cp debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ;\
+	done; done
+	dh_installdeb \
+		-D ARCH_DEFAULT_MPI_IMPL=$(ARCH_DEFAULT_MPI_IMPL) \
+		-D PKG_VERSION=$(PKG_VERSION)

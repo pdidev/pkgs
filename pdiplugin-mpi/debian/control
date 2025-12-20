@@ -2,7 +2,7 @@ Source: pdiplugin-mpi
 Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Build-Depends: debhelper (>= 11),
+Build-Depends: debhelper-compat (= 13),
   cmake (>= 3.16.3),
   gfortran | fortran-compiler <!nocheck>,
   libmpich-dev,
@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 11),
   mpich <!nocheck>,
   openmpi-bin <!nocheck>
 Standards-Version: 4.5.0
-Homepage: https://pdi.julien-bigot.fr/
+Homepage: https://pdi.dev/
 
 Package: pdiplugin-mpi-mpich
 Architecture: any

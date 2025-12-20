@@ -1,0 +1,2 @@
+remove-on-upgrade /etc/apt/sources.list.d/pdi.list
+remove-on-upgrade /etc/apt/trusted.gpg.d/pdidev-archive-keyring.gpg

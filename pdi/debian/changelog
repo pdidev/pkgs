@@ -1,6 +1,9 @@
 pdi (1.9.2-2) unstable devel; urgency=medium
 
   * Use dh-fortran to get FMODDIR
+  * Workaround a bug in dh-fortran
+  * Switch to debhelper-compat 13
+  * Remove useless dh-exec
 
  -- Julien Bigot <julien.bigot@cea.fr>  Tue, 16 Dec 2025 13:15:41 +0100
 

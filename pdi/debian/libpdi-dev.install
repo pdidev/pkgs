@@ -1,4 +1,4 @@
-#! /usr/bin/dh-exec
 usr/include/*
 usr/lib/*/*.so
 usr/share/pdi/cmake/*
+usr/lib/*/fortran/*/pdif.h

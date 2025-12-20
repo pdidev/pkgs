@@ -1,7 +1,12 @@
 #!/usr/bin/make -f
 
+
 %:
 	dh $@
 
+override_dh_auto_build-indep:
+	./build.sh
+
 override_dh_install:
-	dh_install *.gpg etc/apt/trusted.gpg.d
+	dh_install *.sources etc/apt/sources.list.d/
+	dh_install *.gpg usr/share/keyrings/

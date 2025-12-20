@@ -1,34 +1,44 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-include /usr/share/dpkg/architecture.mk
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
-	CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
+ifneq ("$(wildcard /usr/share/debhelper/dh-fortran/fortran-support.mk)","")
+    include /usr/share/debhelper/dh-fortran/fortran-support.mk
+endif
+FC_DEFAULT ?= $(shell basename $(shell readlink /etc/alternatives/f95))
+# Workaround a bug in forky where FMODDIR is not updated for default gfortran
+ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)", "VERSION_CODENAME=forky")
+    FC_DEFAULT := $(shell basename $(shell readlink $(shell which $(FC_DEFAULT))))
+endif
+ifdef get_fmoddir
+    FMODDIR := $(call get_fmoddir, $(FC_DEFAULT))
+else
+    FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(shell basename $(shell readlink -f $(shell which $(FC_DEFAULT))))
+endif
+# Workaround a bug in questing where FMODDIR is not updated for gfortran-15
+ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)/$(FC_DEFAULT)", "VERSION_CODENAME=questing/gfortran")
+    FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/gfortran-mod-16
 endif
 
-ifneq ("$(wildcard $(PATH_TO_FILE))","")
-    include /usr/share/debhelper/dh-fortran/fortran-support.mk
-    FMODDIR:= $(call get_fmoddir, $(FC_DEFAULT))
-else
-    FC:=$(shell basename $(shell readlink -f /usr/bin/gfortran))
-    FMODDIR:=/usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(FC)
+include /usr/share/dpkg/architecture.mk
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+    CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
 endif
 
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 
+
 %:
-	dh $@ --parallel --with python3,fortran_mod
+	dh $@
 
 override_dh_auto_configure:
-	dpkg -L libparaconf-dev
-	ls -lR $(shell dirname $(FMODDIR))
-	dh_auto_configure --parallel -D pdi -- \
+	dh_auto_configure -D pdi -- \
 		-DBUILD_DOCUMENTATION=OFF \
 		-DBUILD_PYTHON=ON \
 		-DCMAKE_BUILD_TYPE=Release \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
-		-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/ \
+		"-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)" \
 		-DPython3_EXECUTABLE=/usr/bin/python3 \
 		$(CMAKEFLAGS)

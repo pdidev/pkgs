@@ -14,7 +14,7 @@ FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-mpi-' | sed 's/^pdiplugin-m
 
 
 %:
-	dh $@ --parallel -D plugins/mpi
+	dh $@
 
 override_dh_auto_clean:
 	set -e; for FLAVOR in $(FLAVORS) ;\
@@ -25,7 +25,7 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
-		dh_auto_configure -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} -- \
+		dh_auto_configure -D plugins/mpi -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} -- \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
 			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
@@ -41,6 +41,12 @@ override_dh_auto_build:
 		dh_auto_build -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
 	done
 
+override_dh_auto_install:
+	set -e; for FLAVOR in $(FLAVORS) ;\
+	do \
+		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
+	done
+
 override_dh_auto_test:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
@@ -49,23 +55,10 @@ override_dh_auto_test:
 		dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
 	done
 
-override_dh_auto_install:
-	set -e; for FLAVOR in $(FLAVORS) ;\
-	do \
-		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
-	done
-
 override_dh_installdeb:
-	# execute_before_dh_installdeb is not available before debhelper 12
-	# dh_installdeb -D is not available before debhelper 13, we use sed
-	set -e; for FLAVOR in $(FLAVORS) ;\
-	do  \
-		for SUFFIX in prerm postinst ;\
-		do sed \
-			-e 's/#ARCH_DEFAULT_MPI_IMPL#/$(ARCH_DEFAULT_MPI_IMPL)/g' \
-			-e "s/#FLAVOR#/$${FLAVOR}/g" \
-			-e 's/#PKG_VERSION#/$(PKG_VERSION)/g' \
-			debian/pdiplugin-mpi-FLAVOR.$${SUFFIX} > debian/pdiplugin-mpi-$${FLAVOR}.$${SUFFIX} ;\
-		done ;\
-		dh_installdeb -ppdiplugin-mpi-$${FLAVOR} ;\
-	done
+	set -e; for FLAVOR in $(FLAVORS) ; do for SUFFIX in prerm postinst ;\
+		do cp debian/pdiplugin-mpi-FLAVOR.$${SUFFIX} debian/pdiplugin-mpi-$${FLAVOR}.$${SUFFIX} ;\
+	done; done
+	dh_installdeb \
+		-D PKG_VERSION=$(PKG_VERSION) \
+		-D ARCH_DEFAULT_MPI_IMPL=$(ARCH_DEFAULT_MPI_IMPL)
