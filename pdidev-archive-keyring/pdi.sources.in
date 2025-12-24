@@ -3,4 +3,4 @@ URIs: https://repo.pdi.dev/#ID#
 Suites: #VERSION_CODENAME#
 Components: main
 arch: amd64
-signed-by=/usr/share/keyrings/pdidev-archive-automatic.gpg
+signed-by: /usr/share/keyrings/pdidev-archive-automatic.gpg

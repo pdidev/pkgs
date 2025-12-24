@@ -1,12 +1,12 @@
 <h3> On ${dist_release}</h3>
 <code style="white-space: pre-wrap">
-cat&lt;'EOF' | sudo tee /etc/apt/sources.list.d/pdi.source > /dev/null
+cat&lt;&lt;'EOF' | sudo tee /etc/apt/sources.list.d/pdi.sources > /dev/null
 Types: deb deb-src
 URIs: ${baseurl}
 Suites: ${codename}
 Components: main
 arch: amd64
-signed-by=/usr/share/keyrings/pdidev-archive-automatic.gpg
+signed-by: /usr/share/keyrings/pdidev-archive-automatic.gpg
 EOF
 sudo wget -O /usr/share/keyrings/pdidev-archive-automatic.gpg ${baseurl}/pdidev-archive-keyring.gpg
 sudo chmod a+r /usr/share/keyrings/pdidev-archive-automatic.gpg /etc/apt/sources.list.d/pdi.source
