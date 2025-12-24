@@ -44,11 +44,6 @@ jobs:
       run: |
         set -x
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        wget -O /etc/apt/keyrings/aptly.asc https://www.aptly.info/pubkey.txt > /dev/null
-        echo "deb [signed-by=/etc/apt/keyrings/aptly.asc] http://repo.aptly.info/release noble main" | sudo tee /etc/apt/sources.list.d/aptly.list
-        sudo apt-get update
-        sudo apt-get upgrade
-        sudo apt-get install dpkg-dev devscripts aptly
         pip3.13 install -r pkg_builder/requirements.txt
     - name: Build packages
       env:
