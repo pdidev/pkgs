@@ -1,3 +1,9 @@
+pdiplugin-serialize (1766610344main-1) unstable devel; urgency=medium
+
+  * Upstream release main
+
+ -- Pending release on main <julien.bigot@cea.fr>  Wed, 24 Dec 2025 22:05:44 +0100
+
 pdiplugin-serialize (1.9.2-2) unstable devel; urgency=medium
 
   * Switch to debhelper-compat 13
