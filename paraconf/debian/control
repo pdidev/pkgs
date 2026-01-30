@@ -3,9 +3,9 @@ Section: libdevel
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper-compat (= 13), dh-sequence-fortran-mod,
-  cmake (>= 3.10),
+  cmake (>= 3.22),
   gfortran | fortran-compiler,
-  libyaml-dev,
+  libyaml-dev (>= 0.2.2),
   pkg-config
 Standards-Version: 4.5.0
 Homepage: https://github.com/pdidev/paraconf

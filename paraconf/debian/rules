@@ -27,6 +27,6 @@ endif
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -D paraconf -- \
+	dh_auto_configure -- \
 		"-DINSTALL_FMODDIR=$(FMODDIR)" \
 		-DCMAKE_BUILD_TYPE=Release

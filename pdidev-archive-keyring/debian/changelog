@@ -1,3 +1,9 @@
+pdidev-archive-keyring (2026.01.01) unstable; urgency=medium
+
+  * Correctly handle sid
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Thu, 01 Jan 2026 16:43:37 +0100
+
 pdidev-archive-keyring (2025.12.20) unstable; urgency=medium
 
   * Switch to debhelper-compat 13

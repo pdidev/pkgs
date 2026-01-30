@@ -29,6 +29,12 @@ if [ "x${VERSION}" == "xmain" ]
 then
 	AUTHOR="Pending release on main <julien.bigot@cea.fr>"
 	sed \
+		-e 's%https://repo.pdi.dev/%https://repo.pdi.dev/pdi-main.%' \
+		-i pdidev-archive-keyring/pdi.sources.in
+	sed \
+		-e "1ipdidev-archive-keyring (2026.01.01.main) unstable; urgency=medium\n\n  * Move to pdi main\n\n -- Julien Bigot <julien.bigot@cea.fr>  Thu, 01 Jan 2026 16:43:38 +0100\n" \
+		-i  pdidev-archive-keyring/changelog
+	sed \
 		-e "1{h;s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/;p;x}" \
 		-i  pdi/debian/changelog pdiplugin*/debian/changelog
 	sed \
@@ -40,7 +46,15 @@ then
 		-e "s/%changelog/%changelog\n\* ${RPM_DATE} - ${AUTHOR}\n- Upstream release main/" \
 		-e "s#https://github\.com/pdidev/pdi/archive/[a-zA-Z0-9{}%_/]*\.tar.gz#https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz#" \
 		-i pdi*/*.spec
+
+
 else
+	sed \
+		-e '1,+4d' \
+		-i pdidev-archive-keyring/pdi.sources.in
+	sed \
+		-e 's%https://repo.pdi.dev/pdi-main.%https://repo.pdi.dev/%' \
+		-i pdidev-archive-keyring/pdi.sources.in
 	sed \
 		-e 's/path: "pdi-main\./path: "/' \
 		-e 's#url: "https://repo.pdi.dev/pdi-main.#url: "https://repo.pdi.dev/#' \
@@ -62,3 +76,4 @@ sed \
 	-e "s/- Upstream release main/- Upstream release ${VERSION}/" \
 	-e "s/=\s*main\b/= %{version}/" \
 	-i pdi*/*.spec
+
