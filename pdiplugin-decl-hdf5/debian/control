@@ -3,10 +3,10 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper-compat (= 13),
-  cmake (>= 3.16.3),
-  libhdf5-dev (>= 1.10.4),
-  libhdf5-mpich-dev (>= 1.10.4),
-  libhdf5-openmpi-dev (>= 1.10.4),
+  cmake (>= 3.22),
+  libhdf5-dev (>= 1.10.7),
+  libhdf5-mpich-dev (>= 1.10.7),
+  libhdf5-openmpi-dev (>= 1.10.7),
   libpdi-dev,
   mpi-default-dev,
   mpich <!nocheck>,

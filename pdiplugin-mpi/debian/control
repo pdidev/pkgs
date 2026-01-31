@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper-compat (= 13),
-  cmake (>= 3.16.3),
+  cmake (>= 3.22),
   gfortran | fortran-compiler <!nocheck>,
   libmpich-dev,
   libopenmpi-dev,

@@ -6,8 +6,8 @@ Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
-BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10.4
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.22
+BuildRequires:  pdi-devel = %{version}, hdf5-devel >= 1.10.7
 
 %description
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -16,7 +16,7 @@ a simple declarative interface to access a large subset of it.
 
 %package openmpi
 Summary: Decl'HDF5 plugin for the PDI Data Interface, OpenMPI version
-BuildRequires:  hdf5-openmpi-devel >= 1.10.4
+BuildRequires:  hdf5-openmpi-devel >= 1.10.7
 
 %description openmpi
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a
@@ -25,7 +25,7 @@ a simple declarative interface to access a large subset of it.
 
 %package mpich
 Summary: Decl'HDF5 plugin for the PDI Data Interface, MPich version
-BuildRequires:  hdf5-mpich-devel >= 1.10.4
+BuildRequires:  hdf5-mpich-devel >= 1.10.7
 
 %description mpich
 The Decl'HDF5 PDI plugin enables one to read and write data from HDF5 files in a

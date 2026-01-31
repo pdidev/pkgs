@@ -3,13 +3,13 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper-compat (= 13), dh-sequence-python3, dh-sequence-fortran-mod,
-  cmake (>= 3.16.3),
+  cmake (>= 3.22),
   gfortran | fortran-compiler,
   libparaconf-dev (>= 1.0.0),
-  libspdlog-dev (>= 1:1.5.0),
-  pybind11-dev (>= 2.4.3),
-  python3-dev (>= 3.8.2),
-  python3-numpy (>= 1.17.4),
+  libspdlog-dev (>= 1:1.9.2),
+  pybind11-dev (>= 2.9.1),
+  python3-dev (>= 3.10.6),
+  python3-numpy (>= 1.21.5),
   python3-setuptools
 Standards-Version: 4.5.0
 Homepage: https://pdi.dev/
@@ -60,10 +60,10 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod}, ${fortran:Depends},
   libpdi-f90.1 (= ${binary:Version}),
   python3-pdi (= ${binary:Version}),
   libparaconf-dev (>= 1.0.0),
-  libspdlog-dev (>= 1:1.5.0),
-  pybind11-dev (>= 2.4.3),
-  python3-dev (>= 3.8.2),
-  python3-numpy (>= 1.17.4),
+  libspdlog-dev (>= 1:1.9.2),
+  pybind11-dev (>= 2.9.1),
+  python3-dev (>= 3.10.6),
+  python3-numpy (>= 1.21.5),
   python3-setuptools
 Recommends: cmake, pkg-config, pdiplugin-all
 Description: Development files for PDI

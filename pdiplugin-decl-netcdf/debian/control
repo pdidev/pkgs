@@ -3,9 +3,9 @@ Section: libs
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Build-Depends: debhelper-compat (= 13),
-  cmake (>= 3.16.3),
-  libnetcdf-dev (>= 4.7.3),
-  libnetcdf-mpi-dev (>= 4.7.3) <disabled>,
+  cmake (>= 3.22),
+  libnetcdf-dev (>= 4.8.1),
+  libnetcdf-mpi-dev (>= 4.8.1) <disabled>,
   libpdi-dev,
   pkg-config,
   mpi-default-dev,

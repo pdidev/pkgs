@@ -7,9 +7,9 @@ Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
-BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.16.3
-BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.5.0
-BuildRequires:  pybind11-devel >= 2.4.3, python3-devel >= 3.8.2, python3-numpy >= 1.17.4
+BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.22
+BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.9.2
+BuildRequires:  pybind11-devel >= 2.9.1, python3-devel >= 3.10.6, python3-numpy >= 1.21.5
 BuildRequires:  python3-setuptools
 
 %description
@@ -21,10 +21,10 @@ Summary:        Development files for %{name}
 Requires:       gcc-gfortran%{_isa}
 Requires:       lib%{name}-f90.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       paraconf-devel >= 1.0.0
-Requires:       pybind11-devel >= 2.4.3
+Requires:       pybind11-devel >= 2.9.1
 Requires:       python3-%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       python3-devel >= 3.8.2, python3-numpy >= 1.17.4
-Requires:       spdlog-devel >= 1.5.0
+Requires:       python3-devel >= 3.10.6, python3-numpy >= 1.21.5
+Requires:       spdlog-devel >= 1.9.2
 Requires:       python3-setuptools
 
 %description devel

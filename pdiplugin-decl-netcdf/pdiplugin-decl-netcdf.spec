@@ -6,8 +6,8 @@ Group:          Development/Libraries/C and C++
 Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
-BuildRequires:  gcc, gcc-c++, make, cmake >= 3.16.3
-BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 4.7.3
+BuildRequires:  gcc, gcc-c++, make, cmake >= 3.22
+BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 4.8.1
 
 %description
 The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in a
@@ -16,7 +16,7 @@ a simple declarative interface to access a large subset of it.
 
 %package openmpi
 Summary: Decl'NetCDF plugin for the PDI Data Interface, OpenMPI version
-BuildRequires: netcdf-openmpi-devel >= 4.7.3
+BuildRequires: netcdf-openmpi-devel >= 4.8.1
 
 %description openmpi
 The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in a
@@ -25,7 +25,7 @@ a simple declarative interface to access a large subset of it.
 
 %package mpich
 Summary: Decl'NetCDF plugin for the PDI Data Interface, MPich version
-BuildRequires: netcdf-mpich-devel >= 4.7.3
+BuildRequires: netcdf-mpich-devel >= 4.8.1
 
 %description mpich
 The Decl'NetCDF PDI plugin enables one to read and write data from NetCDF files in a
