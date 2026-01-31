@@ -32,9 +32,6 @@ then
 		-e 's%https://repo.pdi.dev/#ID#%https://repo.pdi.dev/pdi-main.#ID#%' \
 		-i pdidev-archive-keyring/pdi.sources.in
 	sed \
-		-e "1ipdidev-archive-keyring (2026.01.01.main) unstable; urgency=medium\n\n  * Move to pdi main\n\n -- Julien Bigot <julien.bigot@cea.fr>  Thu, 01 Jan 2026 16:43:38 +0100\n" \
-		-i  pdidev-archive-keyring/changelog
-	sed \
 		-e "1{h;s/(.*$/(${DEB_PKG_VERSION}-1) unstable devel; urgency=medium\n\n  * Upstream release ${VERSION}\n\n -- ${AUTHOR}  ${DEB_DATE}\n/;p;x}" \
 		-i  pdi/debian/changelog pdiplugin*/debian/changelog
 	sed \
