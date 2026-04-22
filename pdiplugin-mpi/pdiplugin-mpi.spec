@@ -1,6 +1,6 @@
 Name:           pdiplugin-mpi
 Version:        1.10.1
-Release:        0
+Release:        1
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        MPI plugin for the PDI Data Interface
@@ -39,7 +39,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/${MPI_VERSION}/lib/pdi/plugins_%{version}/ \
 	-S plugins/mpi \
 	-B build-${MPI_VERSION}
-%make_build -C build-${MPI_VERSION}
+%cmake_build build-${MPI_VERSION}
 module purge
 done
 
@@ -48,7 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-%make_install -C build-${MPI_VERSION}
+%cmake_install build-${MPI_VERSION}
 module purge
 done
 
@@ -74,6 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>
+- Fix direct use of make that breaks with ninja
 * Tue Feb 10 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.10.1
 * Sat Jan 31 2026 - Julien Bigot <julien.bigot@.cea.fr>

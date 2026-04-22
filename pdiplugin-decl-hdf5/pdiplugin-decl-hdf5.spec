@@ -1,6 +1,6 @@
 Name:           pdiplugin-decl-hdf5
 Version:        1.10.1
-Release:        0
+Release:        1
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
@@ -43,7 +43,7 @@ mkdir build
 	-DBUILD_HDF5_PARALLEL=OFF \
     -S plugins/decl_hdf5 \
     -B build
-%make_build -C build
+%cmake_build build
 
 for MPI_VERSION in openmpi mpich
 do
@@ -56,19 +56,19 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	-DINSTALL_PDIPLUGINDIR=${MPI_LIB}/pdi/plugins_%{version}/ \
 	-S plugins/decl_hdf5 \
 	-B build-${MPI_VERSION}
-%make_build -C build-${MPI_VERSION}
+%cmake_build build-${MPI_VERSION}
 module purge
 done
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%make_install -C build
+%cmake_install build
 
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-%make_install -C build-${MPI_VERSION}
+%cmake_install build-${MPI_VERSION}
 module purge
 done
 
@@ -103,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/mpich/lib/pdi/*/lib*.so
 
 %changelog
+* Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>
+- Fix direct use of make that breaks with ninja
 * Tue Feb 10 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.10.1
 * Sat Jan 31 2026 - Julien Bigot <julien.bigot@.cea.fr>
