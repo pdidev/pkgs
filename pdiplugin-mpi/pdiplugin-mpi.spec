@@ -27,28 +27,26 @@ BuildRequires:  mpich-devel
 The PDI mpi plugin interfaces PDI with MPI.
 
 %prep
+%global _vpath_srcdir plugins/mpi
+%global _vpath_builddir build-${MPI_VERSION}
 %autosetup -n pdi-%{version}
 
 %build
 for MPI_VERSION in openmpi mpich
 do
-mkdir build-${MPI_VERSION}
 module load mpi/${MPI_VERSION}-%{_arch}
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/${MPI_VERSION}/lib/pdi/plugins_%{version}/ \
-	-S plugins/mpi \
-	-B build-${MPI_VERSION}
-%cmake_build build-${MPI_VERSION}
+%cmake_build
 module purge
 done
 
 %install
-rm -rf $RPM_BUILD_ROOT
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-%cmake_install build-${MPI_VERSION}
+%cmake_install
 module purge
 done
 

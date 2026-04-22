@@ -33,42 +33,37 @@ declarative way. Decl'HDF5 does not support the full HDF5 feature set but offers
 a simple declarative interface to access a large subset of it.
 
 %prep
+%global _vpath_srcdir plugins/decl_hdf5
+%global _vpath_builddir build-${MPI_VERSION}
 %autosetup -n pdi-%{version}
 
 %build
-mkdir build
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
 	-DBUILD_HDF5_PARALLEL=OFF \
-    -S plugins/decl_hdf5 \
-    -B build
-%cmake_build build
+%cmake_build
 
 for MPI_VERSION in openmpi mpich
 do
-mkdir build-${MPI_VERSION}
 module load mpi/${MPI_VERSION}-%{_arch}
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
 	-DBUILD_HDF5_PARALLEL=ON \
 	-DINSTALL_PDIPLUGINDIR=${MPI_LIB}/pdi/plugins_%{version}/ \
-	-S plugins/decl_hdf5 \
-	-B build-${MPI_VERSION}
-%cmake_build build-${MPI_VERSION}
+%cmake_build
 module purge
 done
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%cmake_install build
+%cmake_install
 
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
-%cmake_install build-${MPI_VERSION}
+%cmake_install
 module purge
 done
 
