@@ -1,8 +1,8 @@
-pdiplugin-user-code (1770708252main-1) unstable devel; urgency=medium
+pdiplugin-user-code (1.11.0-1) unstable devel; urgency=medium
 
-  * Upstream release main
+  * Upstream release 1.11.0
 
- -- Pending release on main <julien.bigot@cea.fr>  Tue, 10 Feb 2026 08:24:12 +0100
+ -- Julien Bigot <julien.bigot@.cea.fr>  Wed, 22 Apr 2026 21:17:37 +0200
 
 pdiplugin-user-code (1.10.1-1) unstable devel; urgency=medium
 
