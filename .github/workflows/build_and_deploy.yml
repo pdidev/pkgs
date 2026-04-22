@@ -16,10 +16,10 @@ jobs:
     steps:
     - if: "github.event_name != 'schedule' || github.event.schedule != '27 2 * * *'"
       name: Checkout packages
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - if: "github.event.schedule == '27 2 * * *'"
       name: Checkout packages (main)
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with: { ref: pdi-main }
     - name: check version
       id: version
@@ -32,7 +32,7 @@ jobs:
     - uses: docker/login-action@v3
       with: { registry: "ghcr.io",  username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
     - name: Checkout builder script
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: jbigot/pkg_builder
         path: pkg_builder
@@ -72,11 +72,11 @@ jobs:
     steps:
     - if: "github.event_name != 'schedule' || github.event.schedule != '27 2 * * *'"
       name: Checkout packages
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with: { path: data }
     - if: github.event.schedule == '27 2 * * *'
       name: Checkout packages
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with: { path: data, ref: pdi-main }
     - name: Aggregate sources
       id: ident
@@ -172,4 +172,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
