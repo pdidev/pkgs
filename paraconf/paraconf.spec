@@ -1,6 +1,6 @@
 %define _sover  1
 Name:           paraconf
-Version:        1.0.3
+Version:        1.1.1
 Release:        0
 License:        MIT
 Group:          Development/Libraries/C and C++
@@ -85,6 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 12 2026 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 1.1.1
 * Fri Jan 30 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 1.0.3
 * Wed Dec 17 2025 - Julien Bigot <julien.bigot@cea.fr>
