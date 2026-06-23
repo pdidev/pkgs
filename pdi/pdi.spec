@@ -1,12 +1,12 @@
 %define _sover  1
 Name:           pdi
-Version:        1.11.1
+Version:        main
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.22
 BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.9.2
 BuildRequires:  pybind11-devel >= 2.9.1, python3-devel >= 3.10.6, python3-numpy >= 1.21.5
@@ -115,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Tue Jun 23 2026 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.11.1
 * Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>
