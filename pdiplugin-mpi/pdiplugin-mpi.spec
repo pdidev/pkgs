@@ -1,5 +1,5 @@
 Name:           pdiplugin-mpi
-Version:        1.11.1
+Version:        1.12.0
 Release:        0
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
