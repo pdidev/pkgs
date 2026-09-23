@@ -1,11 +1,11 @@
 %define _sover  1
 Name:           pdi
-Version:        1.12.0
-Release:        2
+Version:        main
+Release:        0
 License:        BSD-3-Clause
 Summary:        the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
 BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.22
 BuildRequires:  paraconf-devel >= 1.0.0, spdlog-devel >= 1.9.2
 BuildRequires:  pybind11-devel >= 2.9.1, python3-devel >= 3.10.6, python3-numpy >= 1.21.5
@@ -106,6 +106,8 @@ mkdir -p %{buildroot}%{_libdir}/pdi/plugins_%{version}
 %{python3_sitearch}/pdi/
 
 %changelog
+* Thu Nov 05 2026 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
 - add the missing runtime dependency on numpy
 - own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets

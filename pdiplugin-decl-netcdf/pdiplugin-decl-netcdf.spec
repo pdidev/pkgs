@@ -1,10 +1,10 @@
 Name:           pdiplugin-decl-netcdf
-Version:        1.12.0
-Release:        2
+Version:        main
+Release:        0
 License:        BSD-3-Clause
 Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
-Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/pdidev/pdi/archive/refs/heads/main.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.22
 BuildRequires:  pdi-devel = %{version}, netcdf-devel >= 4.8.1
 
@@ -88,6 +88,8 @@ done
 %{_libdir}/mpich/lib/pdi/plugins_%{version}/lib*.so
 
 %changelog
+* Thu Nov 05 2026 - Pending release on main <julien.bigot@cea.fr>
+- Upstream release main
 * Thu Nov 05 2026 - Julien Bigot <julien.bigot@cea.fr>
 - point the MPI builds at the netcdf_meta.h of their own NetCDF, to build on Fedora 45 (pdidev/pdi#771)
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
