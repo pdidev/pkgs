@@ -29,6 +29,7 @@ override_dh_auto_configure:
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		dh_auto_configure -D plugins/decl_hdf5 -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
 			-DBUILD_HDF5_PARALLEL=$${BUILD_HDF5_PARALLEL} \
+			-DHDF5_DIR="$$(find /usr/lib ! -readable -prune -false -o -path '*/cmake/hdf5_'"$${FLAVOR}" -prune)" \
 			-DHDF5_C_COMPILER_EXECUTABLE=/usr/bin/$${H5CC} \
 			-DINSTALL_PDIPLUGINDIR=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} \
 			-DCMAKE_BUILD_TYPE=Release \
