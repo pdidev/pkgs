@@ -1,5 +1,5 @@
 Types: deb deb-src
-URIs: https://repo.pdi.dev/#ID#
+URIs: https://repo.pdi.dev/pdi-main.#ID#
 Suites: #VERSION_CODENAME#
 Components: main
 arch: amd64

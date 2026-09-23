@@ -1,3 +1,9 @@
+pdiplugin-decl-hdf5 (1790170994main-1) unstable devel; urgency=medium
+
+  * Upstream release main
+
+ -- Pending release on main <julien.bigot@cea.fr>  Wed, 23 Sep 2026 15:43:14 +0200
+
 pdiplugin-decl-hdf5 (1.11.1-2) unstable devel; urgency=medium
 
   * Pass HDF5_DIR to let CMake find the correct HDF5 on debian sid
