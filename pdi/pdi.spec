@@ -1,7 +1,7 @@
 %define _sover  1
 Name:           pdi
 Version:        1.12.0
-Release:        0
+Release:        1
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
@@ -71,6 +71,7 @@ codes from Input/Output concerns.
 	-DINSTALL_FMODDIR=%{_fmoddir} \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/pdi/plugins_%{version}/ \
 	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_CXX_FLAGS="%{build_cxxflags} -DPARACONF_NO_FORMAT_ATTRIBUTE" \
 	-S pdi
 %cmake_build
 
@@ -115,6 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Tue Oct 19 2026 - Julien Bigot <julien.bigot@.cea.fr>
+- added a workaround for broken code in PDI that fails with paraconf 1.2
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.11.1
 * Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>

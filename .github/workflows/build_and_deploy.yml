@@ -18,7 +18,7 @@ jobs:
       name: Checkout packages
       uses: actions/checkout@v6
     - if: "github.event.schedule == '27 2 * * *'"
-      name: Checkout packages (main)
+      name: Checkout packages (pdi-main)
       uses: actions/checkout@v6
       with: { ref: pdi-main }
     - name: check version

@@ -1,3 +1,9 @@
+paraconf (1.2.1-1) unstable devel; urgency=medium
+
+  * Version bump to 1.2.1
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Mon, 19 Oct 2026 11:06:34 +0200
+
 paraconf (1.1.1-1) unstable devel; urgency=medium
 
   * Version bump to 1.1.1

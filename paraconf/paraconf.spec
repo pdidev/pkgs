@@ -1,13 +1,13 @@
 %define _sover  1
 Name:           paraconf
-Version:        1.1.1
+Version:        1.2.1
 Release:        0
 License:        MIT
 Group:          Development/Libraries/C and C++
 Summary:        A library that provides a simple query language to access a Yaml tree on top of libyaml
 Url:            https://github.com/pdidev/%{name}
 Source0:        https://github.com/pdidev/%{name}/archive/%{version}.tar.gz
-BuildRequires:  gcc, gcc-gfortran, make, cmake >= 3.22
+BuildRequires:  gcc, gcc-c++, gcc-gfortran, make, cmake >= 3.22
 BuildRequires:  pkgconfig(yaml-0.1)
 
 %description
@@ -85,6 +85,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
+- Version bump to 1.2.1
 * Fri Jun 12 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 1.1.1
 * Fri Jan 30 2026 - Julien Bigot <julien.bigot@cea.fr>
