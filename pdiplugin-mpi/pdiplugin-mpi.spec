@@ -35,6 +35,7 @@ for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
 %cmake \
+	-DBUILD_TESTING=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/${MPI_VERSION}/lib/pdi/plugins_%{version}/ \
 %cmake_build
@@ -66,6 +67,7 @@ done
 %changelog
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
 - own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
+- do not build tests that are never run
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>

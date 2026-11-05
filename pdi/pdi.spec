@@ -70,6 +70,8 @@ codes from Input/Output concerns.
 	-DBUILD_PYTHON=ON \
 	-DINSTALL_FMODDIR=%{_fmoddir} \
 	-DINSTALL_PDIPLUGINDIR=%{_libdir}/pdi/plugins_%{version}/ \
+	-DBUILD_BENCHMARKING=OFF \
+	-DBUILD_TESTING=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_CXX_FLAGS="%{build_cxxflags} -DPARACONF_NO_FORMAT_ATTRIBUTE" \
 	-S pdi
@@ -107,6 +109,7 @@ mkdir -p %{buildroot}%{_libdir}/pdi/plugins_%{version}
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
 - add the missing runtime dependency on numpy
 - own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
+- do not build tests that are never run
 * Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
 - added a workaround for broken code in PDI that fails with paraconf 1.2
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
