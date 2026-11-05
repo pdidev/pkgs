@@ -19,10 +19,6 @@ ifdef get_fmoddir
 else
     FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/$(shell basename $(shell readlink -f $(shell which $(FC_DEFAULT))))
 endif
-# Workaround a bug in questing where FMODDIR is not updated for gfortran-15
-ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)/$(FC_DEFAULT)", "VERSION_CODENAME=questing/gfortran")
-    FMODDIR := /usr/lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)/fortran/gfortran-mod-16
-endif
 
 include /usr/share/dpkg/architecture.mk
 CMAKEFLAGS += -DBUILD_BENCHMARKING=OFF
