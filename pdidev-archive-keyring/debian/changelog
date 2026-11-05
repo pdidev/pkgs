@@ -2,6 +2,7 @@ pdidev-archive-keyring (2026.11.04) unstable; urgency=medium
 
   * Use the optional priority, extra is deprecated
   * Add the missing machine-readable copyright file
+  * Give the build script a valid interpreter line
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:03:30 +0100
 

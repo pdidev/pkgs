@@ -1,4 +1,4 @@
-#!
+#!/bin/sh
 
 SRCDIR="$(dirname "$0")"
 
