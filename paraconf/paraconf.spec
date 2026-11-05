@@ -1,9 +1,8 @@
 %define _sover  1
 Name:           paraconf
 Version:        1.2.1
-Release:        0
+Release:        1
 License:        MIT
-Group:          Development/Libraries/C and C++
 Summary:        A library that provides a simple query language to access a Yaml tree on top of libyaml
 Url:            https://github.com/pdidev/%{name}
 Source0:        https://github.com/pdidev/%{name}/archive/%{version}.tar.gz
@@ -15,16 +14,15 @@ Paraconf is a library that provides a simple query language to
 access a Yaml tree on top of libyaml.
 
 %package     -n lib%{name}%{_sover}
-Summary:        C++ logging library
+Summary:        A simple query language to access a Yaml tree on top of libyaml
 
 %description -n lib%{name}%{_sover}
 Paraconf is a library that provides a simple query language to
 access a Yaml tree on top of libyaml.
-applications that use %{name}.
 
 %package     -n lib%{name}-f90.%{_sover}
-Summary:        C++ logging library
-Requires:       lib%{name}%{_sover} = %{?epoch:%{epoch}:}%{version}-%{release}
+Summary:        Fortran interface of Paraconf
+Requires:       lib%{name}%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description -n lib%{name}-f90.%{_sover}
 Paraconf is a library that provides a simple query language to
@@ -32,7 +30,7 @@ access a Yaml tree on top of libyaml.
 
 %package devel
 Summary:        Development files for %{name}
-Requires:       lib%{name}-f90.%{_sover} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       lib%{name}-f90.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       libyaml-devel
 Requires:       gcc-gfortran%{_isa}
 
@@ -51,20 +49,7 @@ applications that use %{name}.
 %cmake_build
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %cmake_install
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post   -n lib%{name}%{_sover} -p /sbin/ldconfig
-
-%postun -n lib%{name}%{_sover} -p /sbin/ldconfig
-
-%post   -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
-
-%postun -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
-
 
 %files devel
 %license LICENSES/MIT.txt
@@ -73,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 %{_fmoddir}/*.mod
 %{_libdir}/lib%{name}*.so
-%{_datadir}/paraconf/cmake/
+%{_datadir}/paraconf/
 
 
 %files -n lib%{name}%{_sover}
@@ -85,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
+- own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
+- fix the copy-pasted summaries and descriptions of the library packages
 * Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Version bump to 1.2.1
 * Fri Jun 12 2026 - Julien Bigot <julien.bigot@cea.fr>

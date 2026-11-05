@@ -1,8 +1,7 @@
 Name:           pdiplugin-trace
 Version:        1.12.0
-Release:        0
+Release:        1
 License:        BSD-3-Clause
-Group:          Development/Libraries/C and C++
 Summary:        Trace plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
@@ -22,22 +21,16 @@ The PDI trace plugin generates a trace of what happens in PDI data store.
 %cmake_build
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %cmake_install
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post   -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
 
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/pdi/*/lib*.so
+%{_libdir}/pdi/plugins_%{version}/lib*.so
 
 %changelog
+* Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
+- drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>

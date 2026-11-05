@@ -3,7 +3,6 @@ Name:           pdi
 Version:        1.12.0
 Release:        2
 License:        BSD-3-Clause
-Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
@@ -77,35 +76,23 @@ codes from Input/Output concerns.
 %cmake_build
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %cmake_install
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post   -n lib%{name}%{_sover} -p /sbin/ldconfig
-
-%postun -n lib%{name}%{_sover} -p /sbin/ldconfig
-
-%post   -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
-
-%postun -n lib%{name}-f90.%{_sover} -p /sbin/ldconfig
-
-%post   -n lib%{name}-pysupport.%{_sover} -p /sbin/ldconfig
-
-%postun -n lib%{name}-pysupport.%{_sover} -p /sbin/ldconfig
+mkdir -p %{buildroot}%{_libdir}/pdi/plugins_%{version}
 
 %files devel
 %license LICENSE
 %doc README.md
 %{_bindir}/*
-%{_includedir}/
+%{_includedir}/pdi.h
+%{_includedir}/pdi/
 %{_fmoddir}/*
 %{_libdir}/lib*.so
 %{_datadir}/%{name}
 
 %files -n lib%{name}%{_sover}
 %{_libdir}/lib%{name}.so.*
+%dir %{_libdir}/pdi/
+%dir %{_libdir}/pdi/plugins_%{version}/
 
 %files -n lib%{name}-f90.%{_sover}
 %{_libdir}/lib%{name}_f90.so.*
@@ -114,11 +101,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib%{name}_pysupport.so.*
 
 %files -n python3-%{name}
-%{python3_sitearch}/pdi/*
+%{python3_sitearch}/pdi/
 
 %changelog
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
 - add the missing runtime dependency on numpy
+- own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
 * Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
 - added a workaround for broken code in PDI that fails with paraconf 1.2
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>

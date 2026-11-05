@@ -1,8 +1,7 @@
 Name:           pdiplugin-decl-hdf5
 Version:        1.12.0
-Release:        0
+Release:        1
 License:        BSD-3-Clause
-Group:          Development/Libraries/C and C++
 Summary:        Decl'HDF5 plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
@@ -67,37 +66,28 @@ module load mpi/${MPI_VERSION}-%{_arch}
 module purge
 done
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post   -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
-%post   openmpi -p /sbin/ldconfig
-
-%postun openmpi -p /sbin/ldconfig
-
-%post   mpich -p /sbin/ldconfig
-
-%postun mpich -p /sbin/ldconfig
-
 %files
 %license LICENSE
 %doc README.md
-%{_libdir}/pdi/*/lib*.so
+%{_libdir}/pdi/plugins_%{version}/lib*.so
 
 %files openmpi
 %license LICENSE
 %doc README.md
-%{_libdir}/openmpi/lib/pdi/*/lib*.so
+%dir %{_libdir}/openmpi/lib/pdi/
+%dir %{_libdir}/openmpi/lib/pdi/plugins_%{version}/
+%{_libdir}/openmpi/lib/pdi/plugins_%{version}/lib*.so
 
 %files mpich
 %license LICENSE
 %doc README.md
-%{_libdir}/mpich/lib/pdi/*/lib*.so
+%dir %{_libdir}/mpich/lib/pdi/
+%dir %{_libdir}/mpich/lib/pdi/plugins_%{version}/
+%{_libdir}/mpich/lib/pdi/plugins_%{version}/lib*.so
 
 %changelog
+* Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
+- own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>
