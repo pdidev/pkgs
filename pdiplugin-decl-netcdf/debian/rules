@@ -62,8 +62,12 @@ override_dh_auto_install:
 		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
 
+# Let the tests run more processes than there are cores: Open MPI up to 4 reads OMPI_MCA_rmaps_base_oversubscribe,
+# Open MPI 5 and later map processes with PRRTE, which reads PRTE_MCA_rmaps_default_mapping_policy instead,
+# renamed PRTE_MCA_mapby in Open MPI 6: setting both spares the latter its deprecation warning.
 override_dh_auto_test:
 	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+	export PRTE_MCA_rmaps_default_mapping_policy=:oversubscribe PRTE_MCA_mapby=:oversubscribe ;\
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\

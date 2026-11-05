@@ -23,9 +23,16 @@ override_dh_auto_clean:
 		dh_auto_clean -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
+# Hydra, the mpiexec of MPICH, speaks PMI-1 only: it launches singletons of a libmpich built for PMIx, as Ubuntu 24.04's is.
+# Open MPI's mpiexec runs a PMIx server, so it launches these as one job.
 override_dh_auto_configure:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do  \
+		MPIEXEC=/usr/bin/mpiexec.$${FLAVOR} ;\
+		if [ "$${FLAVOR}" = mpich ] && mpichversion | grep -q -e '--with-pmix' ;\
+		then \
+			MPIEXEC=/usr/bin/mpiexec.openmpi ;\
+		fi ;\
 		H5CC="$$(printf 'h5pcc.%s' "$${FLAVOR}" | sed -e 's/h5pcc.serial/h5cc/' )" ;\
 		BUILD_HDF5_PARALLEL=$$([ "$${FLAVOR}" = serial ] && echo OFF || echo ON ) ;\
 		dh_auto_configure -D plugins/decl_hdf5 -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} -- \
@@ -37,7 +44,7 @@ override_dh_auto_configure:
 			-DMPI_C_COMPILER=mpicc.$${FLAVOR} \
 			-DMPI_CXX_COMPILER=mpicxx.$${FLAVOR} \
 			-DMPI_Fortran_COMPILER=mpif90.$${FLAVOR} \
-			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$${FLAVOR} \
+			-DMPIEXEC_EXECUTABLE=$${MPIEXEC} \
 			$(CMAKEFLAGS) ;\
 	done
 
@@ -53,9 +60,13 @@ override_dh_auto_install:
 		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-decl-hdf5-$${FLAVOR} ;\
 	done
 
+# Let the tests run more processes than there are cores: Open MPI up to 4 reads OMPI_MCA_rmaps_base_oversubscribe,
+# Open MPI 5 and later map processes with PRRTE, which reads PRTE_MCA_rmaps_default_mapping_policy instead,
+# renamed PRTE_MCA_mapby in Open MPI 6: setting both spares the latter its deprecation warning.
 override_dh_auto_test:
 	set -e ;\
 	export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 OMPI_MCA_rmaps_base_oversubscribe=1 ;\
+	export PRTE_MCA_rmaps_default_mapping_policy=:oversubscribe PRTE_MCA_mapby=:oversubscribe ;\
 	for FLAVOR in $(FLAVORS) ;\
 	do \
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$${FLAVOR} ;\

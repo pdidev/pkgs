@@ -7,6 +7,8 @@ pdiplugin-decl-netcdf (1.12.0-1) unstable devel; urgency=medium
   * Add the missing machine-readable copyright file
   * Declare compliance with Debian Policy 4.7.2, and that the build does not
     require root
+  * Let the MPI tests run on fewer cores than processes with Open MPI 5 and
+    later
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:00:31 +0100
 
