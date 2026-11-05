@@ -46,7 +46,7 @@ override_dh_auto_configure:
 			-DMPI_CXX_COMPILER=mpicxx.$(ARCH_DEFAULT_MPI_IMPL) \
 			-DMPI_Fortran_COMPILER=mpif90.$(ARCH_DEFAULT_MPI_IMPL) \
 			-DMPIEXEC_EXECUTABLE=/usr/bin/mpiexec.$(ARCH_DEFAULT_MPI_IMPL) \
-			-DnetCDF_DIR=/usr/lib/x86_64-linux-gnu/cmake/$${netCDF_DIR} \
+			-DnetCDF_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)/cmake/$${netCDF_DIR} \
 			$(CMAKEFLAGS) ;\
 	done
 
