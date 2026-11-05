@@ -1,6 +1,7 @@
 paraconf (1.2.1-2) unstable devel; urgency=medium
 
   * Drop the workaround for Ubuntu 25.10, which reached its end of life
+  * Add the missing machine-readable copyright file
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:03:40 +0100
 

@@ -10,6 +10,7 @@ pdi (1.12.0-1) unstable devel; urgency=medium
   * Fix the package descriptions, sections and the architecture of the
     pdiplugin-all metapackage
   * Drop the workaround for Ubuntu 25.10, which reached its end of life
+  * Add the missing machine-readable copyright file
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:00:31 +0100
 
