@@ -4,6 +4,8 @@ pdi (1.12.0-1) unstable devel; urgency=medium
   * Keep the build flags of dpkg-buildflags for C++: passing CMAKE_CXX_FLAGS
     made CMake ignore CXXFLAGS, so libpdi was built without debug information
     or hardening
+  * Run the test suite at build time, the nocheck condition was inverted, and
+    never build the benchmarks
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:00:31 +0100
 

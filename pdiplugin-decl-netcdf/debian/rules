@@ -8,7 +8,7 @@ include /usr/share/dpkg/architecture.mk
 include /usr/share/mpi-default-dev/debian_defaults
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
 FLAVORS = $(shell dh_listpackages | grep '^pdiplugin-decl-netcdf-' | sed 's/^pdiplugin-decl-netcdf-//')
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
 	CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
 
@@ -67,7 +67,7 @@ override_dh_auto_test:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \
 		export PDI_PLUGIN_PATH=/usr/lib/$(DEB_HOST_MULTIARCH)/pdi/plugins_$(PKG_VERSION)/$$([ "$${FLAVOR}" = serial ] && echo serial || echo $(ARCH_DEFAULT_MPI_IMPL) ) ;\
-		dh_auto_test -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
+		dh_auto_test -Bbuild-$${FLAVOR} -ppdiplugin-decl-netcdf-$${FLAVOR} ;\
 	done
 
 override_dh_installdeb:

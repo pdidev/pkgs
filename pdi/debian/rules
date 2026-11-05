@@ -25,8 +25,9 @@ ifeq ("$(shell grep VERSION_CODENAME /etc/os-release)/$(FC_DEFAULT)", "VERSION_C
 endif
 
 include /usr/share/dpkg/architecture.mk
-ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
-    CMAKEFLAGS += -DBUILD_TESTING=OFF -DBUILD_BENCHMARKING=OFF
+CMAKEFLAGS += -DBUILD_BENCHMARKING=OFF
+ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS) $(DEB_BUILD_PROFILES)))
+    CMAKEFLAGS += -DBUILD_TESTING=OFF
 endif
 
 PKG_VERSION := $(shell dpkg-parsechangelog -S version | sed 's/-.*//')
