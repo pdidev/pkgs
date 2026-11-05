@@ -54,9 +54,6 @@ override_dh_auto_install:
 		dh_auto_install -Bbuild-$${FLAVOR} -ppdiplugin-mpi-$${FLAVOR} ;\
 	done
 
-# Let the tests run more processes than there are cores: Open MPI up to 4 reads OMPI_MCA_rmaps_base_oversubscribe,
-# Open MPI 5 and later map processes with PRRTE, which reads PRTE_MCA_rmaps_default_mapping_policy instead,
-# renamed PRTE_MCA_mapby in Open MPI 6: setting both spares the latter its deprecation warning.
 override_dh_auto_test:
 	set -e; for FLAVOR in $(FLAVORS) ;\
 	do \

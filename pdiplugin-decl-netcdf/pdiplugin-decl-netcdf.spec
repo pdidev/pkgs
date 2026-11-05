@@ -1,6 +1,6 @@
 Name:           pdiplugin-decl-netcdf
 Version:        1.12.0
-Release:        1
+Release:        2
 License:        BSD-3-Clause
 Summary:        Decl'NetCDF plugin for the PDI Data Interface
 Url:            https://github.com/pdidev/pdi
@@ -43,6 +43,7 @@ a simple declarative interface to access a large subset of it.
 	-DBUILD_NETCDF_PARALLEL=OFF \
 %cmake_build
 
+# Workaround https://github.com/pdidev/pdi/issues/771 with NetCDF_META_H
 for MPI_VERSION in openmpi mpich
 do
 module load mpi/${MPI_VERSION}-%{_arch}
@@ -50,6 +51,7 @@ module load mpi/${MPI_VERSION}-%{_arch}
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_TESTING=OFF \
 	-DBUILD_NETCDF_PARALLEL=ON \
+	-DNetCDF_META_H=${MPI_INCLUDE}/netcdf_meta.h \
 	-DINSTALL_PDIPLUGINDIR=${MPI_LIB}/pdi/plugins_%{version}/ \
 %cmake_build
 module purge
@@ -86,6 +88,8 @@ done
 %{_libdir}/mpich/lib/pdi/plugins_%{version}/lib*.so
 
 %changelog
+* Thu Nov 05 2026 - Julien Bigot <julien.bigot@cea.fr>
+- point the MPI builds at the netcdf_meta.h of their own NetCDF, to build on Fedora 45 (pdidev/pdi#771)
 * Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
 - own the directories the package installs, and only those; drop obsolete Group tags, buildroot cleanup and ldconfig scriptlets
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
