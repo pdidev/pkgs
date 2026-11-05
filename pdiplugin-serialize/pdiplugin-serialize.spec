@@ -39,6 +39,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
+* Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
+- Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.11.1
 * Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>

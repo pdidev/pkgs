@@ -1,3 +1,9 @@
+pdi (1.12.0-1) unstable devel; urgency=medium
+
+  * Upstream release 1.12.0
+
+ -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:00:31 +0100
+
 pdi (1.11.1-2) unstable devel; urgency=medium
 
   * added a workaround for broken code in PDI that fails with paraconf 1.2

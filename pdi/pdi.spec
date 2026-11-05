@@ -116,8 +116,10 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
-* Tue Oct 19 2026 - Julien Bigot <julien.bigot@.cea.fr>
+* Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
 - added a workaround for broken code in PDI that fails with paraconf 1.2
+* Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
+- Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>
 - Upstream release 1.11.1
 * Wed Apr 22 2026 - Julien Bigot <julien.bigot@.cea.fr>
