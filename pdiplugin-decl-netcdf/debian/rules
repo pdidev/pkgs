@@ -75,6 +75,7 @@ override_dh_installdeb:
 		do cp debian/pdiplugin-decl-netcdf-FLAVOR.$${SUFFIX} debian/pdiplugin-decl-netcdf-$${FLAVOR}.$${SUFFIX} ;\
 	done; done
 	dh_installdeb \
+		-D DEB_HOST_MULTIARCH=$(DEB_HOST_MULTIARCH) \
 		-D PKG_VERSION=$(PKG_VERSION) \
 		-ppdiplugin-decl-netcdf-mpi \
 		-ppdiplugin-decl-netcdf-serial

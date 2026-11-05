@@ -17,7 +17,7 @@ Homepage: https://pdi.dev/
 Package: pdiplugin-decl-netcdf-serial
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-netcdf
 Enhances: libpdi1
 Description: Decl'NetCDF plugin for the PDI Data Interface
@@ -31,7 +31,7 @@ Package: pdiplugin-decl-netcdf-mpi
 Build-Profiles: <disabled>
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-netcdf
 Enhances: libpdi1
 Description: Decl'NetCDF plugin for the PDI Data Interface

@@ -17,7 +17,7 @@ Homepage: https://pdi.dev/
 Package: pdiplugin-mpi-mpich
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: mpich
 Enhances: libpdi1
 Provides: pdiplugin-mpi
@@ -27,7 +27,7 @@ Description: MPI plugin for the PDI Data Interface
 Package: pdiplugin-mpi-openmpi
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: openmpi-bin
 Enhances: libpdi1
 Provides: pdiplugin-mpi

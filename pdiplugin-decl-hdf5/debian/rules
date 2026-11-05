@@ -67,5 +67,6 @@ override_dh_installdeb:
 		do cp debian/pdiplugin-decl-hdf5-FLAVOR.$${SUFFIX} debian/pdiplugin-decl-hdf5-$${FLAVOR}.$${SUFFIX} ;\
 	done; done
 	dh_installdeb \
+		-D DEB_HOST_MULTIARCH=$(DEB_HOST_MULTIARCH) \
 		-D ARCH_DEFAULT_MPI_IMPL=$(ARCH_DEFAULT_MPI_IMPL) \
 		-D PKG_VERSION=$(PKG_VERSION)

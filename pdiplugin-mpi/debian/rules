@@ -60,5 +60,6 @@ override_dh_installdeb:
 		do cp debian/pdiplugin-mpi-FLAVOR.$${SUFFIX} debian/pdiplugin-mpi-$${FLAVOR}.$${SUFFIX} ;\
 	done; done
 	dh_installdeb \
+		-D DEB_HOST_MULTIARCH=$(DEB_HOST_MULTIARCH) \
 		-D PKG_VERSION=$(PKG_VERSION) \
 		-D ARCH_DEFAULT_MPI_IMPL=$(ARCH_DEFAULT_MPI_IMPL)

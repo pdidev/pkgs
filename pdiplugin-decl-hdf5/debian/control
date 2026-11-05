@@ -20,7 +20,7 @@ Homepage: https://pdi.dev/
 Package: pdiplugin-decl-hdf5-serial
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-hdf5
 Enhances: libpdi1
 Description: Decl'HDF5 plugin for the PDI Data Interface
@@ -31,7 +31,7 @@ Description: Decl'HDF5 plugin for the PDI Data Interface
 Package: pdiplugin-decl-hdf5-openmpi
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-hdf5
 Enhances: libpdi1
 Description: Decl'HDF5 plugin for the PDI Data Interface
@@ -42,7 +42,7 @@ Description: Decl'HDF5 plugin for the PDI Data Interface
 Package: pdiplugin-decl-hdf5-mpich
 Architecture: any
 Section: libs
-Depends: dpkg-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: pdiplugin-decl-hdf5
 Enhances: libpdi1
 Description: Decl'HDF5 plugin for the PDI Data Interface

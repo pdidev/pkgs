@@ -1,4 +1,4 @@
-#!
+#!/bin/sh
 set -e
 
 FLAVOR=`printf #PACKAGE#|sed 's/pdiplugin-mpi-//'`
@@ -16,9 +16,9 @@ case "$1" in
 configure)
 	update-alternatives \
 		--install \
-		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/libpdi_mpi_plugin.so \
-		pdi-#PKG_VERSION#_mpi_plugin.so-$(dpkg-architecture -qDEB_HOST_MULTIARCH) \
-		/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)/pdi/plugins_#PKG_VERSION#/${FLAVOR}/libpdi_mpi_plugin.so \
+		/usr/lib/#DEB_HOST_MULTIARCH#/pdi/plugins_#PKG_VERSION#/libpdi_mpi_plugin.so \
+		pdi-#PKG_VERSION#_mpi_plugin.so-#DEB_HOST_MULTIARCH# \
+		/usr/lib/#DEB_HOST_MULTIARCH#/pdi/plugins_#PKG_VERSION#/${FLAVOR}/libpdi_mpi_plugin.so \
 		"${PRIORITY}"
 ;;
 *)
