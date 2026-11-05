@@ -11,7 +11,8 @@ Build-Depends: debhelper-compat (= 13),
   mpi-default-dev,
   mpich <!nocheck>,
   openmpi-bin <!nocheck>
-Standards-Version: 4.5.0
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
 Homepage: https://pdi.dev/
 
 Package: pdiplugin-mpi-mpich

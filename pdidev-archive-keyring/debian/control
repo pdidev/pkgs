@@ -2,7 +2,8 @@ Source: pdidev-archive-keyring
 Section: misc
 Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
-Standards-Version: 4.5.0
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
 Build-Depends: debhelper-compat (= 13)
 
 Package: pdidev-archive-keyring

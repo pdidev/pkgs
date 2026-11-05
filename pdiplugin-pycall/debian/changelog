@@ -5,6 +5,8 @@ pdiplugin-pycall (1.12.0-1) unstable devel; urgency=medium
   * Add the missing runtime dependency on the PDI python module
   * Fix the indentation of the package description, which displayed verbatim
   * Add the missing machine-readable copyright file
+  * Declare compliance with Debian Policy 4.7.2, and that the build does not
+    require root
 
  -- Julien Bigot <julien.bigot@cea.fr>  Wed, 04 Nov 2026 21:00:31 +0100
 
