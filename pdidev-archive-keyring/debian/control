@@ -1,6 +1,6 @@
 Source: pdidev-archive-keyring
 Section: misc
-Priority: extra
+Priority: optional
 Maintainer: Julien Bigot <julien.bigot@cea.fr>
 Standards-Version: 4.5.0
 Build-Depends: debhelper-compat (= 13)

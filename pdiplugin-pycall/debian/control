@@ -14,5 +14,5 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, python3-pdi
 Enhances: libpdi1
 Description: Pycall plugin for the PDI Data Interface
-  The PDI pycall plugin enables one to call a user-defined python function when
-  a specified event occur or certain data becomes available.
+ The PDI pycall plugin enables one to call a user-defined python function when
+ a specified event occur or certain data becomes available.

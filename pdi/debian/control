@@ -24,7 +24,7 @@ Recommends:
   pdiplugin-set-value,
   pdiplugin-trace,
   pdiplugin-user-code
-Description: the PDI Data , main library
+Description: the PDI Data Interface, main library
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.
 
@@ -46,7 +46,7 @@ Description: the PDI Data Interface python support library
 
 Package: python3-pdi
 Architecture: any
-Section: libs
+Section: python
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
   libpdi-pysupport1 (= ${binary:Version}),
   python3-numpy
@@ -56,8 +56,7 @@ Description: the PDI Data Interface python module
 
 Package: libpdi-dev
 Architecture: any
-Section: libs
-Priority: optional
+Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${Fortran-Mod}, ${fortran:Depends},
   libpdi-f90.1 (= ${binary:Version}),
   python3-pdi (= ${binary:Version}),
@@ -73,8 +72,8 @@ Description: Development files for PDI
  applications or plugins that use PDI.
 
 Package: pdiplugin-all
-Architecture: any
-Section: all
+Architecture: all
+Section: metapackages
 Depends:
   pdiplugin-decl-hdf5,
   pdiplugin-decl-netcdf,
