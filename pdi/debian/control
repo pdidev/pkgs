@@ -47,7 +47,9 @@ Description: the PDI Data Interface python support library
 Package: python3-pdi
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, libpdi-pysupport1 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends},
+  libpdi-pysupport1 (= ${binary:Version}),
+  python3-numpy
 Description: the PDI Data Interface python module
  PDI is a library that aims to decouple high-performance simulation
  codes from Input/Output concerns.

@@ -1,6 +1,6 @@
 Name:           pdiplugin-pycall
 Version:        1.12.0
-Release:        0
+Release:        1
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        Trace plugin for the PDI Data Interface
@@ -8,6 +8,7 @@ Url:            https://github.com/pdidev/pdi
 Source0:        https://github.com/pdidev/pdi/archive/refs/tags/%{version}.tar.gz
 BuildRequires:  gcc, gcc-c++, make, cmake >= 3.22
 BuildRequires:  pdi-devel = %{version}
+Requires:       python3-pdi
 
 %description
 The PDI pycall plugin enables one to call a user-defined python function when a
@@ -40,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pdi/*/lib*.so
 
 %changelog
+* Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
+- add the missing runtime dependency on the PDI python module
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
 - Upstream release 1.12.0
 * Tue Jun 23 2026 - Julien Bigot <julien.bigot@.cea.fr>

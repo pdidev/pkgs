@@ -1,7 +1,7 @@
 %define _sover  1
 Name:           pdi
 Version:        1.12.0
-Release:        1
+Release:        2
 License:        BSD-3-Clause
 Group:          Development/Libraries/C and C++
 Summary:        the PDI Data Interface
@@ -56,6 +56,7 @@ codes from Input/Output concerns.
 %package     -n python3-%{name}
 Summary:        the PDI Data Interface
 Requires:       lib%{name}-pysupport.%{_sover}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       python3-numpy
 
 %description -n python3-%{name}
 PDI is a library that aims to decouple high-performance simulation
@@ -116,6 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python3_sitearch}/pdi/*
 
 %changelog
+* Wed Nov 04 2026 - Julien Bigot <julien.bigot@cea.fr>
+- add the missing runtime dependency on numpy
 * Mon Oct 19 2026 - Julien Bigot <julien.bigot@cea.fr>
 - added a workaround for broken code in PDI that fails with paraconf 1.2
 * Wed Jul 29 2026 - Julien Bigot <julien.bigot@cea.fr>
