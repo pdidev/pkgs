@@ -1,0 +1,18 @@
+Source: pdiplugin-timer
+Section: libs
+Priority: optional
+Maintainer: Julien Bigot <julien.bigot@cea.fr>
+Build-Depends: debhelper-compat (= 13),
+  cmake (>= 3.22),
+  libpdi-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://pdi.dev/
+
+Package: pdiplugin-timer
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: libpdi1
+Description: Timer plugin for the PDI Data Interface
+ The PDI timer plugin measures the time spent by PDI and its plugins.

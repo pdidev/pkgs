@@ -82,6 +82,7 @@ Depends:
   pdiplugin-pycall,
   pdiplugin-serialize,
   pdiplugin-set-value,
+  pdiplugin-timer,
   pdiplugin-trace,
   pdiplugin-user-code
 Description: PDI plugins, full set
