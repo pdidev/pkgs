@@ -9,7 +9,7 @@ arch: amd64
 signed-by: /usr/share/keyrings/pdidev-archive-automatic.gpg
 EOF
 sudo wget -O /usr/share/keyrings/pdidev-archive-automatic.gpg ${baseurl}/pdidev-archive-keyring.gpg
-sudo chmod a+r /usr/share/keyrings/pdidev-archive-automatic.gpg /etc/apt/sources.list.d/pdi.source
+sudo chmod a+r /usr/share/keyrings/pdidev-archive-automatic.gpg /etc/apt/sources.list.d/pdi.sources
 sudo apt update
 sudo apt install pdidev-archive-keyring libpdi-dev pdiplugin-all
 </code>
