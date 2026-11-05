@@ -7,7 +7,7 @@ then
 fi
 
 VERSION="$1"
-AUTHOR="Julien Bigot <julien.bigot@.cea.fr>"
+AUTHOR="Julien Bigot <julien.bigot@cea.fr>"
 DEB_DATE="$(date -R)"
 RPM_DATE="$(LC_ALL=C date "+%a %b %d %Y")"
 DEB_PKG_VERSION="$(echo "${VERSION}"|sed 's/-/~/g')"
